@@ -1,49 +1,65 @@
 // App.jsx
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import styled from "styled-components";
-import { FaHome, FaUser } from "react-icons/fa";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import GlobalStyles from "./styles/GolobalStyles";
+import AppLayout from "./ui/AppLayout";
+import Home from "./pages/Home";
+import Discover from "./pages/Discover";
+import Messages from "./pages/Messages";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 
-const Nav = styled.nav`
-  display: flex;
-  gap: 20px;
-  padding: 20px;
-  background: var(--color-brand-100);
-
-  a {
-    color: white;
-    text-decoration: none;
-  }
-`;
-
-function Home() {
-  return (
-    <h1>
-      <FaHome /> Home Page
-    </h1>
-  );
-}
-
-function About() {
-  return (
-    <h1>
-      <FaUser /> About Page
-    </h1>
-  );
-}
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // staleTime: 60 * 1000,
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   return (
-    <BrowserRouter>
-      <Nav>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-      </Nav>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <GlobalStyles />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/discover" element={<Discover />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+              backgroundColor: "var(--color-grey-0)",
+              color: "var(--color-grey-700)",
+            },
+          }}
+        />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

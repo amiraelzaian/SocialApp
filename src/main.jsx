@@ -6,7 +6,6 @@ import GlobalStyles from "./styles/GolobalStyles.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <GlobalStyles />
     <App />
   </StrictMode>,
 );
