@@ -1,5 +1,6 @@
 import { supabase } from "./supabase";
 
+// we will handle this and add to and from to handle pagination
 export async function getUsers(searchQuery) {
   let query = supabase.from("users").select("*").range(0, 14); // First 15 users
 
