@@ -1,7 +1,64 @@
-// set user online/offline
-export async function updateOnlineStatus(isOnline, userId) {}
-//track user activity
-export async function trackPresence(userId) {}
-// I don't know if I will implement or not
-// get list of online users
-export async function getOnlineUsers() {}
+import { supabase } from "./supabase";
+
+//  Set user online/offline with last_seen
+export async function updateOnlineStatus(isOnline) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const { data, error } = await supabase
+    .from("users")
+    .update({
+      is_online: isOnline,
+      last_seen: new Date().toISOString(),
+    })
+    .eq("id", user.id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+// Track user activity (heartbeat)
+export async function trackPresence() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { error } = await supabase
+    .from("users")
+    .update({
+      is_online: true,
+      last_seen: new Date().toISOString(),
+    })
+    .eq("id", user.id);
+
+  if (error) console.error("Presence update failed:", error.message);
+}
+
+//  Get list of online users
+export async function getOnlineUsers() {
+  const { data: users, error } = await supabase
+    .from("users")
+    .select("id, username, full_name, avatar_url, is_online, last_seen")
+    .eq("is_online", true)
+    .order("last_seen", { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return users;
+}
+
+//  Get user's online status
+export async function getUserStatus(userId) {
+  const { data, error } = await supabase
+    .from("users")
+    .select("is_online, last_seen")
+    .eq("id", userId)
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
