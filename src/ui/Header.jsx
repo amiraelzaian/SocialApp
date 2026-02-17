@@ -1,9 +1,11 @@
-// Navbar.jsx
 import { HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
 import styled from "styled-components";
 import Button from "./Button";
 import SearchInput from "./SearchInput";
+import Logo from "./Logo";
 import { useGetPage } from "../hooks/useGetPage";
+import { useScreenSize } from "../hooks/useScreenSize";
+import { useLocation } from "react-router-dom";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-50);
@@ -24,9 +26,14 @@ const TopSection = styled.div`
   width: 100%;
 `;
 
+const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Buttons = styled.div`
   display: flex;
-  align-items: flex-end; /* fixed */
+  align-items: center;
   gap: 10px;
 `;
 
@@ -36,29 +43,39 @@ const H2 = styled.h2`
   font-size: 20px;
 `;
 
-function Navbar() {
+function Header() {
   const { nameOfPage } = useGetPage();
+  const { isMobile } = useScreenSize();
+  const { pathname } = useLocation();
+
+  // Route-based check instead of fragile string matching
+  const showSearch =
+    pathname.startsWith("/messages") || pathname.startsWith("/discover");
+
+  function handleLogout() {
+    // TODO: wire up logout logic
+  }
 
   return (
     <StyledHeader>
       <TopSection>
-        <H2>{nameOfPage}</H2>
+        {isMobile ? (
+          <LogoWrapper>
+            <Logo />
+          </LogoWrapper>
+        ) : (
+          <H2>{nameOfPage}</H2>
+        )}
         <Buttons>
-          {/* Example: optional dark mode button */}
-          {/* <Button size="medium" variation="outlined">
-            <HiOutlineMoon />
-          </Button> */}
-          <Button size="medium" variation="danger">
+          <Button size="medium" variation="danger" onClick={handleLogout}>
             <HiOutlineArrowRightOnRectangle /> Logout
           </Button>
         </Buttons>
       </TopSection>
 
-      {(nameOfPage === "Messages" || nameOfPage === "Discover") && (
-        <SearchInput />
-      )}
+      {showSearch && <SearchInput />}
     </StyledHeader>
   );
 }
 
-export default Navbar;
+export default Header;

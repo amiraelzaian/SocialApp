@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useScreenSize } from "../hooks/useScreenSize";
 
 const StyledNavLink = styled(NavLink)`
   display: flex;
@@ -31,10 +32,12 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 function ButtonIcon({ to, icon, children }) {
+  const { isMobile } = useScreenSize();
+
   return (
     <StyledNavLink to={to}>
       {icon}
-      <span>{children}</span>
+      <span>{!isMobile && children}</span>
     </StyledNavLink>
   );
 }

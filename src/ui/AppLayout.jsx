@@ -2,10 +2,12 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import { useScreenSize } from "../hooks/useScreenSize";
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: ${({ $isMobile }) =>
+    $isMobile ? "1fr" : "240px 1fr"};
   height: 100vh;
   background-color: var(--color-grey-100);
 `;
@@ -13,15 +15,28 @@ const Layout = styled.div`
 const Main = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  padding-bottom: ${({ $isMobile }) => ($isMobile ? "80px" : "0")};
+`;
+
+const ContentArea = styled.div`
+  flex: 1;
+  overflow-y: auto;
 `;
 
 function AppLayout() {
+  const { isMobile } = useScreenSize();
+
   return (
-    <Layout>
+    <Layout $isMobile={isMobile}>
+      {/* Single Sidebar — handles its own mobile/desktop styling internally */}
       <Sidebar />
-      <Main>
+
+      <Main $isMobile={isMobile}>
         <Header />
-        <Outlet />
+        <ContentArea>
+          <Outlet />
+        </ContentArea>
       </Main>
     </Layout>
   );
