@@ -8,7 +8,7 @@ import ButtonIcon from "./ButtonIcon";
 import Logo from "./Logo";
 import styled from "styled-components";
 import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
-import { useScreenSize } from "../hooks/useScreenSize";
+import { useScreen } from "../context/ScreenSizeContext.jsx";
 
 const Nav = styled.nav`
   display: flex;
@@ -32,13 +32,13 @@ const Nav = styled.nav`
       z-index: 10;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      justify-content: flex-start;
+      justify-content: center;
       padding: 2px;
     `}
 `;
 
 function Sidebar() {
-  const { isMobile } = useScreenSize();
+  const { isMobile } = useScreen();
 
   return (
     <Nav $isMobile={isMobile}>

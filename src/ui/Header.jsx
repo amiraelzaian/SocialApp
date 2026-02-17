@@ -4,8 +4,9 @@ import Button from "./Button";
 import SearchInput from "./SearchInput";
 import Logo from "./Logo";
 import { useGetPage } from "../hooks/useGetPage";
-import { useScreenSize } from "../hooks/useScreenSize";
 import { useLocation } from "react-router-dom";
+import { useScreen } from "../context/ScreenSizeContext.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-50);
@@ -43,12 +44,23 @@ const H2 = styled.h2`
   font-size: 20px;
 `;
 
+const ButtonContent = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+`;
+
 function Header() {
   const { nameOfPage } = useGetPage();
-  const { isMobile } = useScreenSize();
+  const { isMobile } = useScreen();
   const { pathname } = useLocation();
 
-  // Route-based check instead of fragile string matching
   const showSearch =
     pathname.startsWith("/messages") || pathname.startsWith("/discover");
 
@@ -67,8 +79,12 @@ function Header() {
           <H2>{nameOfPage}</H2>
         )}
         <Buttons>
+          <ThemeToggle />
           <Button size="medium" variation="danger" onClick={handleLogout}>
-            <HiOutlineArrowRightOnRectangle /> Logout
+            <ButtonContent>
+              <HiOutlineArrowRightOnRectangle />
+              {!isMobile && <span>Logout</span>}
+            </ButtonContent>
           </Button>
         </Buttons>
       </TopSection>

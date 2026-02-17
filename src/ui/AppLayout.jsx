@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { useScreenSize } from "../hooks/useScreenSize";
+import { useScreen } from "../context/ScreenSizeContext.jsx";
 
 const Layout = styled.div`
   display: grid;
@@ -25,7 +25,7 @@ const ContentArea = styled.div`
 `;
 
 function AppLayout() {
-  const { isMobile } = useScreenSize();
+  const { isMobile } = useScreen();
 
   return (
     <Layout $isMobile={isMobile}>

@@ -8,7 +8,7 @@ const Input = styled.input`
   border: 1px solid var(--color-grey-200);
   font-size: 14px;
   transition: all 0.2s ease;
-
+  background-color: var(--color-grey-100);
   &::placeholder {
     color: var(--color-grey-400);
   }

@@ -28,7 +28,8 @@ const sizes = {
   `,
   medium: css`
     font-size: 16px;
-    padding: 10px 18px;
+    font-weight: 400;
+    padding: 8px 8px;
     border-radius: 6px;
   `,
   large: css`
@@ -39,10 +40,14 @@ const sizes = {
 };
 
 const StyledButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   cursor: pointer;
   font-weight: 500;
   transition: all 0.2s ease;
+  white-space: nowrap;
 
   ${(props) => variations[props.variation]}
   ${(props) => sizes[props.size]}
