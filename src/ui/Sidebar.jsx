@@ -12,7 +12,7 @@ import { useScreen } from "../context/ScreenSizeContext.jsx";
 
 const Nav = styled.nav`
   display: flex;
-  gap: 5px;
+
   align-items: center;
   flex-direction: ${({ $isMobile }) => ($isMobile ? "row" : "column")};
   padding: 5px;
@@ -27,7 +27,7 @@ const Nav = styled.nav`
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 90%;
+      width: 95%;
       height: 60px;
       z-index: 10;
       border-radius: 12px;

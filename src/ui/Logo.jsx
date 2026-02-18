@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useScreen } from "../context/ScreenSizeContext";
 
 const StyledLogo = styled(Link)`
   display: inline-block; /* ensures transform works on inline element */
@@ -16,6 +17,8 @@ const StyledLogo = styled(Link)`
   ); /* fallback for forced-color / high-contrast modes */
   transition: transform 0.2s ease;
 
+  margin-top: ${({ $isMobile }) => (!$isMobile ? "16px" : "0")};
+  margin-bottom: ${({ $isMobile }) => (!$isMobile ? "16px" : "0")};
   &:hover {
     transform: scale(1.05);
   }
@@ -24,7 +27,12 @@ const StyledLogo = styled(Link)`
 `;
 
 function Logo() {
-  return <StyledLogo to="/">VibeHub</StyledLogo>;
+  const { isMobile } = useScreen();
+  return (
+    <StyledLogo $isMobile={isMobile} to="/">
+      VibeHub
+    </StyledLogo>
+  );
 }
 
 export default Logo;
