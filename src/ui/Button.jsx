@@ -17,13 +17,14 @@ const variations = {
   outlined: css`
     background-color: transparent;
     border: none;
+    color: var(--color-brand-600);
   `,
 };
 
 const sizes = {
   small: css`
     font-size: 14px;
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 4px;
   `,
   medium: css`

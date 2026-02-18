@@ -1,4 +1,9 @@
-import { HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
+import {
+  HiOutlineArrowRightOnRectangle,
+  HiOutlineCheckBadge,
+  HiOutlineCheckCircle,
+  HiOutlineTrash,
+} from "react-icons/hi2";
 import styled from "styled-components";
 import Button from "./Button";
 import SearchInput from "./SearchInput";
@@ -7,6 +12,7 @@ import { useGetPage } from "../hooks/useGetPage";
 import { useLocation } from "react-router-dom";
 import { useScreen } from "../context/ScreenSizeContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
+import NotificationCount from "./NotificationCount.jsx";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-50);
@@ -63,10 +69,9 @@ function Header() {
 
   const showSearch =
     pathname.startsWith("/messages") || pathname.startsWith("/discover");
+  const showNumOfNotifications = pathname.startsWith("/notifications");
 
-  function handleLogout() {
-    // TODO: wire up logout logic
-  }
+  function handleLogout() {}
 
   return (
     <StyledHeader>
@@ -80,15 +85,33 @@ function Header() {
         )}
         <Buttons>
           <ThemeToggle />
-          <Button size="medium" variation="danger" onClick={handleLogout}>
-            <ButtonContent>
-              <HiOutlineArrowRightOnRectangle />
-              {!isMobile && <span>Logout</span>}
-            </ButtonContent>
-          </Button>
+          {nameOfPage === "Home" && (
+            <Button size="medium" variation="danger" onClick={handleLogout}>
+              <ButtonContent>
+                <HiOutlineArrowRightOnRectangle />
+                {!isMobile && <span>Logout</span>}
+              </ButtonContent>
+            </Button>
+          )}
+          {nameOfPage === "Notifications" && (
+            <Button size="small" variation="outlined">
+              <ButtonContent>
+                {isMobile && <HiOutlineCheckBadge />}
+                {!isMobile && <span>Mark all as read</span>}
+              </ButtonContent>
+            </Button>
+          )}
+          {nameOfPage === "Notifications" && (
+            <Button size="small" variation="outlined">
+              <ButtonContent>
+                {isMobile && <HiOutlineTrash />}
+                {!isMobile && <span>Delete all</span>}
+              </ButtonContent>
+            </Button>
+          )}
         </Buttons>
       </TopSection>
-
+      {showNumOfNotifications && <NotificationCount numOfNotificaitons={5} />}
       {showSearch && <SearchInput />}
     </StyledHeader>
   );
