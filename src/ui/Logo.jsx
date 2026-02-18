@@ -28,11 +28,7 @@ const StyledLogo = styled(Link)`
 
 function Logo() {
   const { isMobile } = useScreen();
-  return (
-    <StyledLogo $isMobile={isMobile} to="/">
-      VibeHub
-    </StyledLogo>
-  );
+  return <StyledLogo $isMobile={isMobile}>VibeHub</StyledLogo>;
 }
 
 export default Logo;
