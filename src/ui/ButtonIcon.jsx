@@ -15,7 +15,7 @@ const StyledNavLink = styled(NavLink)`
 
   text-decoration: none;
   color: var(--color-grey-700);
-  font-size: ${({ $isMobile }) => ($isMobile ? "13px" : "16px")};
+  font-size: ${({ $isMobile }) => ($isMobile ? "11px" : "16px")};
   font-weight: 500;
   width: 90%;
   transition: all 0.2s ease;

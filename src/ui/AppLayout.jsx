@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { useScreen } from "../context/ScreenSizeContext.jsx";
+import { useGetPage } from "../hooks/useGetPage.js";
 
 const Layout = styled.div`
   display: grid;
@@ -26,14 +27,14 @@ const ContentArea = styled.div`
 
 function AppLayout() {
   const { isMobile } = useScreen();
+  const { nameOfPage } = useGetPage();
 
   return (
     <Layout $isMobile={isMobile}>
-      {/* Single Sidebar — handles its own mobile/desktop styling internally */}
       <Sidebar />
 
       <Main $isMobile={isMobile}>
-        <Header />
+        {nameOfPage !== "Profile" && <Header />}
         <ContentArea>
           <Outlet />
         </ContentArea>

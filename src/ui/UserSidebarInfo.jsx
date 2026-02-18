@@ -3,7 +3,11 @@ import FakeAvatar from "./FakeAvatar";
 
 const StyledInfo = styled.div`
   display: flex;
-  gap: 2px;
+  gap: 5px;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  flex-wrap: wrap;
 `;
 const UserInfo = styled.div`
   display: flex;
@@ -13,7 +17,7 @@ const UserInfo = styled.div`
 `;
 const P = styled.p`
   font-size: 13px;
-  color: var(--color-gray-500);
+  color: var(--color-gray-400);
 `;
 
 function UserSidebarInfo() {
@@ -21,8 +25,8 @@ function UserSidebarInfo() {
     <StyledInfo>
       <FakeAvatar>AZ</FakeAvatar>
       <UserInfo>
-        <P>_amira</P>
-        <P>amira@gmail.com</P>
+        <P>Amira Mohamed</P>
+        <P>@amira</P>
       </UserInfo>
     </StyledInfo>
   );

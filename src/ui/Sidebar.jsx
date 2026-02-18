@@ -9,6 +9,7 @@ import Logo from "./Logo";
 import styled from "styled-components";
 import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 import { useScreen } from "../context/ScreenSizeContext.jsx";
+import UserSidebarInfo from "./userSidebarInfo.jsx";
 
 const Nav = styled.nav`
   display: flex;
@@ -34,6 +35,7 @@ const Nav = styled.nav`
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       justify-content: center;
       padding: 2px;
+      
     `}
 `;
 
@@ -58,6 +60,7 @@ function Sidebar() {
       <ButtonIcon to="/profile" icon={<HiOutlineUser />}>
         Profile
       </ButtonIcon>
+      {!isMobile && <UserSidebarInfo />}
     </Nav>
   );
 }
