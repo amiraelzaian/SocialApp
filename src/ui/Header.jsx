@@ -8,12 +8,14 @@ import styled from "styled-components";
 import Button from "./Button";
 import SearchInput from "./SearchInput";
 import Logo from "./Logo";
+import Spinner from "./Spinner";
 import { useGetPage } from "../hooks/useGetPage";
 import { useLocation } from "react-router-dom";
 import { useScreen } from "../context/ScreenSizeContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import NotificationCount from "./NotificationCount.jsx";
 import { useLogout } from "../features/authentication/useLogout.js";
+import MiniSpinner from "./MiniSpinner.jsx";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-50);
@@ -67,7 +69,7 @@ function Header() {
   const { nameOfPage } = useGetPage();
   const { isMobile } = useScreen();
   const { pathname } = useLocation();
-  const { logout } = useLogout();
+  const { logout, isPending } = useLogout();
 
   const showSearch =
     pathname.startsWith("/messages") || pathname.startsWith("/discover");
@@ -91,10 +93,14 @@ function Header() {
           <ThemeToggle />
           {nameOfPage === "Home" && (
             <Button size="medium" variation="danger" onClick={handleLogout}>
-              <ButtonContent>
-                <HiOutlineArrowRightOnRectangle />
-                {!isMobile && <span>Logout</span>}
-              </ButtonContent>
+              {isPending ? (
+                <MiniSpinner />
+              ) : (
+                <ButtonContent>
+                  <HiOutlineArrowRightOnRectangle />
+                  {!isMobile && <span>Logout</span>}
+                </ButtonContent>
+              )}
             </Button>
           )}
           {nameOfPage === "Notifications" && (

@@ -4,11 +4,11 @@ import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import Label from "../../ui/Label";
 import Row from "../../ui/Row";
+import Spinner from "../../ui/Spinner";
 import Button from "../../ui/Button";
 import FormHeader from "../../ui/FormHeader";
 import { useScreen } from "../../context/ScreenSizeContext";
 import FormTail from "../../ui/FormTail";
-import { useState } from "react";
 import { useLogin } from "./useLogin";
 
 const ForgotRow = styled.div`
@@ -50,7 +50,7 @@ const ErrorMsg = styled.span`
 
 function LoginForm() {
   const { isMobile } = useScreen();
-  const { login } = useLogin();
+  const { login, isPending } = useLogin();
 
   const {
     register,
@@ -63,7 +63,9 @@ function LoginForm() {
     console.log(data);
     login(data);
   }
-
+  console.log(isPending);
+  if (isPending) return <Spinner />;
+  console.log(isPending);
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} $isMobile={isMobile}>
@@ -77,6 +79,7 @@ function LoginForm() {
             id="email"
             type="email"
             placeholder="john@example.com"
+            disabed={isPending}
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -96,6 +99,7 @@ function LoginForm() {
             id="password"
             type="password"
             placeholder="••••••••"
+            disabed={isPending}
             {...register("password", {
               required: "Password is required",
               minLength: {
