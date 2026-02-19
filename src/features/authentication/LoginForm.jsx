@@ -8,6 +8,8 @@ import Button from "../../ui/Button";
 import FormHeader from "../../ui/FormHeader";
 import { useScreen } from "../../context/ScreenSizeContext";
 import FormTail from "../../ui/FormTail";
+import { useState } from "react";
+import { useLogin } from "./useLogin";
 
 const ForgotRow = styled.div`
   display: flex;
@@ -48,6 +50,7 @@ const ErrorMsg = styled.span`
 
 function LoginForm() {
   const { isMobile } = useScreen();
+  const { login } = useLogin();
 
   const {
     register,
@@ -58,6 +61,7 @@ function LoginForm() {
 
   function onSubmit(data) {
     console.log(data);
+    login(data);
   }
 
   return (
