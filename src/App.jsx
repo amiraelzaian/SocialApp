@@ -15,12 +15,12 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { ScreenProvider } from "./context/ScreenSizeContext.jsx";
 import { DarkModeProvider } from "./context/ThemeContext.jsx/";
+import ProtectedRoutes from "./ui/ProtectedRoutes.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // staleTime: 60 * 1000,
-      staleTime: 0,
+      staleTime: 60 * 1000,
     },
   },
 });
@@ -34,7 +34,13 @@ function App() {
         <DarkModeProvider>
           <BrowserRouter>
             <Routes>
-              <Route element={<AppLayout />}>
+              <Route
+                element={
+                  <ProtectedRoutes>
+                    <AppLayout />
+                  </ProtectedRoutes>
+                }
+              >
                 <Route path="/" element={<Home />} />
                 <Route path="/discover" element={<Discover />} />
                 <Route path="/messages" element={<Messages />} />
