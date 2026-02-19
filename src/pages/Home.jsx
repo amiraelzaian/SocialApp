@@ -1,5 +1,11 @@
+import PostFeed from "../features/posts/PostFeed";
+
 function Home() {
-  return <div>Home Page</div>;
+  return (
+    <div>
+      <PostFeed />
+    </div>
+  );
 }
 
 export default Home;

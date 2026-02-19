@@ -15,6 +15,7 @@ export async function getPosts() {
       )
     `,
     )
+    
     .order("created_at", { ascending: false })
     .range(0, 14);
 

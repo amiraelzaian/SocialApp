@@ -25,13 +25,13 @@ const Nav = styled.nav`
     $isMobile &&
     `
       position: fixed;
-      bottom: 20px;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 95%;
+      width: 100%;
       height: 60px;
       z-index: 10;
-      border-radius: 12px;
+      border-radius: 1px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       justify-content: center;
       padding: 2px;

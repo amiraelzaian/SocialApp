@@ -10,7 +10,6 @@ export async function getUsers(searchQuery) {
       `full_name.ilike.%${searchQuery}%,username.ilike.%${searchQuery}%`,
     );
   }
-
   const { data: users, error } = await query;
 
   if (error) throw new Error(error.message);
