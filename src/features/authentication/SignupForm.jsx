@@ -5,9 +5,11 @@ import Input from "../../ui/Input";
 import Label from "../../ui/Label";
 import Row from "../../ui/Row";
 import Button from "../../ui/Button";
+import Spinner from "../../ui/Spinner";
 import FormHeader from "../../ui/FormHeader";
 import { useScreen } from "../../context/ScreenSizeContext";
 import FormTail from "../../ui/FormTail";
+import { useSignup } from "./useSignup";
 
 const Divider = styled.div`
   display: flex;
@@ -41,6 +43,7 @@ const ErrorMsg = styled.span`
 
 function SignupForm() {
   const { isMobile } = useScreen();
+  const { signup, isPending } = useSignup();
 
   const {
     register,
@@ -51,8 +54,9 @@ function SignupForm() {
 
   function onSubmit(data) {
     console.log(data);
+    signup(data);
   }
-
+  if (isPending) return <Spinner />;
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} $isMobile={isMobile}>
@@ -66,6 +70,7 @@ function SignupForm() {
             id="fullName"
             type="text"
             placeholder="fullname"
+            disabled={isPending}
             {...register("fullName", {
               required: "Fullname is required",
             })}
@@ -80,6 +85,7 @@ function SignupForm() {
             id="username"
             type="text"
             placeholder="username"
+            disabled={isPending}
             {...register("username", {
               required: "username is required",
             })}
@@ -94,6 +100,7 @@ function SignupForm() {
             id="phone"
             type="tel"
             placeholder="phone number"
+            disabled={isPending}
             {...register("phone", {
               required: "Phone number is required",
             })}
@@ -109,6 +116,7 @@ function SignupForm() {
             id="email"
             type="email"
             placeholder="john@example.com"
+            disabled={isPending}
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -128,6 +136,7 @@ function SignupForm() {
             id="password"
             type="password"
             placeholder="••••••••"
+            disabled={isPending}
             {...register("password", {
               required: "Password is required",
               minLength: {

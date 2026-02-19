@@ -1,13 +1,14 @@
 import { supabase } from "./supabase";
 
-export async function signup({ email, password, fullName, username }) {
+export async function signup({ email, password, fullName, username, phone }) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: {
         full_name: fullName,
-        username: username,
+        username,
+        phone,
         avatar_url: "",
       },
     },
@@ -15,18 +16,17 @@ export async function signup({ email, password, fullName, username }) {
 
   if (error) throw new Error(error.message);
 
-  if (data.user) {
-    const { error: profileError } = await supabase.from("users").insert([
-      {
-        id: data.user.id,
-        username: username,
-        full_name: fullName,
-        avatar_url: "",
-      },
-    ]);
+  const { error: profileError } = await supabase.from("users").insert([
+    {
+      id: data.user.id,
+      full_name: fullName,
+      username,
 
-    if (profileError) throw new Error(profileError.message);
-  }
+      avatar_url: "",
+    },
+  ]);
+
+  if (profileError) throw new Error(profileError.message);
 
   return data;
 }
