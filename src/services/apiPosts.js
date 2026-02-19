@@ -1,6 +1,5 @@
 import { supabase } from "./supabase";
 
-
 // we will handle this and add to and from to get handle pagination
 export async function getPosts() {
   const { data: posts, error } = await supabase
@@ -17,7 +16,7 @@ export async function getPosts() {
     `,
     )
     .order("created_at", { ascending: false })
-    .range(0, 9);
+    .range(0, 14);
 
   if (error) throw new Error(error.message);
 
