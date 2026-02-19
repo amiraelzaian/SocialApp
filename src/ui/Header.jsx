@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import { useScreen } from "../context/ScreenSizeContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import NotificationCount from "./NotificationCount.jsx";
+import { useLogout } from "../features/authentication/useLogout.js";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-50);
@@ -66,12 +67,15 @@ function Header() {
   const { nameOfPage } = useGetPage();
   const { isMobile } = useScreen();
   const { pathname } = useLocation();
+  const { logout } = useLogout();
 
   const showSearch =
     pathname.startsWith("/messages") || pathname.startsWith("/discover");
   const showNumOfNotifications = pathname.startsWith("/notifications");
 
-  function handleLogout() {}
+  function handleLogout() {
+    logout();
+  }
 
   return (
     <StyledHeader>

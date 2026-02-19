@@ -80,13 +80,19 @@ const StyledButton = styled.button`
 `;
 
 function Button({
+  onClick,
   children,
   variation = "primary",
   size = "medium",
   ...props
 }) {
   return (
-    <StyledButton variation={variation} size={size} {...props}>
+    <StyledButton
+      variation={variation}
+      size={size}
+      {...props}
+      onClick={onClick}
+    >
       {children}
     </StyledButton>
   );
