@@ -26,6 +26,9 @@ const Toggle = styled.button`
     transform: scale(1.15);
     background-color: var(--color-grey-100);
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 function ThemeToggle() {

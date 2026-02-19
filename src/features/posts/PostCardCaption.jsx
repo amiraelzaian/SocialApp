@@ -28,6 +28,9 @@ const CommentsLink = styled.button`
   &:hover {
     color: var(--color-grey-700);
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 function PostCardCaption({ post }) {

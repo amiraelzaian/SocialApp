@@ -11,18 +11,49 @@ const Layout = styled.div`
     $isMobile ? "1fr" : "240px 1fr"};
   height: 100vh;
   background-color: var(--color-grey-100);
+  overflow: hidden; /* ✅ Prevent layout scroll */
 `;
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  height: 100vh; /* ✅ Fixed height */
+  overflow: hidden; /* ✅ Prevent main scroll */
   padding-bottom: ${({ $isMobile }) => ($isMobile ? "80px" : "0")};
 `;
 
 const ContentArea = styled.div`
   flex: 1;
-  overflow-y: auto;
+  overflow-y: auto; /* ✅ Only this scrolls */
+  overflow-x: hidden;
+
+  /* ✅ Custom Scrollbar Styles */
+
+  /* For Webkit browsers (Chrome, Safari, Edge) */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color-grey-100);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-grey-400);
+    border-radius: 10px;
+
+    &:hover {
+      background: var(--color-grey-500);
+    }
+  }
+
+  /* For Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-grey-400) var(--color-grey-100);
+
+  /* ✅ Smooth scrolling */
+  scroll-behavior: smooth;
 `;
 
 function AppLayout() {

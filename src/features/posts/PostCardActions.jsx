@@ -34,6 +34,9 @@ const ActionButton = styled.button`
   &:hover {
     color: var(--color-grey-600);
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 const LikesCount = styled.div`

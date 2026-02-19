@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import PostCardCapiton from "./PostCardCapiton";
+import PostCardCaption from "./PostCardCaption";
 import PostCardHeader from "./PostCardHeader";
 import PostCardActions from "./PostCardActions";
 import PostCardImage from "./PostCardImage";
@@ -17,7 +17,7 @@ function PostCard({ post }) {
   return (
     <Card>
       <PostCardHeader post={post} />
-      <PostCardCapiton post={post} />
+      <PostCardCaption post={post} />
       <PostCardImage post={post} />
       <PostCardActions post={post} />
     </Card>

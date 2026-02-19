@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useEffect, useRef } from "react";
 import PostCard from "./PostCard";
 import { usePosts } from "./usePosts";
 import Spinner from "../../ui/Spinner";
@@ -22,7 +23,32 @@ const EmptyState = styled.div`
 `;
 
 function PostFeed() {
-  const { posts, isPending, error } = usePosts();
+  const {
+    posts,
+    isPending,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = usePosts();
+
+  const loaderRef = useRef(null);
+
+  useEffect(() => {
+    if (!hasNextPage) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        fetchNextPage();
+      }
+    });
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasNextPage, fetchNextPage]);
 
   if (isPending) {
     return (
@@ -36,7 +62,7 @@ function PostFeed() {
     return <EmptyState>Error loading posts: {error.message}</EmptyState>;
   }
 
-  if (!posts || posts.length === 0) {
+  if (!posts.length) {
     return <EmptyState>No posts yet. Create your first post! 🎉</EmptyState>;
   }
 
@@ -45,6 +71,15 @@ function PostFeed() {
       {posts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
+
+      {/* Loader div for infinite scroll */}
+      <div ref={loaderRef}>
+        {isFetchingNextPage && (
+          <LoadingContainer>
+            <Spinner />
+          </LoadingContainer>
+        )}
+      </div>
     </Feed>
   );
 }

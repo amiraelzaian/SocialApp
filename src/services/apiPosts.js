@@ -1,23 +1,24 @@
 import { supabase } from "./supabase";
 
 // we will handle this and add to and from to get handle pagination
-export async function getPosts() {
-  const { data: posts, error } = await supabase
+export async function getPosts({ cursor = null, limit = 15 }) {
+  let query = supabase
     .from("posts")
     .select(
       `
       *,
-      users (
-        id,
-        username,
-        full_name,
-        avatar_url
-      )
+      users(
+      id,username,full_name,avatar_url)
     `,
     )
-    
     .order("created_at", { ascending: false })
-    .range(0, 14);
+    .order("id", { ascending: false })
+    .limit(limit);
+
+  if (cursor) {
+    query = query.lt("created_at", cursor);
+  }
+  const { data: posts, error } = await query;
 
   if (error) throw new Error(error.message);
 

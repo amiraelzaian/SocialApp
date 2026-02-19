@@ -33,6 +33,9 @@ const StyledNavLink = styled(NavLink)`
     /* background-color: var(--color-brand-100); */
     color: var(--color-brand-700);
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 function ButtonIcon({ to, icon, children }) {

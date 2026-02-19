@@ -42,6 +42,9 @@ const MenuButton = styled.button`
   &:hover {
     color: var(--color-grey-900);
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 function PostCardHeader({ post }) {
