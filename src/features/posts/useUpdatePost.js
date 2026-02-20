@@ -10,7 +10,7 @@ export function useUpdatePost() {
       updatePost(postId, { caption, hashtags }),
 
     onSuccess: () => {
-      toast.success("Post updated successfully! ");
+      toast.success("Post updated successfully! ✅");
       queryClient.invalidateQueries(["posts"]);
     },
 

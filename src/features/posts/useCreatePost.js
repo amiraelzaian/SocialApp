@@ -9,7 +9,7 @@ export function useCreatePost() {
     mutationFn: createPost,
     onSuccess: () => {
       toast.success("Post created successfully! 🎉");
-      queryClient.invalidateQueries(["posts"]); // Refresh posts
+      queryClient.invalidateQueries(["posts"]);
     },
     onError: (error) => {
       toast.error(error.message);

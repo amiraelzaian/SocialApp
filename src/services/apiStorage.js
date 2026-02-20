@@ -1,5 +1,4 @@
-import { supabase } from "../supabaseClient";
-
+import { supabase } from "./supabase";
 // =============================
 // Upload user avatar
 // Bucket: avatars
