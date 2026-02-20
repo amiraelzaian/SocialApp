@@ -16,6 +16,12 @@ const Text = styled.span`
   line-height: 1.6;
 `;
 
+const Hashtag = styled.span`
+  color: var(--color-brand-600);
+  font-weight: 500;
+  margin-right: 0.4rem;
+`;
+
 const CommentsLink = styled.button`
   background: none;
   border: none;
@@ -28,6 +34,7 @@ const CommentsLink = styled.button`
   &:hover {
     color: var(--color-grey-700);
   }
+
   &:focus {
     outline: none;
   }
@@ -38,7 +45,13 @@ function PostCardCaption({ post }) {
     <Caption>
       <div>
         <Username>{post.users?.username}</Username>
-        <Text>{parseCaption(post.caption)}</Text>
+
+        <Text>
+          {parseCaption(post.caption)}{" "}
+          {post.hashtags?.map((tag) => (
+            <Hashtag key={tag}>#{tag}</Hashtag>
+          ))}
+        </Text>
       </div>
 
       {post.comments_count > 0 && (

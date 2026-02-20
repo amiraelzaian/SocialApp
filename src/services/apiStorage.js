@@ -1,4 +1,5 @@
 import { supabase } from "./supabase";
+
 // =============================
 // Upload user avatar
 // Bucket: avatars
@@ -13,7 +14,10 @@ export async function uploadAvatar(userId, file) {
 
   if (error) throw error;
 
-  return filePath;
+  // ✅ FIXED: Return PUBLIC URL, not just path
+  const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+
+  return data.publicUrl;
 }
 
 // =============================
@@ -30,7 +34,10 @@ export async function uploadCover(userId, file) {
 
   if (error) throw error;
 
-  return filePath;
+  // ✅ FIXED: Return PUBLIC URL
+  const { data } = supabase.storage.from("covers").getPublicUrl(filePath);
+
+  return data.publicUrl;
 }
 
 // =============================
@@ -47,7 +54,10 @@ export async function uploadPostImage(userId, postId, file) {
 
   if (error) throw error;
 
-  return filePath;
+  // ✅ FIXED: Return PUBLIC URL
+  const { data } = supabase.storage.from("posters").getPublicUrl(filePath);
+
+  return data.publicUrl;
 }
 
 // =============================
@@ -64,7 +74,10 @@ export async function uploadStoryImage(userId, storyId, file) {
 
   if (error) throw error;
 
-  return filePath;
+  // ✅ FIXED: Return PUBLIC URL
+  const { data } = supabase.storage.from("stories").getPublicUrl(filePath);
+
+  return data.publicUrl;
 }
 
 // =============================
@@ -79,7 +92,7 @@ export async function deleteImage(bucket, path) {
 }
 
 // =============================
-// display Url
+// Get public URL for existing file
 // =============================
 export function getPublicUrl(bucket, path) {
   const { data } = supabase.storage.from(bucket).getPublicUrl(path);

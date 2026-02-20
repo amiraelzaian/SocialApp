@@ -75,8 +75,8 @@ const ButtonGroup = styled.div`
 
 function PostModal({ mode = "create", post = null, onClose }) {
   const [caption, setCaption] = useState("");
-  const [imageUrl, setImageUrl] = useState(""); // ✅ Fixed: was 'image', now 'imageUrl'
-  const [hashtagsInput, setHashtagsInput] = useState(""); // ✅ Fixed: added hashtags input
+  const [imageUrl, setImageUrl] = useState("");
+  const [hashtagsInput, setHashtagsInput] = useState("");
 
   const { createNewPost, isPending: isCreating } = useCreatePost();
   const { editPost, isUpdating } = useUpdatePost();
@@ -87,8 +87,8 @@ function PostModal({ mode = "create", post = null, onClose }) {
   // ✅ Fixed: Pre-fill form in edit mode
   useEffect(() => {
     if (isEditMode && post) {
-      setCaption(post.caption || "");
       setImageUrl(post.image_url || "");
+      setCaption(post.caption || "");
       setHashtagsInput(post.hashtags?.join(" ") || "");
     }
   }, [isEditMode, post]);
@@ -96,7 +96,6 @@ function PostModal({ mode = "create", post = null, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // ✅ Fixed: Parse hashtags from input
     const hashtags = hashtagsInput
       .split(/\s+/)
       .filter((tag) => tag.startsWith("#"))

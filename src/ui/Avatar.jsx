@@ -7,8 +7,8 @@ const Styledavatar = styled.img`
   object-fit: cover;
 `;
 
-function Avatar({ image = "https://i.pravatar.cc/150" }) {
-  return <Styledavatar src={image} alt={image} />;
+function Avatar({ src, alt, image = "https://i.pravatar.cc/150" }) {
+  return <Styledavatar src={src || image} alt={alt || "avatar"} />;
 }
 
 export default Avatar;

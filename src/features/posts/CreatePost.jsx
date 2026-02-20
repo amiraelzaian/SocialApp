@@ -7,7 +7,7 @@ import PostModal from "../../ui/PostModal";
 const StyledBox = styled.div`
   margin: 15px auto 0;
   background-color: var(--color-grey-0);
-  max-width: 60rem; // ✅ Added back max-width
+  max-width: 60rem;
   width: 98%;
   border: 1px solid var(--color-grey-200);
   border-radius: var(--border-radius-md);
@@ -46,7 +46,6 @@ const FakeInput = styled.button`
   &:focus,
   &:focus-visible,
   &:active {
-    // ✅ Added focus styles
     outline: none;
     border-color: var(--color-brand-600);
   }
@@ -56,19 +55,24 @@ function CreatePost() {
   const { user } = useUser();
   const [showModal, setShowModal] = useState(false);
 
-  const firstName = user?.full_name?.split(" ")[0] || user?.username;
+  const firstName =
+    user?.full_name?.split(" ")[0] ||
+    user?.user_metadata?.full_name?.split(" ")[0] ||
+    user?.user_metadata?.username ||
+    user?.username;
+
+  const avatarUrl = user?.avatar_url || user?.user_metadata?.avatar_url;
 
   return (
     <>
       <StyledBox>
-        <Avatar src={user?.avatar_url} alt={user?.username} size="medium" />
+        <Avatar src={avatarUrl} alt={user?.username} />
 
         <FakeInput onClick={() => setShowModal(true)}>
           What's on your mind, {firstName}?
         </FakeInput>
       </StyledBox>
 
-      {/* ✅ Pass mode="create" */}
       {showModal && (
         <PostModal mode="create" onClose={() => setShowModal(false)} />
       )}

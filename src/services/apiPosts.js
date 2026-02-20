@@ -1,28 +1,31 @@
 import { supabase } from "./supabase";
 
 // we will handle this and add to and from to get handle pagination
-export async function getPosts({ cursor = null, limit = 15 }) {
+
+export async function getPosts({ cursor, limit = 20 }) {
   let query = supabase
     .from("posts")
     .select(
       `
       *,
-      users(
-      id,username,full_name,avatar_url)
+      users (
+        id,
+        username,
+        full_name,
+        avatar_url
+      )
     `,
     )
     .order("created_at", { ascending: false })
-    .order("id", { ascending: false })
     .limit(limit);
 
   if (cursor) {
     query = query.lt("created_at", cursor);
   }
-  const { data: posts, error } = await query;
 
+  const { data, error } = await query;
   if (error) throw new Error(error.message);
-
-  return posts;
+  return data;
 }
 
 export async function getPostById(postId) {
@@ -92,13 +95,12 @@ export async function getPostsByHashtag(hashtag) {
 }
 
 export async function createPost({ caption, imageUrl, hashtags }) {
-  // Get current user
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) throw new Error("Not authenticated");
 
-  const { data: post, error } = await supabase
+  const { data, error } = await supabase
     .from("posts")
     .insert([
       {
@@ -122,14 +124,14 @@ export async function createPost({ caption, imageUrl, hashtags }) {
     .single();
 
   if (error) throw new Error(error.message);
-
-  return post;
+  return data;
 }
 
 export async function updatePost(postId, { caption, hashtags }) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
   if (!user) throw new Error("Not authenticated");
 
   const { data: post, error } = await supabase
@@ -137,7 +139,17 @@ export async function updatePost(postId, { caption, hashtags }) {
     .update({ caption, hashtags })
     .eq("id", postId)
     .eq("user_id", user.id)
-    .select()
+    .select(
+      `
+      *,
+      users (
+        id,
+        username,
+        full_name,
+        avatar_url
+      )
+    `,
+    )
     .single();
 
   if (error) throw new Error(error.message);

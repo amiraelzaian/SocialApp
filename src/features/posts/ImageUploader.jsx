@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { HiOutlinePhotograph, HiX } from "react-icons/hi";
 import { uploadPostImage } from "../../services/apiStorage";
 import { useUser } from "../authentication/useUser";
+import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
 
 const Container = styled.div`
@@ -77,6 +78,11 @@ const RemoveButton = styled.button`
     background-color: rgba(0, 0, 0, 0.8);
   }
 
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
   svg {
     font-size: 2rem;
   }
@@ -84,10 +90,7 @@ const RemoveButton = styled.button`
 
 const LoadingOverlay = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -99,20 +102,29 @@ const LoadingOverlay = styled.div`
 
 function ImageUploader({ imageUrl, setImageUrl }) {
   const [isUploading, setIsUploading] = useState(false);
-  const [preview, setPreview] = useState(imageUrl || null);
+  const [preview, setPreview] = useState(null);
   const { user } = useUser();
+  const fileInputRef = useRef(null);
+
+  // Sync preview when parent imageUrl changes
+  useEffect(() => {
+    setPreview(imageUrl || null);
+  }, [imageUrl]);
 
   const handleFileSelect = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
+    if (!user?.id) {
+      toast.error("You must be logged in to upload an image");
+      return;
+    }
+
     if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
     }
 
-    // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
       toast.error("Image size must be less than 10MB");
       return;
@@ -121,22 +133,25 @@ function ImageUploader({ imageUrl, setImageUrl }) {
     try {
       setIsUploading(true);
 
-      // Create preview
+      // Instant preview
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
       };
       reader.readAsDataURL(file);
 
-      // Upload to Supabase Storage
-      const postId = crypto.randomUUID(); // Generate temporary ID
+      // ✅ Fixed UUID generation
+      const postId = uuidv4();
+
       const publicUrl = await uploadPostImage(user.id, postId, file);
 
       setImageUrl(publicUrl);
       toast.success("Image uploaded successfully! 🎉");
     } catch (error) {
-      toast.error(error.message);
+      console.error("Upload error:", error);
+      toast.error(error.message || "Failed to upload image");
       setPreview(null);
+      setImageUrl("");
     } finally {
       setIsUploading(false);
     }
@@ -145,6 +160,7 @@ function ImageUploader({ imageUrl, setImageUrl }) {
   const handleRemove = () => {
     setPreview(null);
     setImageUrl("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   return (
@@ -163,6 +179,7 @@ function ImageUploader({ imageUrl, setImageUrl }) {
             </Text>
           </UploadArea>
           <HiddenInput
+            ref={fileInputRef}
             type="file"
             accept="image/*"
             onChange={handleFileSelect}

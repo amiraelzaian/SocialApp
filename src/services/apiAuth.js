@@ -49,7 +49,6 @@ export async function logout() {
 }
 
 export async function getCurrentUser() {
-  // First check if there's an active session
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return null;
 
@@ -60,7 +59,17 @@ export async function getCurrentUser() {
 
   if (error) throw new Error(error.message);
 
-  return user;
+  // Also fetch the profile from your users table
+  const { data: profile, error: profileError } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  if (profileError) throw new Error(profileError.message);
+
+  // Merge auth user with profile data
+  return { ...user, ...profile };
 }
 
 export async function updateUser({ email, password, fullName, avatarUrl }) {

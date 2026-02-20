@@ -36,6 +36,7 @@ const MenuButton = styled.button`
   &:hover {
     color: var(--color-grey-900);
   }
+
   &:focus {
     outline: none;
   }
@@ -45,9 +46,9 @@ function PostCardHeader({ post }) {
   return (
     <Header>
       <UserInfo>
-        <Avatar image={post.users?.avatar_url} />
+        <Avatar src={post.users?.avatar_url} alt={post.users?.username} />
         <UserDetails>
-          <Username>{post.users?.username}</Username>
+          <Username>{post.users?.username || post.users?.full_name}</Username>
         </UserDetails>
       </UserInfo>
 
