@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { HiDotsHorizontal } from "react-icons/hi";
+import Avatar from "../../ui/Avatar";
 
 const Header = styled.div`
   display: flex;
@@ -12,13 +13,6 @@ const UserInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 1.2rem;
-`;
-
-const Avatar = styled.img`
-  width: 3.6rem;
-  height: 3.6rem;
-  border-radius: 50%;
-  object-fit: cover;
 `;
 
 const UserDetails = styled.div`
@@ -51,10 +45,7 @@ function PostCardHeader({ post }) {
   return (
     <Header>
       <UserInfo>
-        <Avatar
-          src={post.users?.avatar_url || "https://i.pravatar.cc/150"}
-          alt={post.users?.username}
-        />
+        <Avatar image={post.users?.avatar_url} />
         <UserDetails>
           <Username>{post.users?.username}</Username>
         </UserDetails>
