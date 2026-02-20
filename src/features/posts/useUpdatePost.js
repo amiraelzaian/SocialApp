@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export function useUpdatePost() {
   const queryClient = useQueryClient();
 
-  const { mutate: editPost, isPending: isUpdating } = useMutation({
+  const { mutate: editPost, isPending } = useMutation({
     mutationFn: ({ postId, caption, hashtags }) =>
       updatePost(postId, { caption, hashtags }),
 
@@ -19,5 +19,5 @@ export function useUpdatePost() {
     },
   });
 
-  return { editPost, isUpdating };
+  return { editPost, isPending };
 }

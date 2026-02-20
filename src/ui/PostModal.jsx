@@ -134,7 +134,7 @@ function PostModal({ mode = "create", post = null, onClose }) {
   const { isMobile } = useScreen();
 
   const isEditMode = mode === "edit";
-  const isLoading = isCreating || isUpdating;
+  const isPending = isCreating || isUpdating;
 
   useEffect(() => {
     if (isEditMode && post) {
@@ -186,7 +186,7 @@ function PostModal({ mode = "create", post = null, onClose }) {
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             placeholder="Write a caption..."
-            disabled={isLoading}
+            disabled={isPending}
             $isMobile={isMobile}
           />
         </FieldGroup>
@@ -198,7 +198,7 @@ function PostModal({ mode = "create", post = null, onClose }) {
             value={hashtagsInput}
             onChange={(e) => setHashtagsInput(e.target.value)}
             placeholder="#hashtag1 #hashtag2 #hashtag3"
-            disabled={isLoading}
+            disabled={isPending}
           />
         </FieldGroup>
 
@@ -207,13 +207,13 @@ function PostModal({ mode = "create", post = null, onClose }) {
             type="button"
             variation="secondary"
             onClick={onClose}
-            disabled={isLoading}
+            disabled={isPending}
           >
             Cancel
           </Button>
 
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "..." : isEditMode ? "Update" : "Post"}
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "..." : isEditMode ? "Update" : "Post"}
           </Button>
         </ButtonGroup>
       </Form>

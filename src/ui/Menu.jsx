@@ -21,13 +21,13 @@ const StyledMenu = styled.ul`
 `;
 
 function Menu({ onClose, post }) {
-  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   return (
     <>
       <StyledMenu>
         <MenuItem
           onClick={() => {
-            setShowModal((show) => !show);
+            setShowEditModal((show) => !show);
           }}
         >
           Edit post
@@ -36,12 +36,12 @@ function Menu({ onClose, post }) {
           Delete post
         </MenuItem>
       </StyledMenu>
-      {showModal && (
+      {showEditModal && (
         <PostModal
           mode="edit"
           post={post}
           onClose={() => {
-            setShowModal(false);
+            setShowEditModal(false);
             onClose();
           }}
         />
