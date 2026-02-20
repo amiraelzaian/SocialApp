@@ -5,72 +5,123 @@ import Button from "./Button";
 import ImageUploader from "../features/posts/ImageUploader";
 import { useCreatePost } from "../features/posts/useCreatePost";
 import { useUpdatePost } from "../features/posts/useUpdatePost";
+import { useScreen } from "../context/ScreenSizeContext";
 import toast from "react-hot-toast";
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 2rem;
-  min-width: 56rem;
-  max-width: 60rem;
+  gap: 1.6rem;
+  padding: ${({ $isMobile }) =>
+    $isMobile ? "1.6rem 1.2rem" : "2rem 2.4rem 2.4rem"};
 `;
 
 const Title = styled.h2`
-  font-size: 2.4rem;
-  font-weight: 600;
+  font-size: ${({ $isMobile }) => ($isMobile ? "1.8rem" : "2rem")};
+  font-weight: 700;
   color: var(--color-grey-800);
   text-align: center;
-  padding-bottom: 1.6rem;
+  padding: ${({ $isMobile }) =>
+    $isMobile ? "1.6rem 1.2rem 1.2rem" : "2rem 2.4rem 1.6rem"};
   border-bottom: 1px solid var(--color-grey-200);
+  letter-spacing: -0.02em;
 `;
 
 const Textarea = styled.textarea`
   width: 100%;
-  min-height: 12rem;
+  min-height: ${({ $isMobile }) => ($isMobile ? "9rem" : "12rem")};
   padding: 1.2rem;
   border: 1px solid var(--color-grey-300);
   border-radius: var(--border-radius-md);
   font-family: inherit;
   font-size: 1.5rem;
   resize: vertical;
+  color: var(--color-grey-800);
+  background: var(--color-grey-0);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  line-height: 1.6;
+
+  &::placeholder {
+    color: var(--color-grey-400);
+  }
 
   &:focus {
     outline: none;
-    border-color: var(--color-brand-600);
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-brand-500) 15%, transparent);
   }
 
   &:disabled {
-    background-color: var(--color-grey-200);
+    background-color: var(--color-grey-100);
     cursor: not-allowed;
+    opacity: 0.7;
   }
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 1.2rem;
+  padding: 1.1rem 1.2rem;
   border: 1px solid var(--color-grey-300);
   border-radius: var(--border-radius-md);
   font-family: inherit;
   font-size: 1.4rem;
+  color: var(--color-grey-800);
+  background: var(--color-grey-0);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &::placeholder {
+    color: var(--color-grey-400);
+  }
 
   &:focus {
     outline: none;
-    border-color: var(--color-brand-600);
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-brand-500) 15%, transparent);
   }
 
   &:disabled {
-    background-color: var(--color-grey-200);
+    background-color: var(--color-grey-100);
     cursor: not-allowed;
+    opacity: 0.7;
   }
+`;
+
+const FieldLabel = styled.label`
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-grey-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+  display: block;
+`;
+
+const FieldGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
-  gap: 1.2rem;
-  justify-content: flex-end;
+  gap: 1rem;
+  justify-content: ${({ $isMobile }) => ($isMobile ? "stretch" : "flex-end")};
   padding-top: 1.6rem;
   border-top: 1px solid var(--color-grey-200);
+
+  ${({ $isMobile }) =>
+    $isMobile &&
+    `
+    & > * {
+      flex: 1;
+    }
+  `}
 `;
 
 function PostModal({ mode = "create", post = null, onClose }) {
@@ -80,11 +131,11 @@ function PostModal({ mode = "create", post = null, onClose }) {
 
   const { createNewPost, isPending: isCreating } = useCreatePost();
   const { editPost, isUpdating } = useUpdatePost();
+  const { isMobile } = useScreen();
 
   const isEditMode = mode === "edit";
   const isLoading = isCreating || isUpdating;
 
-  // ✅ Fixed: Pre-fill form in edit mode
   useEffect(() => {
     if (isEditMode && post) {
       setImageUrl(post.image_url || "");
@@ -102,62 +153,56 @@ function PostModal({ mode = "create", post = null, onClose }) {
       .map((tag) => tag.replace("#", ""));
 
     if (isEditMode) {
-      // ✅ Edit mode
       editPost(
         { postId: post.id, caption, hashtags },
-        {
-          onSuccess: () => {
-            onClose();
-          },
-        },
+        { onSuccess: () => onClose() },
       );
     } else {
-      // ✅ Create mode - validate image
       if (!imageUrl) {
         toast.error("Please upload an image");
         return;
       }
-
       createNewPost(
         { caption, imageUrl, hashtags },
-        {
-          onSuccess: () => {
-            onClose();
-          },
-        },
+        { onSuccess: () => onClose() },
       );
     }
   };
 
   return (
     <Modal onClose={onClose}>
-      <Title>{isEditMode ? "Edit Post" : "Create New Post"}</Title>
+      <Title $isMobile={isMobile}>
+        {isEditMode ? "Edit Post" : "Create New Post"}
+      </Title>
 
-      <Form onSubmit={handleSubmit}>
-        {/* ✅ Image upload - only in create mode, pass props */}
+      <Form onSubmit={handleSubmit} $isMobile={isMobile}>
         {!isEditMode && (
           <ImageUploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
         )}
 
-        {/* ✅ Caption textarea */}
-        <Textarea
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Write a caption..."
-          disabled={isLoading}
-        />
+        <FieldGroup>
+          <FieldLabel>Caption</FieldLabel>
+          <Textarea
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            placeholder="Write a caption..."
+            disabled={isLoading}
+            $isMobile={isMobile}
+          />
+        </FieldGroup>
 
-        {/* ✅ Hashtags input */}
-        <Input
-          type="text"
-          value={hashtagsInput}
-          onChange={(e) => setHashtagsInput(e.target.value)}
-          placeholder="#hashtag1 #hashtag2 #hashtag3"
-          disabled={isLoading}
-        />
+        <FieldGroup>
+          <FieldLabel>Hashtags</FieldLabel>
+          <Input
+            type="text"
+            value={hashtagsInput}
+            onChange={(e) => setHashtagsInput(e.target.value)}
+            placeholder="#hashtag1 #hashtag2 #hashtag3"
+            disabled={isLoading}
+          />
+        </FieldGroup>
 
-        {/* ✅ Buttons */}
-        <ButtonGroup>
+        <ButtonGroup $isMobile={isMobile}>
           <Button
             type="button"
             variation="secondary"

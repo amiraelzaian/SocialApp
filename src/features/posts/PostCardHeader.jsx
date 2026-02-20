@@ -1,12 +1,17 @@
 import styled from "styled-components";
 import { HiDotsHorizontal } from "react-icons/hi";
 import Avatar from "../../ui/Avatar";
+import { useUser } from "../authentication/useUser";
+import { useState } from "react";
+import Menu from "../../ui/Menu";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.6rem;
+  position: relative;
 `;
 
 const UserInfo = styled.div`
@@ -32,8 +37,13 @@ const MenuButton = styled.button`
   cursor: pointer;
   padding: 0.4rem;
   color: var(--color-grey-600);
+  border-radius: 50%;
+  transition:
+    background 0.2s,
+    color 0.2s;
 
   &:hover {
+    background: var(--color-grey-100);
     color: var(--color-grey-900);
   }
 
@@ -43,6 +53,14 @@ const MenuButton = styled.button`
 `;
 
 function PostCardHeader({ post }) {
+  const [openMenu, setOpenMenu] = useState(false);
+  const { user } = useUser();
+
+  // Close menu when clicking outside
+  const menuRef = useOutsideClick(() => setOpenMenu(false));
+
+  const isOwner = user?.id === post.users?.id;
+
   return (
     <Header>
       <UserInfo>
@@ -52,9 +70,14 @@ function PostCardHeader({ post }) {
         </UserDetails>
       </UserInfo>
 
-      <MenuButton>
-        <HiDotsHorizontal size={24} />
-      </MenuButton>
+      {isOwner && (
+        <div ref={menuRef} style={{ position: "relative" }}>
+          <MenuButton onClick={() => setOpenMenu((open) => !open)}>
+            <HiDotsHorizontal size={24} />
+          </MenuButton>
+          {openMenu && <Menu onClose={() => setOpenMenu(false)} post={post} />}
+        </div>
+      )}
     </Header>
   );
 }
