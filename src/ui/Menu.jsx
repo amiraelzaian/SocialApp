@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import MenuItem from "./MenuItem";
+import { useState } from "react";
+import PostModal from "./PostModal";
 
 const StyledMenu = styled.ul`
   list-style: none;
@@ -19,13 +21,32 @@ const StyledMenu = styled.ul`
 `;
 
 function Menu({ onClose, post }) {
+  const [showModal, setShowModal] = useState(false);
   return (
-    <StyledMenu>
-      <MenuItem onClick={onClose}>Edit post</MenuItem>
-      <MenuItem onClick={onClose} danger>
-        Delete post
-      </MenuItem>
-    </StyledMenu>
+    <>
+      <StyledMenu>
+        <MenuItem
+          onClick={() => {
+            setShowModal((show) => !show);
+          }}
+        >
+          Edit post
+        </MenuItem>
+        <MenuItem onClick={onClose} danger>
+          Delete post
+        </MenuItem>
+      </StyledMenu>
+      {showModal && (
+        <PostModal
+          mode="edit"
+          post={post}
+          onClose={() => {
+            setShowModal(false);
+            onClose();
+          }}
+        />
+      )}
+    </>
   );
 }
 
