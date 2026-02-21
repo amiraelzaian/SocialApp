@@ -6,7 +6,7 @@ export function useDeletePost() {
   const queryClient = useQueryClient();
 
   const { mutate: removePost, isPending } = useMutation({
-    mutationFn: deletePost,
+    mutationFn: (postId) => deletePost(postId),
     onSuccess: () => {
       toast.success("Post deleted successfully");
       queryClient.invalidateQueries(["posts"]);

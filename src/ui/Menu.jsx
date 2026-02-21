@@ -20,32 +20,15 @@ const StyledMenu = styled.ul`
   min-width: 15rem;
 `;
 
-function Menu({ onClose, post }) {
-  const [showEditModal, setShowEditModal] = useState(false);
+function Menu({ onDelete, onEdit }) {
   return (
     <>
       <StyledMenu>
-        <MenuItem
-          onClick={() => {
-            setShowEditModal((show) => !show);
-          }}
-        >
-          Edit post
-        </MenuItem>
-        <MenuItem onClick={onClose} danger>
+        <MenuItem onClick={onEdit}>Edit post</MenuItem>
+        <MenuItem onClick={onDelete} danger>
           Delete post
         </MenuItem>
       </StyledMenu>
-      {showEditModal && (
-        <PostModal
-          mode="edit"
-          post={post}
-          onClose={() => {
-            setShowEditModal(false);
-            onClose();
-          }}
-        />
-      )}
     </>
   );
 }

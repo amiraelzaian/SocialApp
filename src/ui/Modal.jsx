@@ -1,5 +1,6 @@
 import { HiOutlineX } from "react-icons/hi";
 import styled, { keyframes } from "styled-components";
+import { createPortal } from "react-dom";
 import { useScreen } from "../context/ScreenSizeContext";
 
 const fadeIn = keyframes`
@@ -46,7 +47,6 @@ const ModalWrapper = styled.div`
   animation: ${({ $isMobile }) => ($isMobile ? slideUpMobile : slideUp)} 0.3s
     cubic-bezier(0.34, 1.2, 0.64, 1);
 
-  /* Drag handle for mobile */
   ${({ $isMobile }) =>
     $isMobile &&
     `
@@ -61,7 +61,6 @@ const ModalWrapper = styled.div`
     }
   `}
 
-  /* Scrollbar styling */
   &::-webkit-scrollbar {
     width: 0.4rem;
   }
@@ -115,7 +114,7 @@ function Modal({ children, onClose }) {
     if (e.target === e.currentTarget) onClose?.();
   };
 
-  return (
+  return createPortal(
     <Overlay onClick={handleOverlayClick} $isMobile={isMobile}>
       <ModalWrapper $isMobile={isMobile}>
         <CloseButton onClick={onClose}>
@@ -123,7 +122,8 @@ function Modal({ children, onClose }) {
         </CloseButton>
         {children}
       </ModalWrapper>
-    </Overlay>
+    </Overlay>,
+    document.body,
   );
 }
 

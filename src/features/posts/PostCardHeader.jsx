@@ -4,7 +4,9 @@ import Avatar from "../../ui/Avatar";
 import { useUser } from "../authentication/useUser";
 import { useState } from "react";
 import Menu from "../../ui/Menu";
+import DeletePopup from "../../ui/DeletePopup";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import PostModal from "../../ui/PostModal";
 
 const Header = styled.div`
   display: flex;
@@ -54,11 +56,11 @@ const MenuButton = styled.button`
 
 function PostCardHeader({ post }) {
   const [openMenu, setOpenMenu] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { user } = useUser();
 
-  // Close menu when clicking outside
   const menuRef = useOutsideClick(() => setOpenMenu(false));
-
   const isOwner = user?.id === post.users?.id;
 
   return (
@@ -75,8 +77,36 @@ function PostCardHeader({ post }) {
           <MenuButton onClick={() => setOpenMenu((open) => !open)}>
             <HiDotsHorizontal size={24} />
           </MenuButton>
-          {openMenu && <Menu onClose={() => setOpenMenu(false)} post={post} />}
+
+          {openMenu && (
+            <Menu
+              // post={post}
+              //onClose={() => setOpenMenu(false)}
+              onDelete={() => {
+                setOpenMenu(false); // close the menu
+                setShowDeleteModal(true); // show delete popup
+              }}
+              onEdit={() => {
+                setOpenMenu(false);
+                setShowEditModal(true);
+              }}
+            />
+          )}
         </div>
+      )}
+
+      {showDeleteModal && (
+        <DeletePopup post={post} onClose={() => setShowDeleteModal(false)} />
+      )}
+      {showEditModal && (
+        <PostModal
+          mode="edit"
+          post={post}
+          onClose={() => {
+            setShowEditModal(false);
+            setOpenMenu(false);
+          }}
+        />
       )}
     </Header>
   );

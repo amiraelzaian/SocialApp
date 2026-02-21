@@ -115,13 +115,7 @@ const ButtonGroup = styled.div`
   padding-top: 1.6rem;
   border-top: 1px solid var(--color-grey-200);
 
-  ${({ $isMobile }) =>
-    $isMobile &&
-    `
-    & > * {
-      flex: 1;
-    }
-  `}
+  ${({ $isMobile }) => $isMobile && `& > * { flex: 1; }`}
 `;
 
 function PostModal({ mode = "create", post = null, onClose }) {
@@ -134,7 +128,7 @@ function PostModal({ mode = "create", post = null, onClose }) {
   const { isMobile } = useScreen();
 
   const isEditMode = mode === "edit";
-  const isPending = isCreating || isUpdating;
+  const isLoading = isCreating || isUpdating;
 
   useEffect(() => {
     if (isEditMode && post) {
@@ -174,7 +168,6 @@ function PostModal({ mode = "create", post = null, onClose }) {
       <Title $isMobile={isMobile}>
         {isEditMode ? "Edit Post" : "Create New Post"}
       </Title>
-
       <Form onSubmit={handleSubmit} $isMobile={isMobile}>
         {!isEditMode && (
           <ImageUploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
@@ -186,7 +179,7 @@ function PostModal({ mode = "create", post = null, onClose }) {
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             placeholder="Write a caption..."
-            disabled={isPending}
+            disabled={isLoading}
             $isMobile={isMobile}
           />
         </FieldGroup>
@@ -198,7 +191,7 @@ function PostModal({ mode = "create", post = null, onClose }) {
             value={hashtagsInput}
             onChange={(e) => setHashtagsInput(e.target.value)}
             placeholder="#hashtag1 #hashtag2 #hashtag3"
-            disabled={isPending}
+            disabled={isLoading}
           />
         </FieldGroup>
 
@@ -207,13 +200,12 @@ function PostModal({ mode = "create", post = null, onClose }) {
             type="button"
             variation="secondary"
             onClick={onClose}
-            disabled={isPending}
+            disabled={isLoading}
           >
             Cancel
           </Button>
-
-          <Button type="submit" disabled={isPending}>
-            {isPending ? "..." : isEditMode ? "Update" : "Post"}
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "..." : isEditMode ? "Update" : "Post"}
           </Button>
         </ButtonGroup>
       </Form>
