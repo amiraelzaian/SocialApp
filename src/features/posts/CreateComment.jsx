@@ -1,3 +1,4 @@
+import Input from "../../ui/Input";
 import { useState } from "react";
 import styled from "styled-components";
 import { FiSend } from "react-icons/fi";
@@ -9,20 +10,6 @@ const Wrapper = styled.div`
   gap: 1rem;
   padding: 1rem 1.6rem;
   border-top: 1px solid var(--color-grey-100);
-`;
-
-const Input = styled.input`
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 1.4rem;
-  color: var(--color-grey-800);
-  background: transparent;
-  padding: 0.4rem 0;
-
-  &::placeholder {
-    color: var(--color-grey-400);
-  }
 `;
 
 const SendBtn = styled.button`

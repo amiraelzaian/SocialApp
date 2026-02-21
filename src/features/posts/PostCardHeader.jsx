@@ -66,7 +66,11 @@ function PostCardHeader({ post }) {
   return (
     <Header>
       <UserInfo>
-        <Avatar src={post.users?.avatar_url} alt={post.users?.username} />
+        <Avatar
+          src={post.users?.avatar_url}
+          alt={post.users?.username}
+          name={user.full_name}
+        />
         <UserDetails>
           <Username>{post.users?.username || post.users?.full_name}</Username>
         </UserDetails>

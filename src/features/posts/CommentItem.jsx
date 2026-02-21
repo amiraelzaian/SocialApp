@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { FiEdit2, FiTrash2, FiCheck, FiX } from "react-icons/fi";
 import { useUpdateComment } from "./useUpdateComment";
 import { useDeleteComment } from "./useDeleteComment";
+import { timeAgo } from "../../utils/helpers";
+import Avatar from "../../ui/Avatar";
 
 const Item = styled.div`
   display: flex;
@@ -21,29 +23,6 @@ const Item = styled.div`
       transform: translateY(0);
     }
   }
-`;
-
-const Avatar = styled.img`
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  background-color: var(--color-grey-200);
-`;
-
-const AvatarFallback = styled.div`
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 50%;
-  background-color: var(--color-brand-600);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  font-weight: 700;
-  flex-shrink: 0;
 `;
 
 const Body = styled.div`
@@ -73,12 +52,8 @@ const Timestamp = styled.div`
 const Actions = styled.div`
   display: flex;
   gap: 0.4rem;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.2s;
-
-  ${Item}:hover & {
-    opacity: 1;
-  }
 `;
 
 const IconBtn = styled.button`
@@ -123,14 +98,6 @@ const EditRow = styled.div`
   margin-top: 0.2rem;
 `;
 
-function timeAgo(dateStr) {
-  const diff = (Date.now() - new Date(dateStr)) / 1000;
-  if (diff < 60) return "just now";
-  if (diff < 3600) return `${Math.floor(diff / 60)}m`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
-  return `${Math.floor(diff / 86400)}d`;
-}
-
 function CommentItem({ comment, postId, currentUserId }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(comment.content);
@@ -139,7 +106,7 @@ function CommentItem({ comment, postId, currentUserId }) {
 
   const isOwner = currentUserId === comment.user_id;
   const user = comment.users;
-  const initials = user?.full_name?.charAt(0)?.toUpperCase() || "?";
+  // const initials = user?.full_name?.charAt(0)?.toUpperCase() || "?";
 
   const handleSave = () => {
     if (!editValue.trim() || editValue === comment.content) {
@@ -162,11 +129,11 @@ function CommentItem({ comment, postId, currentUserId }) {
 
   return (
     <Item>
-      {user?.avatar_url ? (
-        <Avatar src={user.avatar_url} alt={user.username} />
-      ) : (
-        <AvatarFallback>{initials}</AvatarFallback>
-      )}
+      <Avatar
+        src={user?.avatar_url}
+        alt={user?.username}
+        name={user.full_name}
+      />
 
       <Body>
         {isEditing ? (

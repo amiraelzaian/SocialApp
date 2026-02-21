@@ -66,7 +66,7 @@ function CreatePost() {
   return (
     <>
       <StyledBox>
-        <Avatar src={avatarUrl} alt={user?.username} />
+        <Avatar src={avatarUrl} alt={user?.username} name={user.full_name} />
 
         <FakeInput onClick={() => setShowModal(true)}>
           What's on your mind, {firstName}?

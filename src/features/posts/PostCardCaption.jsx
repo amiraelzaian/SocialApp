@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { parseCaption } from "../../utils/parseText";
 
 const Caption = styled.div`
-  padding: 0 1.6rem 1.6rem;
+  padding: 1rem 1.6rem 1.6rem;
 `;
 
 const Username = styled.span`
@@ -40,7 +40,7 @@ const CommentsLink = styled.button`
   }
 `;
 
-function PostCardCaption({ post }) {
+function PostCardCaption({ post, setShowCommentsBox }) {
   return (
     <Caption>
       <div>
@@ -55,7 +55,13 @@ function PostCardCaption({ post }) {
       </div>
 
       {post.comments_count > 0 && (
-        <CommentsLink>View all {post.comments_count} comments</CommentsLink>
+        <CommentsLink
+          onClick={() => {
+            setShowCommentsBox((show) => !show);
+          }}
+        >
+          View all {post.comments_count} comments
+        </CommentsLink>
       )}
     </Caption>
   );

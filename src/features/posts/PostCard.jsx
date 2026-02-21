@@ -17,6 +17,18 @@ const Card = styled.div`
   &:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
   }
+  animation: fadeIn 0.25s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 // Pass currentUserId from your auth context/hook
@@ -28,7 +40,7 @@ function PostCard({ post }) {
     <Card>
       <PostCardHeader post={post} />
       <PostCardImage post={post} />
-      <PostCardCaption post={post} />
+      <PostCardCaption post={post} setShowCommentsBox={setShowCommentsBox} />
       <PostCardActions post={post} setShowCommentsBox={setShowCommentsBox} />
       {showCommentsBox && <CommentsBox post={post} />}
     </Card>
