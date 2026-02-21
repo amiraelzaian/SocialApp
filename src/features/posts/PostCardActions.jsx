@@ -34,6 +34,7 @@ const ActionButton = styled.button`
   &:hover {
     color: var(--color-grey-600);
   }
+
   &:focus {
     outline: none;
   }
@@ -46,13 +47,13 @@ const LikesCount = styled.div`
   color: var(--color-grey-800);
 `;
 
-function PostCardActions({ post }) {
+function PostCardActions({ post, setShowCommentsBox }) {
   const { toggleLike } = useLike();
-  const [isLiked, setIsLiked] = useState(false); // TODO: Get from API
+  const [isLiked, setIsLiked] = useState(false); // TODO: wire from API
 
   const handleLike = () => {
     toggleLike({ postId: post.id, isLiked });
-    setIsLiked(!isLiked);
+    setIsLiked((v) => !v);
   };
 
   return (
@@ -62,9 +63,11 @@ function PostCardActions({ post }) {
           <ActionButton onClick={handleLike} $active={isLiked}>
             {isLiked ? <FaHeart size={24} /> : <FaRegHeart size={24} />}
           </ActionButton>
-          <ActionButton>
+
+          <ActionButton onClick={() => setShowCommentsBox((show) => !show)}>
             <FaRegComment size={24} />
           </ActionButton>
+
           <ActionButton>
             <FaRegPaperPlane size={24} />
           </ActionButton>
