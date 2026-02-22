@@ -118,14 +118,14 @@ function LoginForm() {
         </ForgotRow>
 
         <ButtonGroup>
-          <Button type="submit" variation="primary" size="large">
+          <Button type="submit" $variation="primary" $size="large">
             Sign In
           </Button>
           <Divider>or</Divider>
           <Button
             type="button"
-            variation="secondary"
-            size="large"
+            $variation="secondary"
+            $size="large"
             onClick={() => reset()}
             style={{ width: "100%", textAlign: "center" }}
           >

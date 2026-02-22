@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import FakeAvatar from "./FakeAvatar";
+import Avatar from "./Avatar";
+import { useUser } from "../features/authentication/useUser";
 
 const StyledInfo = styled.div`
   display: flex;
@@ -21,12 +23,19 @@ const P = styled.p`
 `;
 
 function UserSidebarInfo() {
+  const { user } = useUser();
+  console.log(user);
+
   return (
     <StyledInfo>
-      <FakeAvatar>AZ</FakeAvatar>
+      <Avatar
+        name={user.full_name}
+        src={user.avatar_url}
+        alt={user.full_name}
+      />
       <UserInfo>
-        <P>Amira Mohamed</P>
-        <P>@amira</P>
+        <P>{user.full_name}</P>
+        <P>{user.username}</P>
       </UserInfo>
     </StyledInfo>
   );

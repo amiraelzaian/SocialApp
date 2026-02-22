@@ -33,12 +33,12 @@ function DeletePopup({ post, onClose }) {
       <StyledDiv>
         <P>Are you sure you want to delete this post?</P>
         <Buttons>
-          <Button size="medium" variation="secondary" onClick={onClose}>
+          <Button $size="medium" $variation="secondary" onClick={onClose}>
             Cancel
           </Button>
           <Button
-            size="medium"
-            variation="danger"
+           $ size="medium"
+            $variation="danger"
             onClick={() => {
               removePost(post.id);
               onClose();

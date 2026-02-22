@@ -55,16 +55,16 @@ const StyledButton = styled.button`
   transition: all 0.25s ease;
   white-space: nowrap;
 
-  ${(props) => variations[props.variation]}
-  ${(props) => sizes[props.size]}
+  ${(props) => variations[props.$variation]}
+  ${(props) => sizes[props.$size]}
 
   &:hover:not(:disabled) {
     opacity: 1;
     transform: translateY(-2px);
-    box-shadow: ${({ variation }) =>
-      variation === "primary"
+    box-shadow: ${({ $variation }) =>
+      $variation === "primary"
         ? "0 8px 25px rgba(168, 85, 247, 0.4)"
-        : variation === "danger"
+        : $variation === "danger"
           ? "0 8px 25px rgba(185, 28, 28, 0.35)"
           : "0 4px 12px rgba(0,0,0,0.1)"};
   }
@@ -77,6 +77,7 @@ const StyledButton = styled.button`
     opacity: 0.6;
     cursor: not-allowed;
   }
+
   &:focus {
     outline: none;
   }
@@ -91,8 +92,8 @@ function Button({
 }) {
   return (
     <StyledButton
-      variation={variation}
-      size={size}
+      $variation={variation}
+      $size={size}
       {...props}
       onClick={onClick}
     >

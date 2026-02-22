@@ -17,19 +17,16 @@ const Layout = styled.div`
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh; /* ✅ Fixed height */
-  overflow: hidden; /* ✅ Prevent main scroll */
+  height: 100vh;
+  overflow: hidden;
   padding-bottom: ${({ $isMobile }) => ($isMobile ? "80px" : "0")};
 `;
 
 const ContentArea = styled.div`
   flex: 1;
-  overflow-y: auto; /* ✅ Only this scrolls */
+  overflow-y: auto;
   overflow-x: hidden;
 
-  /* ✅ Custom Scrollbar Styles */
-
-  /* For Webkit browsers (Chrome, Safari, Edge) */
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -48,11 +45,9 @@ const ContentArea = styled.div`
     }
   }
 
-  /* For Firefox */
   scrollbar-width: thin;
   scrollbar-color: var(--color-grey-400) var(--color-grey-100);
 
-  /* ✅ Smooth scrolling */
   scroll-behavior: smooth;
 `;
 

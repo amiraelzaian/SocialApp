@@ -92,7 +92,7 @@ function Header() {
         <Buttons>
           <ThemeToggle />
           {nameOfPage === "Home" && (
-            <Button size="medium" variation="danger" onClick={handleLogout}>
+            <Button $size="medium" $variation="danger" onClick={handleLogout}>
               {isPending ? (
                 <MiniSpinner />
               ) : (
@@ -104,7 +104,7 @@ function Header() {
             </Button>
           )}
           {nameOfPage === "Notifications" && (
-            <Button size="small" variation="outlined">
+            <Button $size="small" $variation="outlined">
               <ButtonContent>
                 {isMobile && <HiOutlineCheckBadge />}
                 {!isMobile && <span>Mark all as read</span>}
@@ -112,7 +112,7 @@ function Header() {
             </Button>
           )}
           {nameOfPage === "Notifications" && (
-            <Button size="small" variation="outlined">
+            <Button $size="small" $variation="outlined">
               <ButtonContent>
                 {isMobile && <HiOutlineTrash />}
                 {!isMobile && <span>Delete all</span>}

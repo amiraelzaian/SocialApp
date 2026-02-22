@@ -198,8 +198,8 @@ function PostModal({ mode = "create", post = null, onClose }) {
         <ButtonGroup $isMobile={isMobile}>
           <Button
             type="button"
-            variation="secondary"
-            onClick={onClose}
+            $variation="secondary"
+            $onClick={onClose}
             disabled={isLoading}
           >
             Cancel

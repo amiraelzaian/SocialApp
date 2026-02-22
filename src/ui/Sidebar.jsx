@@ -41,6 +41,7 @@ const Nav = styled.nav`
 
 function Sidebar() {
   const { isMobile } = useScreen();
+  
 
   return (
     <Nav $isMobile={isMobile}>
