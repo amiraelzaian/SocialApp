@@ -7,7 +7,6 @@ import {
 } from "react-icons/fa";
 import { FiBookmark } from "react-icons/fi";
 import { useLike } from "./useLike";
-import { useState } from "react";
 
 const Actions = styled.div`
   display: flex;
@@ -48,12 +47,10 @@ const LikesCount = styled.div`
 `;
 
 function PostCardActions({ post, setShowCommentsBox }) {
-  const { toggleLike } = useLike();
-  const [isLiked, setIsLiked] = useState(false); // TODO: wire from API
+  const { toggleLike, isLiked } = useLike(post.id);
 
   const handleLike = () => {
-    toggleLike({ postId: post.id, isLiked });
-    setIsLiked((v) => !v);
+    toggleLike();
   };
 
   return (
