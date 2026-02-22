@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { FiBookmark } from "react-icons/fi";
 import { useLike } from "./useLike";
+import { useRepost } from "./useRepost";
 
 const Actions = styled.div`
   display: flex;
@@ -48,9 +49,13 @@ const LikesCount = styled.div`
 
 function PostCardActions({ post, setShowCommentsBox }) {
   const { toggleLike, isLiked } = useLike(post.id);
+  const { toggleRepost, isReposted } = useRepost(post.id);
 
   const handleLike = () => {
     toggleLike();
+  };
+  const handleRepost = () => {
+    toggleRepost();
   };
 
   return (
@@ -65,19 +70,20 @@ function PostCardActions({ post, setShowCommentsBox }) {
             <FaRegComment size={24} />
           </ActionButton>
 
-          <ActionButton>
+          <ActionButton onClick={handleRepost} $active={isReposted}>
             <FaRegPaperPlane size={24} />
           </ActionButton>
         </LeftActions>
-
-        <ActionButton>
-          <FiBookmark size={24} />
-        </ActionButton>
       </Actions>
 
       {post.likes_count > 0 && (
         <LikesCount>
           {post.likes_count} {post.likes_count === 1 ? "like" : "likes"}
+        </LikesCount>
+      )}
+      {post.repost_count > 0 && (
+        <LikesCount>
+          {post.repost_count} {post.repost_count === 1 ? "repost" : "reposts"}
         </LikesCount>
       )}
     </>

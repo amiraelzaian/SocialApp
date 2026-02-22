@@ -13,6 +13,15 @@ export async function getPosts({ cursor, limit = 20 }) {
         username,
         full_name,
         avatar_url
+      ),
+      original_post:original_post_id (
+        *,
+        users (
+          id,
+          username,
+          full_name,
+          avatar_url
+        )
       )
     `,
     )

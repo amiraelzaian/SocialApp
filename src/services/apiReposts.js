@@ -1,28 +1,27 @@
 import { supabase } from "./supabase";
 
-//  Like a post
-export async function likePost(postId) {
+// Repost a post
+export async function repostPost(postId) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) throw new Error("Not authenticated");
 
-  // Just insert into likes table - trigger handles the count!
   const { data, error } = await supabase
-    .from("likes")
+    .from("posts")
     .insert([
       {
         user_id: user.id,
-        post_id: postId,
+        is_repost: true,
+        original_post_id: postId,
       },
     ])
     .select()
     .single();
 
   if (error) {
-    // Handle unique constraint error (already liked)
     if (error.code === "23505") {
-      throw new Error("You already liked this post");
+      throw new Error("You already reposted this post");
     }
     throw new Error(error.message);
   }
@@ -30,56 +29,36 @@ export async function likePost(postId) {
   return data;
 }
 
-//unlike a post // minus like_count for post by 1
-export async function unlikePost(postId) {
+// Undo a repost
+export async function undoRepost(postId) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) throw new Error("Not authenticated");
 
   const { error } = await supabase
-    .from("likes")
+    .from("posts")
     .delete()
     .eq("user_id", user.id)
-    .eq("post_id", postId);
+    .eq("original_post_id", postId)
+    .eq("is_repost", true);
 
   if (error) throw new Error(error.message);
 }
 
-// Get all likes for a post (with user info)
-export async function getPostLikes(postId) {
-  const { data: likes, error } = await supabase
-    .from("likes")
-    .select(
-      `
-      *,
-      users (
-        id,
-        username,
-        full_name,
-        avatar_url
-      )
-    `,
-    )
-    .eq("post_id", postId)
-    .order("created_at", { ascending: false });
-
-  if (error) throw new Error(error.message);
-  return likes;
-}
-
-//  Check if current user liked a post
-export async function isPostLiked(postId) {
+// Check if current user already reposted a post
+export async function isPostReposted(postId) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return false;
 
   const { data, error } = await supabase
-    .from("likes")
+    .from("posts")
     .select("id")
     .eq("user_id", user.id)
-    .eq("post_id", postId)
+    .eq("original_post_id", postId)
+    .eq("is_repost", true)
     .maybeSingle();
 
   if (error && error.code !== "PGRST116") {
@@ -89,14 +68,14 @@ export async function isPostLiked(postId) {
   return !!data;
 }
 
-// get like count for post
-export async function getLikeCount(postId) {
+// Get repost count for a post
+export async function getRepostCount(postId) {
   const { data, error } = await supabase
     .from("posts")
-    .select("likes_count")
+    .select("repost_count")
     .eq("id", postId)
     .single();
 
   if (error) throw new Error(error.message);
-  return data?.likes_count || 0;
+  return data?.repost_count || 0;
 }

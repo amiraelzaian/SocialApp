@@ -31,10 +31,43 @@ const Card = styled.div`
   }
 `;
 
-// Pass currentUserId from your auth context/hook
-// e.g. const { user } = useUser();  →  currentUserId={user?.id}
+const OriginalPostEmbed = styled.div`
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--border-radius-md);
+  margin: 0 1.6rem 1.2rem;
+  overflow: hidden;
+`;
+
+const RepostLabel = styled.p`
+  font-size: 1.2rem;
+  color: var(--color-grey-500);
+  padding: 0.8rem 1.6rem 0;
+`;
+
 function PostCard({ post }) {
   const [showCommentsBox, setShowCommentsBox] = useState(false);
+
+  if (post.is_repost) {
+    return (
+      <Card>
+        <PostCardHeader post={post} />
+
+        {/* Original post embedded */}
+        <OriginalPostEmbed>
+          <PostCardHeader post={post.original_post} />
+          <PostCardImage post={post.original_post} />
+          <PostCardCaption
+            post={post.original_post}
+            setShowCommentsBox={() => {}}
+          />
+        </OriginalPostEmbed>
+
+        {/* Actions belong to the repost */}
+        <PostCardActions post={post} setShowCommentsBox={setShowCommentsBox} />
+        {showCommentsBox && <CommentsBox post={post} />}
+      </Card>
+    );
+  }
 
   return (
     <Card>
