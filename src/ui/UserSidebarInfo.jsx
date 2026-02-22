@@ -35,7 +35,7 @@ function UserSidebarInfo() {
       />
       <UserInfo>
         <P>{user.full_name}</P>
-        <P>{user.username}</P>
+        <P>@{user.username}</P>
       </UserInfo>
     </StyledInfo>
   );
