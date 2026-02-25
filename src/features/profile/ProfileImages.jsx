@@ -2,6 +2,8 @@ import { useUser } from "../authentication/useUser";
 import styled from "styled-components";
 import Avatar from "../../ui/Avatar";
 import { HiCamera, HiPencil } from "react-icons/hi2";
+import { useUploadAvatar } from "./useUploadAvatar";
+import { useUploadCover } from "./useUploadCover";
 
 const Header = styled.header`
   width: 100%;
@@ -20,7 +22,7 @@ const CoverUploadBtn = styled.label`
   top: 1rem;
   right: 1rem;
   background: var(--color-grey-600);
-  color: white;
+  color: var(--color-grey-50);
   border-radius: 8px;
   padding: 0.5rem 0.8rem;
   display: flex;
@@ -53,7 +55,7 @@ const AvatarOverlay = styled.label`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--color-grey-50);
   font-size: 1.4rem;
   cursor: pointer;
   opacity: 0;
@@ -70,19 +72,23 @@ const HiddenInput = styled.input`
 
 function ProfileImages() {
   const { user } = useUser();
+  const { uploadAvatar, isUploadingAvatar } = useUploadAvatar();
+  const { uploadCover, isUploadingCover } = useUploadCover();
 
   if (!user) return null;
 
   function handleCoverChange(e) {
     const file = e.target.files[0];
     if (!file) return;
-    console.log("cover file:", file);
+    const userId = user?.id;
+    uploadCover({ userId, file });
   }
 
   function handleAvatarChange(e) {
     const file = e.target.files[0];
     if (!file) return;
-    console.log("avatar file:", file);
+    const userId = user?.id;
+    uploadAvatar({ userId, file });
   }
 
   return (
@@ -98,6 +104,7 @@ function ProfileImages() {
         type="file"
         accept="image/*"
         onChange={handleCoverChange}
+        disabled={isUploadingCover}
       />
 
       <AvatarPart>
@@ -115,6 +122,7 @@ function ProfileImages() {
           type="file"
           accept="image/*"
           onChange={handleAvatarChange}
+          disabled={isUploadingAvatar}
         />
       </AvatarPart>
     </Header>

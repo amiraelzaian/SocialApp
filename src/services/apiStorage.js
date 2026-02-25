@@ -14,10 +14,18 @@ export async function uploadAvatar(userId, file) {
 
   if (error) throw error;
 
-  // ✅ FIXED: Return PUBLIC URL, not just path
   const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
 
-  return data.publicUrl;
+  const publicUrl = `${data.publicUrl}?t=${Date.now()}`;
+
+  const { error: updateError } = await supabase
+    .from("users")
+    .update({ avatar_url: publicUrl })
+    .eq("id", userId);
+
+  if (updateError) throw updateError;
+
+  return publicUrl;
 }
 
 // =============================
@@ -34,10 +42,17 @@ export async function uploadCover(userId, file) {
 
   if (error) throw error;
 
-  // ✅ FIXED: Return PUBLIC URL
   const { data } = supabase.storage.from("covers").getPublicUrl(filePath);
+  const publicUrl = `${data.publicUrl}?t=${Date.now()}`;
 
-  return data.publicUrl;
+  const { error: updateError } = await supabase
+    .from("users")
+    .update({ cover_url: publicUrl })
+    .eq("id", userId);
+
+  if (updateError) throw updateError;
+
+  return publicUrl;
 }
 
 // =============================
