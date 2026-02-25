@@ -1,5 +1,11 @@
+import ProfileHeader from "../features/profile/ProfileHeader";
+
 function Profile() {
-  return <div>profile</div>;
+  return (
+    <div>
+      <ProfileHeader />
+    </div>
+  );
 }
 
 export default Profile;
