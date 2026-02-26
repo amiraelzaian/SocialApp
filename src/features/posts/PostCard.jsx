@@ -7,6 +7,7 @@ import CommentsBox from "./CommentsBox";
 import { useState } from "react";
 
 const Card = styled.div`
+  width: 100%;
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-200);
   border-radius: var(--border-radius-md);

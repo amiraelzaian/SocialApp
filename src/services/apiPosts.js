@@ -59,8 +59,8 @@ export async function getPostById(postId) {
   return post;
 }
 
-export async function getPostsByUser(userId) {
-  const { data: posts, error } = await supabase
+export async function getPostsByUser(userId, cursor = null, limit = 10) {
+  let query = supabase
     .from("posts")
     .select(
       `
@@ -70,15 +70,27 @@ export async function getPostsByUser(userId) {
         username,
         full_name,
         avatar_url
+      ),
+      original_post:original_post_id (
+        *,
+        users (
+          id,
+          username,
+          full_name,
+          avatar_url
+        )
       )
     `,
     )
     .eq("user_id", userId)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(limit);
 
+  if (cursor) query = query.lt("created_at", cursor);
+
+  const { data, error } = await query;
   if (error) throw new Error(error.message);
-
-  return posts;
+  return data;
 }
 
 export async function getPostsByHashtag(hashtag) {

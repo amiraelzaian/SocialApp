@@ -1,7 +1,7 @@
 // contain cover, avatar and info
 import styled from "styled-components";
 import ProfileImages from "./ProfileImages";
-import UserDetialsCard from "./UserDetialsCard";
+import UserDetailsCard from "./UserDetailsCard";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -11,7 +11,7 @@ function ProfileHeader() {
   return (
     <StyledHeader>
       <ProfileImages />
-      <UserDetialsCard />
+      <UserDetailsCard />
     </StyledHeader>
   );
 }

@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { HiCog6Tooth, HiMapPin, HiLink, HiCalendarDays } from "react-icons/hi2";
 import { useUser } from "../authentication/useUser";
 import { Link } from "react-router-dom";
+import { useFollowersCount } from "./useFollowersCount";
+import { useFollowingsCount } from "./useFollowingsCount";
+import { useUserPosts } from "./useUserPosts";
 
 const StyledUserInfoCard = styled.div`
   width: 95%;
@@ -68,7 +71,7 @@ const Actions = styled.div`
 `;
 
 const Bio = styled.p`
-  font-size: 15px;
+  font-size: 14px;
   color: var(--color-grey-700);
   line-height: 1.5;
   margin: 0;
@@ -128,6 +131,9 @@ const StatCount = styled.span`
 
 function UserDetailsCard() {
   const { user } = useUser();
+  const { followersCount } = useFollowersCount(user.id);
+  const { followingsCount } = useFollowingsCount(user.id);
+  const { userPosts } = useUserPosts(user.id);
 
   if (!user) return null;
 
@@ -176,15 +182,15 @@ function UserDetailsCard() {
 
       <Stats>
         <StatItem>
-          <StatCount>{0}</StatCount>
+          <StatCount>{userPosts.length || 0}</StatCount>
           <span>Posts</span>
         </StatItem>
         <StatItem>
-          <StatCount>{1234}</StatCount>
+          <StatCount>{followersCount}</StatCount>
           <span>Followers</span>
         </StatItem>
         <StatItem>
-          <StatCount>{567}</StatCount>
+          <StatCount>{followingsCount}</StatCount>
           <span>Following</span>
         </StatItem>
       </Stats>

@@ -7,8 +7,7 @@ import PostModal from "../../ui/PostModal";
 const StyledBox = styled.div`
   margin: 15px auto 0;
   background-color: var(--color-grey-0);
-  max-width: 60rem;
-  width: 98%;
+  width: 94%;
   border: 1px solid var(--color-grey-200);
   border-radius: var(--border-radius-md);
   padding: 1.6rem;
