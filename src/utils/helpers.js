@@ -5,3 +5,12 @@ export function timeAgo(dateStr) {
   if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
   return `${Math.floor(diff / 86400)}d`;
 }
+
+export function dateConverter(value) {
+  const date = new Date(value).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+    day: "numeric",
+  });
+  return date;
+}

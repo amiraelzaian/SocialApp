@@ -5,6 +5,7 @@ import { useUpdateUserDetails } from "./useUpdateUserDetails";
 import { useScreen } from "../../context/ScreenSizeContext";
 import { useUser } from "../authentication/useUser";
 import { useState } from "react";
+import { dateConverter } from "../../utils/helpers";
 
 const Form = styled.form`
   display: flex;
@@ -188,11 +189,7 @@ function UpdateUserModal({ onClose }) {
           <FieldLabel>Joined</FieldLabel>
           <Input
             type="text"
-            value={new Date(user.created_at).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            value={dateConverter(user.created_at)}
             disabled={true}
           />
         </FieldGroup>

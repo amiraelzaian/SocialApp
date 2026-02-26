@@ -6,6 +6,7 @@ import { useFollowersCount } from "./useFollowersCount";
 import { useFollowingsCount } from "./useFollowingsCount";
 import { useUserPosts } from "./useUserPosts";
 import { useState } from "react";
+import { dateConverter } from "../../utils/helpers.js";
 import UpdateUserModal from "./UpdateUserModal";
 
 const StyledUserInfoCard = styled.div`
@@ -140,10 +141,7 @@ function UserDetailsCard() {
 
   if (!user) return null;
 
-  const joinedDate = new Date(user.created_at).toLocaleDateString("en-US", {
-    month: "long",
-    year: "numeric",
-  });
+  const joinedDate = dateConverter(user.created_at);
 
   return (
     <>
