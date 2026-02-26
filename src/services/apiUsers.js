@@ -65,14 +65,7 @@ export async function getSuggestedUsers() {
   return suggestedUsers.slice(0, 10);
 }
 
-export async function updateProfile({
-  fullName,
-  bio,
-  avatarUrl,
-  coverUrl,
-  location,
-  website,
-}) {
+export async function updateProfile({ fullName, bio, location, website }) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -83,8 +76,7 @@ export async function updateProfile({
     .update({
       full_name: fullName,
       bio,
-      avatar_url: avatarUrl,
-      cover_url: coverUrl,
+
       location,
       website,
     })

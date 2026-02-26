@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useFollowersCount } from "./useFollowersCount";
 import { useFollowingsCount } from "./useFollowingsCount";
 import { useUserPosts } from "./useUserPosts";
+import { useState } from "react";
+import UpdateUserModal from "./UpdateUserModal";
 
 const StyledUserInfoCard = styled.div`
   width: 95%;
@@ -134,6 +136,7 @@ function UserDetailsCard() {
   const { followersCount } = useFollowersCount(user.id);
   const { followingsCount } = useFollowingsCount(user.id);
   const { userPosts } = useUserPosts(user.id);
+  const [close, setClose] = useState();
 
   if (!user) return null;
 
@@ -143,58 +146,61 @@ function UserDetailsCard() {
   });
 
   return (
-    <StyledUserInfoCard>
-      <Header>
-        <MainInfo>
-          <FullName>{user.full_name}</FullName>
-          <Username>@{user.username}</Username>
-        </MainInfo>
-        <Actions>
-          <EditButton>
-            <HiCog6Tooth size={14} />
-            Edit Profile
-          </EditButton>
-        </Actions>
-      </Header>
+    <>
+      <StyledUserInfoCard>
+        <Header>
+          <MainInfo>
+            <FullName>{user.full_name}</FullName>
+            <Username>@{user.username}</Username>
+          </MainInfo>
+          <Actions>
+            <EditButton onClick={() => setClose((close) => !close)}>
+              <HiCog6Tooth size={14} />
+              Edit Profile
+            </EditButton>
+          </Actions>
+        </Header>
 
-      {user.bio && <Bio>{user.bio}</Bio>}
+        {user.bio && <Bio>{user.bio}</Bio>}
 
-      <InfoList>
-        {user.location && (
+        <InfoList>
+          {user.location && (
+            <InfoItem>
+              <HiMapPin size={15} />
+              {user.location}
+            </InfoItem>
+          )}
+          {user.website && (
+            <InfoItem>
+              <HiLink size={15} />
+              <InfoLink href={user.website} target="_blank" rel="noreferrer">
+                {user.website.replace(/^https?:\/\//, "")}
+              </InfoLink>
+            </InfoItem>
+          )}
           <InfoItem>
-            <HiMapPin size={15} />
-            {user.location}
+            <HiCalendarDays size={15} />
+            Joined {joinedDate}
           </InfoItem>
-        )}
-        {user.website && (
-          <InfoItem>
-            <HiLink size={15} />
-            <InfoLink href={user.website} target="_blank" rel="noreferrer">
-              {user.website.replace(/^https?:\/\//, "")}
-            </InfoLink>
-          </InfoItem>
-        )}
-        <InfoItem>
-          <HiCalendarDays size={15} />
-          Joined {joinedDate}
-        </InfoItem>
-      </InfoList>
+        </InfoList>
 
-      <Stats>
-        <StatItem>
-          <StatCount>{userPosts.length || 0}</StatCount>
-          <span>Posts</span>
-        </StatItem>
-        <StatItem>
-          <StatCount>{followersCount}</StatCount>
-          <span>Followers</span>
-        </StatItem>
-        <StatItem>
-          <StatCount>{followingsCount}</StatCount>
-          <span>Following</span>
-        </StatItem>
-      </Stats>
-    </StyledUserInfoCard>
+        <Stats>
+          <StatItem>
+            <StatCount>{userPosts.length || 0}</StatCount>
+            <span>Posts</span>
+          </StatItem>
+          <StatItem>
+            <StatCount>{followersCount}</StatCount>
+            <span>Followers</span>
+          </StatItem>
+          <StatItem>
+            <StatCount>{followingsCount}</StatCount>
+            <span>Following</span>
+          </StatItem>
+        </Stats>
+      </StyledUserInfoCard>
+      {close && <UpdateUserModal onClose={() => setClose((close) => !close)} />}
+    </>
   );
 }
 
