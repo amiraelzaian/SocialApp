@@ -4,10 +4,10 @@ import { useScreenSize } from "../hooks/useScreenSize";
 const screenSizeContext = createContext();
 
 function ScreenProvider({ children }) {
-  const { isMobile } = useScreenSize();
+  const { isMobile, isTablet, isDesktop } = useScreenSize();
 
   return (
-    <screenSizeContext.Provider value={{ isMobile }}>
+    <screenSizeContext.Provider value={{ isMobile, isTablet, isDesktop }}>
       {children}
     </screenSizeContext.Provider>
   );
