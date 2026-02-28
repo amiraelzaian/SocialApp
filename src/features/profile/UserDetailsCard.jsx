@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import { HiCog6Tooth, HiMapPin, HiLink, HiCalendarDays } from "react-icons/hi2";
 import { useUser } from "../authentication/useUser";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useFollowersCount } from "./useFollowersCount";
 import { useFollowingsCount } from "./useFollowingsCount";
 import { useUserPosts } from "./useUserPosts";
 import { useState } from "react";
-import { dateConverter } from "../../utils/helpers.js";
+import { dateConverter, formatCount } from "../../utils/helpers.js";
 import UpdateUserModal from "./UpdateUserModal";
+import { useUserProfile } from "../discover/useUserProfile.js";
+import { useFollow } from "../discover/useFollow.js";
 
 const StyledUserInfoCard = styled.div`
   width: 95%;
@@ -131,48 +133,73 @@ const StatCount = styled.span`
   font-weight: 700;
   color: var(--color-grey-800);
 `;
+function FollowButtonHere({ userId }) {
+  const { toggleFollow, isFollowingUser, isPending } = useFollow(userId);
 
+  return (
+    <EditButton onClick={toggleFollow} disabled={isPending}>
+      {isFollowingUser ? "✓ Following" : "Follow"}
+    </EditButton>
+  );
+}
 function UserDetailsCard() {
-  const { user } = useUser();
-  const { followersCount } = useFollowersCount(user.id);
-  const { followingsCount } = useFollowingsCount(user.id);
-  const { userPosts } = useUserPosts(user.id);
-  const [close, setClose] = useState();
+  const { id } = useParams();
+  const { user } = useUser(); // logged in user
+  const isOwnProfile = !id || id === user?.id;
+  const profileId = isOwnProfile ? user?.id : id;
 
-  if (!user) return null;
+  const { profileUser, isPending } = useUserProfile(profileId);
+  const displayUser = isOwnProfile ? user : profileUser;
 
-  const joinedDate = dateConverter(user.created_at);
+  const { followersCount } = useFollowersCount(profileId);
+  const { followingsCount } = useFollowingsCount(profileId);
+  const { userPosts } = useUserPosts(profileId);
+  const [close, setClose] = useState(false);
+
+  if (!displayUser || isPending) return null;
+
+  const joinedDate = dateConverter(displayUser.created_at);
 
   return (
     <>
       <StyledUserInfoCard>
         <Header>
           <MainInfo>
-            <FullName>{user.full_name}</FullName>
-            <Username>@{user.username}</Username>
+            <FullName>{displayUser.full_name}</FullName>
+            <Username>@{displayUser.username}</Username>
           </MainInfo>
           <Actions>
-            <EditButton onClick={() => setClose((close) => !close)}>
-              <HiCog6Tooth size={14} />
-              Edit Profile
-            </EditButton>
+            {isOwnProfile ? (
+              // show edit button only on own profile
+              <EditButton onClick={() => setClose((c) => !c)}>
+                <HiCog6Tooth size={14} />
+                Edit Profile
+              </EditButton>
+            ) : (
+              // show follow button on other profiles
+              <FollowButtonHere userId={id} />
+            )}
           </Actions>
         </Header>
 
-        {user.bio && <Bio>{user.bio}</Bio>}
+        {displayUser.bio && <Bio>{displayUser.bio}</Bio>}
 
         <InfoList>
-          {user.location && (
+          {displayUser.location && (
             <InfoItem>
               <HiMapPin size={15} />
-              {user.location}
+              {displayUser.location}
             </InfoItem>
           )}
-          {user.website && (
+          {displayUser.website && (
             <InfoItem>
               <HiLink size={15} />
-              <InfoLink href={user.website} target="_blank" rel="noreferrer">
-                {user.website.replace(/^https?:\/\//, "")}
+              <InfoLink
+                href={displayUser.website}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {displayUser.website.replace(/^https?:\/\//, "")}
               </InfoLink>
             </InfoItem>
           )}
@@ -184,22 +211,21 @@ function UserDetailsCard() {
 
         <Stats>
           <StatItem>
-            <StatCount>{userPosts.length || 0}</StatCount>
+            <StatCount>{userPosts?.length || 0}</StatCount>
             <span>Posts</span>
           </StatItem>
           <StatItem>
-            <StatCount>{followersCount}</StatCount>
+            <StatCount>{formatCount(followersCount)}</StatCount>
             <span>Followers</span>
           </StatItem>
           <StatItem>
-            <StatCount>{followingsCount}</StatCount>
+            <StatCount>{formatCount(followingsCount)}</StatCount>
             <span>Following</span>
           </StatItem>
         </Stats>
       </StyledUserInfoCard>
-      {close && <UpdateUserModal onClose={() => setClose((close) => !close)} />}
+      {close && <UpdateUserModal onClose={() => setClose((c) => !c)} />}
     </>
   );
 }
-
 export default UserDetailsCard;

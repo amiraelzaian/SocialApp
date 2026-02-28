@@ -1,22 +1,43 @@
 import styled from "styled-components";
 import { useScreen } from "../../context/ScreenSizeContext";
+import { useSuggestedUsers } from "./useSuggestedUsers";
+import { useSearchUsers } from "./useSearchUsers";
+import { useSearch } from "../../context/SearchContext";
+import { useDebounce } from "../../hooks/useDebounce";
 import DiscoverUserCard from "./DiscoverUserCard";
+import Spinner from "../../ui/Spinner";
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: ${({ $isMobile, $isTablet }) =>
-    $isMobile ? "1fr" : $isTablet ? " 1fr 1fr" : "1fr 1fr 1fr"};
+    $isMobile ? "1fr" : $isTablet ? "1fr 1fr" : "1fr 1fr 1fr"};
   padding: 20px;
   margin: auto;
 `;
 
 function Suggestions() {
   const { isMobile, isTablet } = useScreen();
-  console.log(isMobile, isTablet);
+  const { searchQuery } = useSearch();
+  const debouncedQuery = useDebounce(searchQuery);
+
+  const { suggestedUsers = [], isPending: isSuggestionsPending } =
+    useSuggestedUsers();
+  const { searchResults = [], isPending: isSearchPending } =
+    useSearchUsers(debouncedQuery);
+
+  const isSearching = !!debouncedQuery;
+  const users = isSearching ? searchResults : suggestedUsers;
+  const isPending = isSearching ? isSearchPending : isSuggestionsPending;
+
+  if (isPending) return <Spinner />;
+  if (users.length === 0)
+    return <p style={{ padding: "20px" }}>No users found.</p>;
 
   return (
     <Grid $isMobile={isMobile} $isTablet={isTablet}>
-      <DiscoverUserCard />
+      {users.map((user) => (
+        <DiscoverUserCard key={user.id} data={user} />
+      ))}
     </Grid>
   );
 }

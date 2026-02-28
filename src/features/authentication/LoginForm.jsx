@@ -10,6 +10,7 @@ import FormHeader from "../../ui/FormHeader";
 import { useScreen } from "../../context/ScreenSizeContext";
 import FormTail from "../../ui/FormTail";
 import { useLogin } from "./useLogin";
+import { useNavigate } from "react-router-dom";
 
 const ForgotRow = styled.div`
   display: flex;
@@ -51,6 +52,7 @@ const ErrorMsg = styled.span`
 function LoginForm() {
   const { isMobile } = useScreen();
   const { login, isPending } = useLogin();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -63,9 +65,7 @@ function LoginForm() {
     console.log(data);
     login(data);
   }
-  console.log(isPending);
   if (isPending) return <Spinner />;
-  console.log(isPending);
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} $isMobile={isMobile}>
@@ -112,7 +112,11 @@ function LoginForm() {
         </Row>
 
         <ForgotRow>
-          <Label $variant="success" style={{ cursor: "pointer" }}>
+          <Label
+            $variant="success"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/signup")}
+          >
             Forgot password?
           </Label>
         </ForgotRow>

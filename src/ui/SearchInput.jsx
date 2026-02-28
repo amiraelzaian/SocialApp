@@ -1,5 +1,7 @@
-import { useState } from "react";
 import styled from "styled-components";
+import { useSearch } from "../context/SearchContext.jsx";
+import { useGetPage } from "../hooks/useGetPage.js";
+import { useEffect } from "react";
 
 const Input = styled.input`
   width: 100%;
@@ -9,6 +11,7 @@ const Input = styled.input`
   font-size: 14px;
   transition: all 0.2s ease;
   background-color: var(--color-grey-100);
+
   &::placeholder {
     color: var(--color-grey-400);
   }
@@ -20,19 +23,26 @@ const Input = styled.input`
   }
 `;
 
-function SearchInput() {
-  const [searchInput, setSearchInput] = useState("");
+const placeholders = {
+  Discover: "Search users...",
+  Messages: "Search messages...",
+};
 
-  function handleChange(e) {
-    setSearchInput(e.target.value);
-  }
+function SearchInput() {
+  const { searchQuery, setSearchQuery } = useSearch();
+  const { nameOfPage } = useGetPage();
+
+  // debouncedValue not needed here — remove it
+  useEffect(() => {
+    setSearchQuery("");
+  }, [nameOfPage, setSearchQuery]);
 
   return (
     <Input
       type="text"
-      placeholder="Search users..."
-      value={searchInput}
-      onChange={handleChange}
+      placeholder={placeholders[nameOfPage] || "Search..."}
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
     />
   );
 }

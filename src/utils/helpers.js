@@ -14,3 +14,8 @@ export function dateConverter(value) {
   });
   return date;
 }
+
+export function formatCount(n = 0) {
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  return n;
+}
