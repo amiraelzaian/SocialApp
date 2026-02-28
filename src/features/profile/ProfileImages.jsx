@@ -4,6 +4,8 @@ import Avatar from "../../ui/Avatar";
 import { HiCamera, HiPencil } from "react-icons/hi2";
 import { useUploadAvatar } from "./useUploadAvatar";
 import { useUploadCover } from "./useUploadCover";
+import { useUserProfile } from "../discover/useUserProfile";
+import { useParams } from "react-router-dom";
 
 const Header = styled.header`
   width: 100%;
@@ -71,59 +73,75 @@ const HiddenInput = styled.input`
 `;
 
 function ProfileImages() {
+  const { id } = useParams();
   const { user } = useUser();
+  const isOwnProfile = !id || id === user?.id;
+
+  const { profileUser } = useUserProfile(id); 
+  const displayUser = isOwnProfile ? user : profileUser;
+
   const { uploadAvatar, isUploadingAvatar } = useUploadAvatar();
   const { uploadCover, isUploadingCover } = useUploadCover();
 
-  if (!user) return null;
+  if (!displayUser) return null;
 
   function handleCoverChange(e) {
     const file = e.target.files[0];
     if (!file) return;
-    const userId = user?.id;
-    uploadCover({ userId, file });
+    uploadCover({ userId: user?.id, file });
   }
 
   function handleAvatarChange(e) {
     const file = e.target.files[0];
     if (!file) return;
-    const userId = user?.id;
-    uploadAvatar({ userId, file });
+    uploadAvatar({ userId: user?.id, file });
   }
 
   return (
     <Header>
-      <Cover src={user.cover_url || "/public/cover.jpg"} alt="Profile cover" />
-
-      <CoverUploadBtn htmlFor="cover-upload">
-        <HiCamera size={18} />
-        Edit cover
-      </CoverUploadBtn>
-      <HiddenInput
-        id="cover-upload"
-        type="file"
-        accept="image/*"
-        onChange={handleCoverChange}
-        disabled={isUploadingCover}
+      <Cover
+        src={displayUser.cover_url || "/public/cover.jpg"}
+        alt="Profile cover"
       />
+
+      {/* only show edit buttons on own profile */}
+      {isOwnProfile && (
+        <>
+          <CoverUploadBtn htmlFor="cover-upload">
+            <HiCamera size={18} />
+            Edit cover
+          </CoverUploadBtn>
+          <HiddenInput
+            id="cover-upload"
+            type="file"
+            accept="image/*"
+            onChange={handleCoverChange}
+            disabled={isUploadingCover}
+          />
+        </>
+      )}
 
       <AvatarPart>
         <Avatar
-          src={user.avatar_url}
-          name={user.full_name}
-          alt={user.full_name}
+          src={displayUser.avatar_url}
+          name={displayUser.full_name}
+          alt={displayUser.full_name}
           page="profile"
         />
-        <AvatarOverlay htmlFor="avatar-upload">
-          <HiPencil />
-        </AvatarOverlay>
-        <HiddenInput
-          id="avatar-upload"
-          type="file"
-          accept="image/*"
-          onChange={handleAvatarChange}
-          disabled={isUploadingAvatar}
-        />
+        {isOwnProfile && (
+          <>
+            <AvatarOverlay htmlFor="avatar-upload">
+              <HiPencil />
+            </AvatarOverlay>
+            <HiddenInput
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              disabled={isUploadingAvatar}
+            />
+          </>
+        )}
       </AvatarPart>
     </Header>
   );

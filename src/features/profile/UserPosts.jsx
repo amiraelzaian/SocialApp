@@ -4,6 +4,8 @@ import PostCard from "../posts/PostCard";
 import { useUserPosts } from "./useUserPosts";
 import { useUser } from "../authentication/useUser";
 import Spinner from "../../ui/Spinner";
+import { useParams } from "react-router-dom";
+import { useUserProfile } from "../discover/useUserProfile";
 
 const Feed = styled.div`
   width: 95%;
@@ -25,6 +27,11 @@ const EmptyState = styled.div`
 
 function UserPosts() {
   const { user } = useUser();
+  const { id } = useParams();
+  const isOwnProfile = !id || id === user?.id;
+  const { profileUser } = useUserProfile(id);
+  const displayUser = isOwnProfile ? user : profileUser;
+
   const {
     userPosts,
     isPending,
@@ -32,7 +39,7 @@ function UserPosts() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useUserPosts(user?.id);
+  } = useUserPosts(displayUser?.id);
 
   const loaderRef = useRef(null);
 

@@ -10,12 +10,13 @@ import SearchInput from "./SearchInput";
 import Logo from "./Logo";
 import Spinner from "./Spinner";
 import { useGetPage } from "../hooks/useGetPage";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useScreen } from "../context/ScreenSizeContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import NotificationCount from "./NotificationCount.jsx";
 import { useLogout } from "../features/authentication/useLogout.js";
 import MiniSpinner from "./MiniSpinner.jsx";
+import { useUser } from "../features/authentication/useUser.js";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-50);
@@ -70,6 +71,10 @@ function Header() {
   const { isMobile } = useScreen();
   const { pathname } = useLocation();
   const { logout, isPending } = useLogout();
+  const { id } = useParams();
+  const { user } = useUser();
+  const isOwnProfile = !id || id === user?.id;
+  const inOtherUserProfile = nameOfPage === "Discover" && !isOwnProfile;
 
   const showSearch =
     pathname.startsWith("/messages") || pathname.startsWith("/discover");
@@ -122,7 +127,7 @@ function Header() {
         </Buttons>
       </TopSection>
       {showNumOfNotifications && <NotificationCount numOfNotificaitons={5} />}
-      {showSearch && <SearchInput />}
+      {showSearch && !inOtherUserProfile && <SearchInput />}
     </StyledHeader>
   );
 }
