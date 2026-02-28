@@ -1,11 +1,12 @@
 import { useUser } from "../authentication/useUser";
 import styled from "styled-components";
 import Avatar from "../../ui/Avatar";
-import { HiCamera, HiPencil } from "react-icons/hi2";
+import { HiArrowLeft, HiCamera, HiPencil } from "react-icons/hi2";
 import { useUploadAvatar } from "./useUploadAvatar";
 import { useUploadCover } from "./useUploadCover";
 import { useUserProfile } from "../discover/useUserProfile";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { HiArrowCircleLeft } from "react-icons/hi";
 
 const Header = styled.header`
   width: 100%;
@@ -23,6 +24,24 @@ const CoverUploadBtn = styled.label`
   position: absolute;
   top: 1rem;
   right: 1rem;
+  background: var(--color-grey-600);
+  color: var(--color-grey-50);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: var(--color-grey-800);
+  }
+`;
+const BackBtn = styled.label`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
   background: var(--color-grey-600);
   color: var(--color-grey-50);
   border-radius: 8px;
@@ -77,11 +96,13 @@ function ProfileImages() {
   const { user } = useUser();
   const isOwnProfile = !id || id === user?.id;
 
-  const { profileUser } = useUserProfile(id); 
+  const { profileUser } = useUserProfile(id);
   const displayUser = isOwnProfile ? user : profileUser;
 
   const { uploadAvatar, isUploadingAvatar } = useUploadAvatar();
   const { uploadCover, isUploadingCover } = useUploadCover();
+
+  const navigate = useNavigate();
 
   if (!displayUser) return null;
 
@@ -103,7 +124,11 @@ function ProfileImages() {
         src={displayUser.cover_url || "/public/cover.jpg"}
         alt="Profile cover"
       />
-
+      {!isOwnProfile && (
+        <BackBtn onClick={() => navigate(-1)}>
+          <HiArrowLeft size={20} />
+        </BackBtn>
+      )}
       {/* only show edit buttons on own profile */}
       {isOwnProfile && (
         <>
