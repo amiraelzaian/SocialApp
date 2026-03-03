@@ -146,7 +146,7 @@ export async function getFollowers(userId) {
   return data.map((item) => item.users);
 }
 
-export async function getFollowing(userId) {
+export async function getFollowings(userId) {
   const { data, error } = await supabase
     .from("follows")
     .select(

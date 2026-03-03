@@ -7,6 +7,7 @@ import { useCreatePost } from "../features/posts/useCreatePost";
 import { useUpdatePost } from "../features/posts/useUpdatePost";
 import { useScreen } from "../context/ScreenSizeContext";
 import toast from "react-hot-toast";
+import Input from "./Input";
 
 const Form = styled.form`
   display: flex;
@@ -42,37 +43,6 @@ const Textarea = styled.textarea`
     border-color 0.2s,
     box-shadow 0.2s;
   line-height: 1.6;
-
-  &::placeholder {
-    color: var(--color-grey-400);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-brand-500);
-    box-shadow: 0 0 0 3px
-      color-mix(in srgb, var(--color-brand-500) 15%, transparent);
-  }
-
-  &:disabled {
-    background-color: var(--color-grey-100);
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 1.1rem 1.2rem;
-  border: 1px solid var(--color-grey-300);
-  border-radius: var(--border-radius-md);
-  font-family: inherit;
-  font-size: 1.4rem;
-  color: var(--color-grey-800);
-  background: var(--color-grey-0);
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
 
   &::placeholder {
     color: var(--color-grey-400);

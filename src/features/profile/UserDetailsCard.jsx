@@ -1,5 +1,12 @@
 import styled from "styled-components";
-import { HiCog6Tooth, HiMapPin, HiLink, HiCalendarDays } from "react-icons/hi2";
+import {
+  HiCog6Tooth,
+  HiMapPin,
+  HiLink,
+  HiCalendarDays,
+  HiMiniUserMinus,
+  HiMiniUserPlus,
+} from "react-icons/hi2";
 import { useUser } from "../authentication/useUser";
 import { Link, useParams } from "react-router-dom";
 import { useFollowersCount } from "./useFollowersCount";
@@ -10,6 +17,7 @@ import { dateConverter, formatCount } from "../../utils/helpers.js";
 import UpdateUserModal from "./UpdateUserModal";
 import { useUserProfile } from "../discover/useUserProfile.js";
 import { useFollow } from "../discover/useFollow.js";
+import FollowingsModal from "./FollowingsModal.jsx";
 
 const StyledUserInfoCard = styled.div`
   width: 95%;
@@ -138,7 +146,15 @@ function FollowButtonHere({ userId }) {
 
   return (
     <EditButton onClick={toggleFollow} disabled={isPending}>
-      {isFollowingUser ? "✓ Following" : "Follow"}
+      {isFollowingUser ? (
+        <>
+          <HiMiniUserMinus /> Following
+        </>
+      ) : (
+        <>
+          <HiMiniUserPlus /> Follow
+        </>
+      )}
     </EditButton>
   );
 }
@@ -155,6 +171,7 @@ function UserDetailsCard() {
   const { followingsCount } = useFollowingsCount(profileId);
   const { userPosts } = useUserPosts(profileId);
   const [close, setClose] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   if (!displayUser || isPending) return null;
 
@@ -214,13 +231,21 @@ function UserDetailsCard() {
             <StatCount>{userPosts?.length || 0}</StatCount>
             <span>Posts</span>
           </StatItem>
+          <StatItem onClick={() => setShowModal((s) => !s)}>
+            {showModal && (
+              <div onClick={(e) => e.stopPropagation()}>
+                <FollowingsModal
+                  setShowModal={setShowModal}
+                  profileId={profileId}
+                />
+              </div>
+            )}
+            <StatCount>{formatCount(followingsCount)}</StatCount>
+            <span>Followings</span>
+          </StatItem>
           <StatItem>
             <StatCount>{formatCount(followersCount)}</StatCount>
             <span>Followers</span>
-          </StatItem>
-          <StatItem>
-            <StatCount>{formatCount(followingsCount)}</StatCount>
-            <span>Following</span>
           </StatItem>
         </Stats>
       </StyledUserInfoCard>
