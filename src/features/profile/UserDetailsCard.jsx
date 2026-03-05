@@ -131,7 +131,7 @@ const StatItem = styled.div`
   gap: 5px;
   font-size: 14px;
   color: var(--color-grey-600);
-  cursor: pointer;
+  cursor: ${({ $isOwnProfile }) => ($isOwnProfile ? "pointer" : "default")};
 
   &:hover span:first-child {
     text-decoration: underline;
@@ -233,8 +233,13 @@ function UserDetailsCard() {
             <StatCount>{userPosts?.length || 0}</StatCount>
             <span>Posts</span>
           </StatItem>
-          <StatItem onClick={() => setShowFollowingsModal((s) => !s)}>
-            {showFollowingsModal && (
+          <StatItem
+            $isOwnProfile={isOwnProfile}
+            onClick={() => {
+              setShowFollowingsModal((s) => isOwnProfile && !s);
+            }}
+          >
+            {showFollowingsModal && isOwnProfile && (
               <div onClick={(e) => e.stopPropagation()}>
                 <FollowingsModal
                   setShowModal={setShowFollowingsModal}
@@ -245,8 +250,13 @@ function UserDetailsCard() {
             <StatCount>{formatCount(followingsCount)}</StatCount>
             <span>Followings</span>
           </StatItem>
-          <StatItem onClick={() => setShowFollowersModal((s) => !s)}>
-            {showFollowersModal && (
+          <StatItem
+            $isOwnProfile={isOwnProfile}
+            onClick={() => {
+              setShowFollowersModal((s) => isOwnProfile && !s);
+            }}
+          >
+            {showFollowersModal && isOwnProfile && (
               <div onClick={(e) => e.stopPropagation()}>
                 <FollowersModal
                   setShowModal={setShowFollowersModal}
