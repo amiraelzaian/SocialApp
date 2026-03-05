@@ -71,7 +71,7 @@ function PostCardHeader({ post }) {
   };
 
   return (
-    <Header>
+    <Header onClick={(e) => e.stopPropagation()}>
       <UserInfo onClick={handleProfileClick}>
         <Avatar
           src={post.users?.avatar_url}
