@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Avatar from "../../ui/Avatar";
 import Button from "../../ui/Button";
 import { useFollow } from "../discover/useFollow";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ListItem from "../../ui/ListItem";
 import { HiMiniUserMinus, HiMiniUserPlus } from "react-icons/hi2";
 
@@ -22,6 +22,7 @@ export default function FollowerItem({ followedUser }) {
   const { isFollowingUser, toggleFollow, isPending } = useFollow(
     followedUser.id,
   );
+  const navigate = useNavigate();
 
   function handleFollowClick(e) {
     e.stopPropagation();
@@ -29,7 +30,7 @@ export default function FollowerItem({ followedUser }) {
   }
 
   return (
-    <ListItem>
+    <ListItem onClick={() => navigate(`/profile/${followedUser.id}`)}>
       <UserInfo>
         <Avatar
           src={followedUser.avatar_url}
