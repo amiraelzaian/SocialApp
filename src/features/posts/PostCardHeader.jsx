@@ -3,6 +3,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import Avatar from "../../ui/Avatar";
 import { useUser } from "../authentication/useUser";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Menu from "../../ui/Menu";
 import DeletePopup from "../../ui/DeletePopup";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
@@ -20,6 +21,7 @@ const UserInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 1.2rem;
+  cursor: pointer;
 `;
 
 const UserDetails = styled.div`
@@ -48,7 +50,6 @@ const MenuButton = styled.button`
     background: var(--color-grey-100);
     color: var(--color-grey-900);
   }
-
   &:focus {
     outline: none;
   }
@@ -59,17 +60,23 @@ function PostCardHeader({ post }) {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const menuRef = useOutsideClick(() => setOpenMenu(false));
   const isOwner = user?.id === post.users?.id;
 
+  const handleProfileClick = (e) => {
+    e.stopPropagation();
+    navigate(`/profile/${post.users?.id}`);
+  };
+
   return (
     <Header>
-      <UserInfo>
+      <UserInfo onClick={handleProfileClick}>
         <Avatar
           src={post.users?.avatar_url}
           alt={post.users?.username}
-          name={user.full_name}
+          name={post.users?.full_name}
         />
         <UserDetails>
           <Username>{post.users?.username || post.users?.full_name}</Username>
@@ -77,18 +84,20 @@ function PostCardHeader({ post }) {
       </UserInfo>
 
       {isOwner && (
-        <div ref={menuRef} style={{ position: "relative" }}>
+        <div
+          ref={menuRef}
+          style={{ position: "relative" }}
+          onClick={(e) => e.stopPropagation()}
+        >
           <MenuButton onClick={() => setOpenMenu((open) => !open)}>
             <HiDotsHorizontal size={24} />
           </MenuButton>
 
           {openMenu && (
             <Menu
-              // post={post}
-              //onClose={() => setOpenMenu(false)}
               onDelete={() => {
-                setOpenMenu(false); // close the menu
-                setShowDeleteModal(true); // show delete popup
+                setOpenMenu(false);
+                setShowDeleteModal(true);
               }}
               onEdit={() => {
                 setOpenMenu(false);

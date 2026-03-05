@@ -5,7 +5,6 @@ import {
   FaRegComment,
   FaRegPaperPlane,
 } from "react-icons/fa";
-import { FiBookmark } from "react-icons/fi";
 import { useLike } from "./useLike";
 import { useRepost } from "./useRepost";
 
@@ -32,9 +31,8 @@ const ActionButton = styled.button`
   transition: all 0.2s;
 
   &:hover {
-    color: var(--color-grey-600);
+    color: var(--color-brand-600);
   }
-
   &:focus {
     outline: none;
   }
@@ -51,26 +49,36 @@ function PostCardActions({ post, setShowCommentsBox }) {
   const { toggleLike, isLiked } = useLike(post.id);
   const { toggleRepost, isReposted } = useRepost(post.id);
 
-  const handleLike = () => {
-    toggleLike();
-  };
-  const handleRepost = () => {
-    toggleRepost();
-  };
-
   return (
     <>
       <Actions>
         <LeftActions>
-          <ActionButton onClick={handleLike} $active={isLiked}>
+          <ActionButton
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleLike();
+            }}
+            $active={isLiked}
+          >
             {isLiked ? <FaHeart size={24} /> : <FaRegHeart size={24} />}
           </ActionButton>
 
-          <ActionButton onClick={() => setShowCommentsBox((show) => !show)}>
+          <ActionButton
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowCommentsBox((s) => !s);
+            }}
+          >
             <FaRegComment size={24} />
           </ActionButton>
 
-          <ActionButton onClick={handleRepost} $active={isReposted}>
+          <ActionButton
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleRepost();
+            }}
+            $active={isReposted}
+          >
             <FaRegPaperPlane size={24} />
           </ActionButton>
         </LeftActions>

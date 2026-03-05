@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Avatar from "../../ui/Avatar";
 import PostCardCaption from "./PostCardCaption";
 import PostCardHeader from "./PostCardHeader";
 import PostCardActions from "./PostCardActions";
 import PostCardImage from "./PostCardImage";
 import CommentsBox from "./CommentsBox";
-import { useState } from "react";
 
 const Card = styled.div`
   width: 100%;
@@ -14,12 +16,13 @@ const Card = styled.div`
   overflow: hidden;
   margin: 5px auto;
   transition: box-shadow 0.2s;
+  cursor: pointer;
 
   &:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
   }
-  animation: fadeIn 0.25s ease;
 
+  animation: fadeIn 0.25s ease;
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -39,21 +42,18 @@ const OriginalPostEmbed = styled.div`
   overflow: hidden;
 `;
 
-const RepostLabel = styled.p`
-  font-size: 1.2rem;
-  color: var(--color-grey-500);
-  padding: 0.8rem 1.6rem 0;
-`;
-
 function PostCard({ post }) {
   const [showCommentsBox, setShowCommentsBox] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/posts/${post.id}`);
+  };
 
   if (post.is_repost) {
     return (
-      <Card>
+      <Card onClick={handleCardClick}>
         <PostCardHeader post={post} />
-
-        {/* Original post embedded */}
         <OriginalPostEmbed>
           <PostCardHeader post={post.original_post} />
           <PostCardImage post={post.original_post} />
@@ -62,8 +62,6 @@ function PostCard({ post }) {
             setShowCommentsBox={() => {}}
           />
         </OriginalPostEmbed>
-
-        {/* Actions belong to the repost */}
         <PostCardActions post={post} setShowCommentsBox={setShowCommentsBox} />
         {showCommentsBox && <CommentsBox post={post} />}
       </Card>
@@ -71,7 +69,7 @@ function PostCard({ post }) {
   }
 
   return (
-    <Card>
+    <Card onClick={handleCardClick}>
       <PostCardHeader post={post} />
       <PostCardImage post={post} />
       <PostCardCaption post={post} setShowCommentsBox={setShowCommentsBox} />

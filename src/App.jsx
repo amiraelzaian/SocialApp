@@ -17,6 +17,7 @@ import { ScreenProvider } from "./context/ScreenSizeContext.jsx";
 import { DarkModeProvider } from "./context/ThemeContext.jsx/";
 import ProtectedRoutes from "./ui/ProtectedRoutes.jsx";
 import { SearchProvider } from "./context/SearchContext.jsx";
+import PostDetails from "./pages/PostDetails";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,12 +46,14 @@ function App() {
                   }
                 >
                   <Route path="/" element={<Home />} />
+                  <Route path="/:id" element={<Home />} />
                   <Route path="/discover" element={<Discover />} />
                   <Route path="discover/:id" element={<Profile />} />
                   <Route path="/messages" element={<Messages />} />
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/profile/:id" element={<Profile />} />
+                  <Route path="/posts/:postId" element={<PostDetails />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
