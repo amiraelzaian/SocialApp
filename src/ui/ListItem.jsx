@@ -6,6 +6,7 @@ const ListItem = styled.li`
   align-items: center;
   padding: 8px 4px;
   border-bottom: 1px solid var(--color-grey-200);
+  cursor: pointer;
 `;
 
 export default ListItem;

@@ -6,6 +6,7 @@ export function useFollowingsUsers(userId) {
   const { data: FollowingsUsers, isPending } = useQuery({
     queryKey: ["FollowingsUsers", userId],
     queryFn: () => getFollowings(userId),
+    onSuccess: () => {},
     onError: () => {
       toast.error("could not reload Followings");
     },

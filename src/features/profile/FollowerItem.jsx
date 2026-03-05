@@ -18,7 +18,7 @@ const P = styled.p`
   margin: 0;
 `;
 
-export default function FollowingItem({ followedUser }) {
+export default function FollowerItem({ followedUser }) {
   const { isFollowingUser, toggleFollow, isPending } = useFollow(
     followedUser.id,
   );
@@ -51,7 +51,7 @@ export default function FollowingItem({ followedUser }) {
           </>
         ) : (
           <>
-            <HiMiniUserPlus /> Follow
+            <HiMiniUserPlus /> Follow back
           </>
         )}
       </Button>

@@ -2,7 +2,6 @@ import Modal from "../../ui/Modal";
 import { useUser } from "../authentication/useUser";
 import styled from "styled-components";
 import { useScreen } from "../../context/ScreenSizeContext";
-import { useFollowingsUsers } from "./useFollowingsUsers";
 import Spinner from "../../ui/Spinner";
 import Avatar from "../../ui/Avatar";
 import Button from "../../ui/Button";
@@ -10,6 +9,8 @@ import { HiMiniUserMinus, HiMiniUserPlus } from "react-icons/hi2";
 
 import FollowingItem from "./FollowingItem";
 import { Link } from "react-router-dom";
+import { useFollowersUsers } from "./useFollowersUsers";
+import FollowerItem from "./FollowerItem";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -42,27 +43,23 @@ const Title = styled.h3`
   margin: 0;
 `;
 
-// Per-row follow button with its own hook
-
-function FollowingsModal({ setShowModal, profileId }) {
+function FollowersModal({ setShowModal, profileId }) {
   const { user } = useUser();
   const { isMobile } = useScreen();
-  const { FollowingsUsers, isPending } = useFollowingsUsers(
-    profileId || user.id,
-  );
+  const { FollowersUsers, isPending } = useFollowersUsers(profileId || user.id);
 
   return (
     <Modal onClose={() => setShowModal(false)}>
       <StyledContainer $isMobile={isMobile}>
-        <Title>Followings</Title>
+        <Title>Followers</Title>
         {isPending && <Spinner />}
-        {!isPending && (!FollowingsUsers || FollowingsUsers.length === 0) && (
+        {!isPending && (!FollowersUsers || FollowersUsers.length === 0) && (
           <P>Not following anyone yet.</P>
         )}
-        {!isPending && FollowingsUsers?.length > 0 && (
+        {!isPending && FollowersUsers?.length > 0 && (
           <List>
-            {FollowingsUsers.map((followedUser) => (
-              <FollowingItem
+            {FollowersUsers.map((followedUser) => (
+              <FollowerItem
                 key={followedUser.id}
                 followedUser={followedUser}
                 currentUserId={user.id}
@@ -75,4 +72,4 @@ function FollowingsModal({ setShowModal, profileId }) {
   );
 }
 
-export default FollowingsModal;
+export default FollowersModal;

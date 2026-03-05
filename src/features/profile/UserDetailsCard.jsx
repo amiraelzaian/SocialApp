@@ -18,6 +18,7 @@ import UpdateUserModal from "./UpdateUserModal";
 import { useUserProfile } from "../discover/useUserProfile.js";
 import { useFollow } from "../discover/useFollow.js";
 import FollowingsModal from "./FollowingsModal.jsx";
+import FollowersModal from "./FollowersModal.jsx";
 
 const StyledUserInfoCard = styled.div`
   width: 95%;
@@ -171,7 +172,8 @@ function UserDetailsCard() {
   const { followingsCount } = useFollowingsCount(profileId);
   const { userPosts } = useUserPosts(profileId);
   const [close, setClose] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showFollowersModal, setShowFollowersModal] = useState(false);
+  const [showFollowingsModal, setShowFollowingsModal] = useState(false);
 
   if (!displayUser || isPending) return null;
 
@@ -231,11 +233,11 @@ function UserDetailsCard() {
             <StatCount>{userPosts?.length || 0}</StatCount>
             <span>Posts</span>
           </StatItem>
-          <StatItem onClick={() => setShowModal((s) => !s)}>
-            {showModal && (
+          <StatItem onClick={() => setShowFollowingsModal((s) => !s)}>
+            {showFollowingsModal && (
               <div onClick={(e) => e.stopPropagation()}>
                 <FollowingsModal
-                  setShowModal={setShowModal}
+                  setShowModal={setShowFollowingsModal}
                   profileId={profileId}
                 />
               </div>
@@ -243,7 +245,15 @@ function UserDetailsCard() {
             <StatCount>{formatCount(followingsCount)}</StatCount>
             <span>Followings</span>
           </StatItem>
-          <StatItem>
+          <StatItem onClick={() => setShowFollowersModal((s) => !s)}>
+            {showFollowersModal && (
+              <div onClick={(e) => e.stopPropagation()}>
+                <FollowersModal
+                  setShowModal={setShowFollowersModal}
+                  profileId={profileId}
+                />
+              </div>
+            )}
             <StatCount>{formatCount(followersCount)}</StatCount>
             <span>Followers</span>
           </StatItem>

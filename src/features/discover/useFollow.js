@@ -39,6 +39,8 @@ export function useFollow(targetUserId) {
       queryClient.invalidateQueries({
         queryKey: ["followingCount", targetUserId],
       });
+      queryClient.invalidateQueries({ queryKey: ["followingCount"] });
+      queryClient.invalidateQueries({ queryKey: ["followersCount"] });
     },
   });
 
