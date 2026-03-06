@@ -11,19 +11,19 @@ export async function getNotifications() {
     .from("notifications")
     .select(
       `
-      *,
-      actor:actor_id (
-        id,
-        username,
-        full_name,
-        avatar_url
-      ),
-      posts (
-        id,
-        caption,
-        image_url
-      )
-    `,
+    *,
+    actor:actor_id (
+      id,
+      username,
+      full_name,
+      avatar_url
+    ),
+    posts (
+      id,
+      caption,
+      image_url
+    )
+  `,
     )
     .eq("recipient_id", user.id)
     .order("created_at", { ascending: false });
