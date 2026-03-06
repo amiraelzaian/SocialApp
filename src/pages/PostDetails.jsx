@@ -1,16 +1,13 @@
 import styled from "styled-components";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { HiArrowLeft } from "react-icons/hi";
 import { usePostById } from "../features/posts/usePostById";
-import PostCardHeader from "../features/posts/PostCardHeader";
-import PostCardImage from "../features/posts/PostCardImage";
-import PostCardCaption from "../features/posts/PostCardCaption";
-import PostCardActions from "../features/posts/PostCardActions";
+import PostCard from "../features/posts/PostCard"; // 👈 new
 import CommentItem from "../features/posts/CommentItem";
 import CreateComment from "../features/posts/CreateComment";
 import { useComments } from "../features/posts/useComments";
-import { useUser } from "../features/authentication/useUser";
+
 import Spinner from "../ui/Spinner";
 import { useMoveBack } from "../hooks/useMoveBack";
 
@@ -48,10 +45,10 @@ const BackButton = styled.button`
 
 const Card = styled.div`
   width: 95%;
-  max-width: 600px;
+  /* max-width: 600px;
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-200);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-md); */
   overflow: hidden;
 `;
 
@@ -85,19 +82,16 @@ const SpinnerWrap = styled.div`
 `;
 
 function PostDetails() {
-  const [showCommentsBox, setShowCommentsBox] = useState(true);
   const { postId } = useParams();
   const navigate = useMoveBack();
   const [searchParams] = useSearchParams();
   const commentId = searchParams.get("commentId");
 
   const { post, isPending: isPostPending } = usePostById(postId);
-  const { comments, isPending: isCommentsPending } = useComments(postId);
-  const { user } = useUser();
-
+  const { comments } = useComments(postId);
+  //const { user } = useUser();
   const commentRef = useRef(null);
 
-  // scroll to highlighted comment
   useEffect(() => {
     if (commentId && commentRef.current) {
       commentRef.current.scrollIntoView({
@@ -107,14 +101,12 @@ function PostDetails() {
     }
   }, [commentId, comments]);
 
-  if (isPostPending) {
+  if (isPostPending)
     return (
       <SpinnerWrap>
         <Spinner />
       </SpinnerWrap>
     );
-  }
-
   if (!post) return null;
 
   return (
@@ -125,58 +117,43 @@ function PostDetails() {
       </BackButton>
 
       <Card>
-        {/* Post */}
-        <PostCardHeader post={post} />
-        <PostCardImage post={post} />
-        <PostCardCaption
-          post={post}
-          setShowCommentsBox={() => {
-            setShowCommentsBox((show) => !show);
-          }}
-        />
-        <PostCardActions
-          post={post}
-          setShowCommentsBox={() => {
-            setShowCommentsBox((show) => !show);
-          }}
-        />
+        {/* ✅ PostCard handles repost/normal, disableClick stops navigation */}
+        <PostCard post={post} disableClick reposted={true} />
 
         <Divider />
 
         {/* Comments */}
-        {showCommentsBox && (
-          <CommentsList>
-            {isCommentsPending ? (
-              <SpinnerWrap>
-                <Spinner />
-              </SpinnerWrap>
-            ) : comments.length === 0 ? (
-              <Empty>No comments yet. Be the first!</Empty>
-            ) : (
-              comments.map((comment) => {
-                const isHighlighted = comment.id === commentId;
-                return isHighlighted ? (
-                  <HighlightedComment key={comment.id} ref={commentRef}>
-                    <CommentItem
-                      comment={comment}
-                      postId={post.id}
-                      currentUserId={user?.id}
-                    />
-                  </HighlightedComment>
-                ) : (
+        {/* <CommentsList>
+          {isCommentsPending ? (
+            <SpinnerWrap>
+              <Spinner />
+            </SpinnerWrap>
+          ) : comments.length === 0 ? (
+            <Empty>No comments yet. Be the first!</Empty>
+          ) : (
+            comments.map((comment) => {
+              const isHighlighted = comment.id === commentId;
+              return isHighlighted ? (
+                <HighlightedComment key={comment.id} ref={commentRef}>
                   <CommentItem
-                    key={comment.id}
                     comment={comment}
                     postId={post.id}
                     currentUserId={user?.id}
                   />
-                );
-              })
-            )}
-          </CommentsList>
-        )}
+                </HighlightedComment>
+              ) : (
+                <CommentItem
+                  key={comment.id}
+                  comment={comment}
+                  postId={post.id}
+                  currentUserId={user?.id}
+                />
+              );
+            })
+          )}
+        </CommentsList> */}
 
-        <CreateComment postId={post.id} />
+        {/* <CreateComment postId={post.id} /> */}
       </Card>
     </Page>
   );

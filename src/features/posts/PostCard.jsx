@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Avatar from "../../ui/Avatar";
 import PostCardCaption from "./PostCardCaption";
 import PostCardHeader from "./PostCardHeader";
 import PostCardActions from "./PostCardActions";
@@ -16,7 +15,7 @@ const Card = styled.div`
   overflow: hidden;
   margin: 5px auto;
   transition: box-shadow 0.2s;
-  cursor: pointer;
+  cursor: ${({ $disableClick }) => ($disableClick ? "default" : "pointer")};
 
   &:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
@@ -42,26 +41,37 @@ const OriginalPostEmbed = styled.div`
   overflow: hidden;
 `;
 
-function PostCard({ post }) {
-  const [showCommentsBox, setShowCommentsBox] = useState(false);
+function PostCard({ post, disableClick = false }) {
+  const [showCommentsBox, setShowCommentsBox] = useState(true);
   const navigate = useNavigate();
 
+  if (!post) return null;
+
   const handleCardClick = () => {
+    if (disableClick) return;
     navigate(`/posts/${post.id}`);
+  };
+
+  const handleOriginalClick = (e) => {
+    e.stopPropagation();
+    if (disableClick) return;
+    navigate(`/posts/${post.original_post_id}`);
   };
 
   if (post.is_repost) {
     return (
-      <Card onClick={handleCardClick}>
+      <Card onClick={handleCardClick} $disableClick={disableClick}>
         <PostCardHeader post={post} />
-        <OriginalPostEmbed>
-          <PostCardHeader post={post.original_post} />
-          <PostCardImage post={post.original_post} />
-          <PostCardCaption
-            post={post.original_post}
-            setShowCommentsBox={() => {}}
-          />
-        </OriginalPostEmbed>
+        {post.original_post && (
+          <OriginalPostEmbed onClick={handleOriginalClick}>
+            <PostCardHeader post={post.original_post} />
+            <PostCardImage post={post.original_post} />
+            <PostCardCaption
+              post={post.original_post}
+              setShowCommentsBox={() => {}}
+            />
+          </OriginalPostEmbed>
+        )}
         <PostCardActions post={post} setShowCommentsBox={setShowCommentsBox} />
         {showCommentsBox && <CommentsBox post={post} />}
       </Card>
@@ -69,7 +79,7 @@ function PostCard({ post }) {
   }
 
   return (
-    <Card onClick={handleCardClick}>
+    <Card onClick={handleCardClick} $disableClick={disableClick}>
       <PostCardHeader post={post} />
       <PostCardImage post={post} />
       <PostCardCaption post={post} setShowCommentsBox={setShowCommentsBox} />

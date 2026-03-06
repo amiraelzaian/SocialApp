@@ -63,23 +63,24 @@ function PostCardHeader({ post }) {
   const navigate = useNavigate();
 
   const menuRef = useOutsideClick(() => setOpenMenu(false));
-  const isOwner = user?.id === post.users?.id;
+  const isOwner = user?.id === post?.users?.id;
 
   const handleProfileClick = (e) => {
     e.stopPropagation();
+    console.log("profile id:", post.users?.id);
     navigate(`/profile/${post.users?.id}`);
   };
 
   return (
-    <Header onClick={(e) => e.stopPropagation()}>
+    <Header>
       <UserInfo onClick={handleProfileClick}>
         <Avatar
-          src={post.users?.avatar_url}
-          alt={post.users?.username}
-          name={post.users?.full_name}
+          src={post?.users?.avatar_url}
+          alt={post?.users?.username}
+          name={post?.users?.full_name}
         />
         <UserDetails>
-          <Username>{post.users?.username || post.users?.full_name}</Username>
+          <Username>{post?.users?.username || post?.users?.full_name}</Username>
         </UserDetails>
       </UserInfo>
 

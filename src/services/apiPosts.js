@@ -48,6 +48,15 @@ export async function getPostById(postId) {
         username,
         full_name,
         avatar_url
+      ),
+      original_post:original_post_id (
+        *,
+        users (
+          id,
+          username,
+          full_name,
+          avatar_url
+        )
       )
     `,
     )
@@ -55,7 +64,6 @@ export async function getPostById(postId) {
     .single();
 
   if (error) throw new Error(error.message);
-
   return post;
 }
 

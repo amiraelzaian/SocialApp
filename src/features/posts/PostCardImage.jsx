@@ -9,6 +9,7 @@ const Image = styled.img`
 `;
 
 function PostCardImage({ post }) {
+  if (!post?.image_url) return null;
   return <Image src={post.image_url} alt={post.caption || "Post"} />;
 }
 

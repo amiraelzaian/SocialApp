@@ -44,23 +44,23 @@ function PostCardCaption({ post, setShowCommentsBox }) {
   return (
     <Caption>
       <div>
-        <Username>{post.users?.username}</Username>
+        <Username>{post?.users?.username}</Username>
 
         <Text>
-          {parseCaption(post.caption)}{" "}
-          {post.hashtags?.map((tag) => (
+          {parseCaption(post?.caption)}{" "}
+          {post?.hashtags?.map((tag) => (
             <Hashtag key={tag}>#{tag}</Hashtag>
           ))}
         </Text>
       </div>
 
-      {post.comments_count > 0 && (
+      {post?.comments_count > 0 && (
         <CommentsLink
           onClick={() => {
             setShowCommentsBox((show) => !show);
           }}
         >
-          View all {post.comments_count} comments
+          View all {post?.comments_count} comments
         </CommentsLink>
       )}
     </Caption>

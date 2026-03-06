@@ -10,6 +10,7 @@ export function useGetPage() {
     notifications: "Notifications",
     discover: "Discover",
     profile: "Profile",
+    posts: "Post",
   };
 
   const nameOfPage = pageNames[lastSegment] || "Home";

@@ -46,6 +46,7 @@ function App() {
                   }
                 >
                   <Route path="/" element={<Home />} />
+                  <Route path="/posts/:postId" element={<PostDetails />} />
                   <Route path="/:id" element={<Home />} />
                   <Route path="/discover" element={<Discover />} />
                   <Route path="discover/:id" element={<Profile />} />
@@ -53,7 +54,6 @@ function App() {
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/profile/:id" element={<Profile />} />
-                  <Route path="/posts/:postId" element={<PostDetails />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />

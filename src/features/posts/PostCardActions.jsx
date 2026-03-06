@@ -48,6 +48,7 @@ const LikesCount = styled.div`
 function PostCardActions({ post, setShowCommentsBox }) {
   const { toggleLike, isLiked } = useLike(post.id);
   const { toggleRepost, isReposted } = useRepost(post.id);
+  if (!post) return null;
 
   return (
     <>
@@ -84,14 +85,14 @@ function PostCardActions({ post, setShowCommentsBox }) {
         </LeftActions>
       </Actions>
 
-      {post.likes_count > 0 && (
+      {post?.likes_count > 0 && (
         <LikesCount>
-          {post.likes_count} {post.likes_count === 1 ? "like" : "likes"}
+          {post?.likes_count} {post?.likes_count === 1 ? "like" : "likes"}
         </LikesCount>
       )}
-      {post.repost_count > 0 && (
+      {post?.repost_count > 0 && (
         <LikesCount>
-          {post.repost_count} {post.repost_count === 1 ? "repost" : "reposts"}
+          {post?.repost_count} {post?.repost_count === 1 ? "repost" : "reposts"}
         </LikesCount>
       )}
     </>
