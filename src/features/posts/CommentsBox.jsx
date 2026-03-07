@@ -57,7 +57,7 @@ function CommentsBox({ post }) {
   const { comments, isPending } = useComments(post.id);
   const { user } = useUser();
   return (
-    <Box>
+    <Box onClick={(e) => e.stopPropagation()}>
       <CommentsList>
         {isPending ? (
           <Spinner>Loading comments…</Spinner>

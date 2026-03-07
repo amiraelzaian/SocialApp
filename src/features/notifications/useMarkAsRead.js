@@ -9,6 +9,7 @@ export function useMarkAsRead() {
     mutationFn: (notificationId) => markAsReadApi(notificationId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      queryClient.invalidateQueries({ queryKey: ["unreadCount"] });
     },
     onError: () => {
       toast.error("Could not mark notification as read");

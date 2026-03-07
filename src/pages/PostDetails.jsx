@@ -3,11 +3,11 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { HiArrowLeft } from "react-icons/hi";
 import { usePostById } from "../features/posts/usePostById";
-import PostCard from "../features/posts/PostCard"; // 👈 new
+import PostCard from "../features/posts/PostCard";
 import CommentItem from "../features/posts/CommentItem";
 import CreateComment from "../features/posts/CreateComment";
 import { useComments } from "../features/posts/useComments";
-
+import { useUser } from "../features/authentication/useUser";
 import Spinner from "../ui/Spinner";
 import { useMoveBack } from "../hooks/useMoveBack";
 
@@ -45,10 +45,6 @@ const BackButton = styled.button`
 
 const Card = styled.div`
   width: 95%;
-  /* max-width: 600px;
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-200);
-  border-radius: var(--border-radius-md); */
   overflow: hidden;
 `;
 
@@ -60,12 +56,16 @@ const Divider = styled.div`
 const CommentsList = styled.div`
   display: flex;
   flex-direction: column;
+  background: var(--color-grey-0);
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  margin-top: 1rem;
 `;
 
 const HighlightedComment = styled.div`
-  background: var(--color-brand-50);
+  background: var(--color-grey-200);
   border-left: 3px solid var(--color-brand-600);
-  transition: background 0.8s ease;
 `;
 
 const Empty = styled.p`
@@ -88,10 +88,11 @@ function PostDetails() {
   const commentId = searchParams.get("commentId");
 
   const { post, isPending: isPostPending } = usePostById(postId);
-  const { comments } = useComments(postId);
-  //const { user } = useUser();
+  const { comments, isPending: isCommentsPending } = useComments(postId);
+  const { user } = useUser();
   const commentRef = useRef(null);
 
+  // scroll to highlighted comment once comments load
   useEffect(() => {
     if (commentId && commentRef.current) {
       commentRef.current.scrollIntoView({
@@ -99,7 +100,7 @@ function PostDetails() {
         block: "center",
       });
     }
-  }, [commentId, comments]);
+  }, [commentId, comments]); // reruns when comments load ✅
 
   if (isPostPending)
     return (
@@ -117,13 +118,9 @@ function PostDetails() {
       </BackButton>
 
       <Card>
-        {/* ✅ PostCard handles repost/normal, disableClick stops navigation */}
-        <PostCard post={post} disableClick reposted={true} />
+        <PostCard post={post} disableClick />
 
-        <Divider />
-
-        {/* Comments */}
-        {/* <CommentsList>
+        <CommentsList>
           {isCommentsPending ? (
             <SpinnerWrap>
               <Spinner />
@@ -134,6 +131,7 @@ function PostDetails() {
             comments.map((comment) => {
               const isHighlighted = comment.id === commentId;
               return isHighlighted ? (
+                // 👇 ref attaches to the highlighted comment's DOM node
                 <HighlightedComment key={comment.id} ref={commentRef}>
                   <CommentItem
                     comment={comment}
@@ -151,9 +149,8 @@ function PostDetails() {
               );
             })
           )}
-        </CommentsList> */}
-
-        {/* <CreateComment postId={post.id} /> */}
+          <CreateComment postId={post.id} />
+        </CommentsList>
       </Card>
     </Page>
   );

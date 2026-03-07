@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetPage } from "../../hooks/useGetPage";
 import PostCardCaption from "./PostCardCaption";
 import PostCardHeader from "./PostCardHeader";
 import PostCardActions from "./PostCardActions";
@@ -43,8 +42,7 @@ const OriginalPostEmbed = styled.div`
 `;
 
 function PostCard({ post, disableClick = false }) {
- const { nameOfPage } = useGetPage();
- const [showCommentsBox, setShowCommentsBox] = useState(nameOfPage === "Post");
+  const [showCommentsBox, setShowCommentsBox] = useState(false); // 👈 always false
   const navigate = useNavigate();
 
   if (!post) return null;
@@ -74,8 +72,12 @@ function PostCard({ post, disableClick = false }) {
             />
           </OriginalPostEmbed>
         )}
-        <PostCardActions post={post} setShowCommentsBox={setShowCommentsBox} />
-        {showCommentsBox && <CommentsBox post={post} />}
+        <PostCardActions
+          post={post}
+          setShowCommentsBox={disableClick ? () => {} : setShowCommentsBox} // 👈
+        />
+        {showCommentsBox && !disableClick && <CommentsBox post={post} />}{" "}
+        {/* 👈 */}
       </Card>
     );
   }
@@ -84,9 +86,16 @@ function PostCard({ post, disableClick = false }) {
     <Card onClick={handleCardClick} $disableClick={disableClick}>
       <PostCardHeader post={post} />
       <PostCardImage post={post} />
-      <PostCardCaption post={post} setShowCommentsBox={setShowCommentsBox} />
-      <PostCardActions post={post} setShowCommentsBox={setShowCommentsBox} />
-      {showCommentsBox && <CommentsBox post={post} />}
+      <PostCardCaption
+        post={post}
+        setShowCommentsBox={disableClick ? () => {} : setShowCommentsBox} // 👈
+      />
+      <PostCardActions
+        post={post}
+        setShowCommentsBox={disableClick ? () => {} : setShowCommentsBox} // 👈
+      />
+      {showCommentsBox && !disableClick && <CommentsBox post={post} />}{" "}
+      {/* 👈 */}
     </Card>
   );
 }

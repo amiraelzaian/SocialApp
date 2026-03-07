@@ -8,6 +8,7 @@ export function useDeleteNotification() {
     mutationFn: (notificationId) => deleteNotificationApi(notificationId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      queryClient.invalidateQueries({ queryKey: ["unreacCount"] });
     },
     onError: () => {
       toast.error("Could not mark notification as read");

@@ -8,6 +8,7 @@ export function useMarkAllAsRead() {
     mutationFn: () => markAllAsReadApi(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      queryClient.invalidateQueries({ queryKey: ["unreadCount"] });
     },
     onError: () => {
       toast.error("Could not mark all as read");

@@ -8,6 +8,7 @@ import { useDeleteNotification } from "./useDeleteNotification";
 import { useMarkAsRead } from "./useMarkAsRead";
 import { useNavigate } from "react-router-dom";
 import { useFollow } from "../discover/useFollow";
+import Button from "../../ui/Button";
 
 const typeConfig = {
   like: { icon: <FaHeart />, color: "var(--color-red-700)" },
@@ -65,21 +66,24 @@ const PostPreview = styled.p`
   font-style: italic;
 `;
 
-const FollowBackBtn = styled.button`
-  padding: 0.5rem 1.4rem;
-  background: var(--color-brand-600);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 0.4rem;
-  width: fit-content;
+// const FollowBackBtn = styled.button`
+//   padding: 0.5rem 1.4rem;
+//   background: var(--color-brand-600);
+//   color: white;
+//   border: none;
+//   border-radius: 20px;
+//   font-size: 1.2rem;
+//   font-weight: 600;
+//   cursor: pointer;
+//   margin-top: 0.4rem;
+//   width: fit-content;
 
-  &:hover {
-    background: var(--color-brand-700);
-  }
+//   &:hover {
+//     background: var(--color-brand-700);
+//   }
+// `;
+const ButtonCover = styled.div`
+  width: 60px;
 `;
 
 const RightSide = styled.div`
@@ -112,6 +116,9 @@ const DeleteBtn = styled.button`
 
   &:hover {
     color: var(--color-red-700);
+  }
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -164,14 +171,18 @@ function NotificationItem({ notification }) {
         )}
 
         {type === "follow" && (
-          <FollowBackBtn
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleFollow();
-            }}
-          >
-            {isFollowingUser ? "Following" : " Follow Back"}
-          </FollowBackBtn>
+          <ButtonCover>
+            <Button
+              $size="small"
+              $variation="primary"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFollow();
+              }}
+            >
+              {isFollowingUser ? "Following" : " Follow Back"}
+            </Button>
+          </ButtonCover>
         )}
       </Content>
 
