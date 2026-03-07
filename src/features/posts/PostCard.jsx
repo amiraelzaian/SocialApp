@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetPage } from "../../hooks/useGetPage";
 import PostCardCaption from "./PostCardCaption";
 import PostCardHeader from "./PostCardHeader";
 import PostCardActions from "./PostCardActions";
@@ -42,7 +43,8 @@ const OriginalPostEmbed = styled.div`
 `;
 
 function PostCard({ post, disableClick = false }) {
-  const [showCommentsBox, setShowCommentsBox] = useState(true);
+ const { nameOfPage } = useGetPage();
+ const [showCommentsBox, setShowCommentsBox] = useState(nameOfPage === "Post");
   const navigate = useNavigate();
 
   if (!post) return null;

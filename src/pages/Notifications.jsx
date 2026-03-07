@@ -1,5 +1,7 @@
+import NotificationsList from "../features/notifications/NotificationsList";
+
 function Notifications() {
-  return <div>notifications jjj</div>;
+  return <NotificationsList />;
 }
 
 export default Notifications;

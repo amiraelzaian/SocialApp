@@ -7,12 +7,9 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   justify-content: flex-start;
   flex-direction: ${({ $isMobile }) => ($isMobile ? "column" : "row")};
-
   gap: ${({ $isMobile }) => ($isMobile ? "5px" : "10px")};
-
   padding: 12px 16px;
   border-radius: 8px;
-
   text-decoration: none;
   color: var(--color-grey-700);
   font-size: ${({ $isMobile }) => ($isMobile ? "11px" : "16px")};
@@ -20,6 +17,7 @@ const StyledNavLink = styled(NavLink)`
   width: 90%;
   transition: all 0.2s ease;
   margin: 3px auto;
+
   & svg {
     width: 22px;
     height: 22px;
@@ -28,9 +26,7 @@ const StyledNavLink = styled(NavLink)`
   &:hover {
     background-color: var(--color-grey-100);
   }
-
   &.active {
-    /* background-color: var(--color-brand-100); */
     color: var(--color-brand-700);
   }
   &:focus {
@@ -38,12 +34,38 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-function ButtonIcon({ to, icon, children }) {
+const IconWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const Badge = styled.span`
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: var(--color-red-700);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+`;
+
+function ButtonIcon({ to, icon, children, badge }) {
   const { isMobile } = useScreenSize();
 
   return (
     <StyledNavLink to={to} $isMobile={isMobile}>
-      {icon}
+      <IconWrapper>
+        {icon}
+        {badge > 0 && <Badge>{badge > 99 ? "99+" : badge}</Badge>}
+      </IconWrapper>
       <span>{children}</span>
     </StyledNavLink>
   );

@@ -1,3 +1,4 @@
+import { useUnreadCount } from "../features/notifications/useUnreadCount";
 import {
   HiOutlineBell,
   HiOutlineHome,
@@ -41,7 +42,7 @@ const Nav = styled.nav`
 
 function Sidebar() {
   const { isMobile } = useScreen();
-  
+  const { unreadCount } = useUnreadCount();
 
   return (
     <Nav $isMobile={isMobile}>
@@ -55,7 +56,11 @@ function Sidebar() {
       <ButtonIcon to="/messages" icon={<HiOutlineChatBubbleLeftRight />}>
         Messages
       </ButtonIcon>
-      <ButtonIcon to="/notifications" icon={<HiOutlineBell />}>
+      <ButtonIcon
+        to="/notifications"
+        icon={<HiOutlineBell />}
+        badge={unreadCount}
+      >
         Notifications
       </ButtonIcon>
       <ButtonIcon to="/profile" icon={<HiOutlineUser />}>
@@ -65,5 +70,4 @@ function Sidebar() {
     </Nav>
   );
 }
-
 export default Sidebar;
