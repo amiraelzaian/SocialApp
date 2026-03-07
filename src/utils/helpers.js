@@ -1,3 +1,5 @@
+import { supabase } from "../services/supabase";
+
 export function timeAgo(dateStr) {
   const diff = (Date.now() - new Date(dateStr)) / 1000;
   if (diff < 60) return "just now";
@@ -18,4 +20,12 @@ export function dateConverter(value) {
 export function formatCount(n = 0) {
   if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
   return n;
+}
+
+export async function getCurrentUser() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+  return user;
 }

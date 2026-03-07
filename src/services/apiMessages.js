@@ -1,13 +1,11 @@
 import { supabase } from "./supabase";
+import { getCurrentUser } from "../utils/helpers";
 
-//  Get all conversations for current user
+// ─── Get all conversations for current user ──────────────────────────────────
 export async function getConversations() {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const user = await getCurrentUser();
 
-  // Get all messages where user is sender OR receiver
+  // Limit fetch for performance — avoids loading entire messages table
   const { data: messages, error } = await supabase
     .from("messages")
     .select(
@@ -30,7 +28,8 @@ export async function getConversations() {
     `,
     )
     .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(200); // ✅ Limit to avoid fetching entire table
 
   if (error) throw new Error(error.message);
 
@@ -38,13 +37,11 @@ export async function getConversations() {
   const conversationsMap = new Map();
 
   messages?.forEach((message) => {
-    // Determine who the "other person" is
     const otherUser =
       message.sender_id === user.id ? message.receiver : message.sender;
 
     const otherUserId = otherUser.id;
 
-    // If this conversation doesn't exist yet, or this message is newer
     if (!conversationsMap.has(otherUserId)) {
       conversationsMap.set(otherUserId, {
         otherUser,
@@ -55,22 +52,18 @@ export async function getConversations() {
       });
     }
 
-    // Count unread messages (messages sent TO current user that aren't read)
+    // Count unread messages sent TO current user
     if (message.receiver_id === user.id && !message.is_read) {
       conversationsMap.get(otherUserId).unreadCount++;
     }
   });
 
-  // Convert Map to array
   return Array.from(conversationsMap.values());
 }
 
-// ✅ Get all messages with a specific user (conversation history)
+// ─── Get all messages with a specific user ───────────────────────────────────
 export async function getMessages(otherUserId) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const user = await getCurrentUser();
 
   const { data: messages, error } = await supabase
     .from("messages")
@@ -95,12 +88,9 @@ export async function getMessages(otherUserId) {
   return messages;
 }
 
-//  Send a message
+// ─── Send a message ──────────────────────────────────────────────────────────
 export async function sendMessage(receiverId, content) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const user = await getCurrentUser();
 
   const { data: message, error } = await supabase
     .from("messages")
@@ -130,33 +120,24 @@ export async function sendMessage(receiverId, content) {
   return message;
 }
 
-//  Mark a single message as read
+// ─── Mark a single message as read ──────────────────────────────────────────
 export async function markAsRead(messageId) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const user = await getCurrentUser();
 
-  const { data, error } = await supabase
+  // ✅ No .select().single() — we don't need the return value
+  const { error } = await supabase
     .from("messages")
     .update({ is_read: true })
     .eq("id", messageId)
-    .eq("receiver_id", user.id)
-    .select()
-    .single();
+    .eq("receiver_id", user.id);
 
   if (error) throw new Error(error.message);
-
-  return data;
 }
 
+// ─── Mark entire conversation as read ───────────────────────────────────────
 export async function markConversationAsRead(otherUserId) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const user = await getCurrentUser();
 
-  // Mark all messages FROM otherUserId TO current user as read
   const { error } = await supabase
     .from("messages")
     .update({ is_read: true })
@@ -167,12 +148,9 @@ export async function markConversationAsRead(otherUserId) {
   if (error) throw new Error(error.message);
 }
 
-//  Get total unread messages count
+// ─── Get total unread messages count ───────────────────────────────────────
 export async function getUnreadCount() {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const user = await getCurrentUser();
 
   const { count, error } = await supabase
     .from("messages")
@@ -185,30 +163,23 @@ export async function getUnreadCount() {
   return count || 0;
 }
 
-// Delete a single message (only sender can delete)
+// ─── Delete a single message (sender only) ──────────────────────────────────
 export async function deleteMessage(messageId) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const user = await getCurrentUser();
 
   const { error } = await supabase
     .from("messages")
     .delete()
     .eq("id", messageId)
-    .eq("sender_id", user.id);
+    .eq("sender_id", user.id); // ✅ Only sender can delete
 
   if (error) throw new Error(error.message);
 }
 
-//  Delete entire conversation with a user
+// ─── Delete entire conversation ──────────────────────────────────────────────
 export async function deleteConversation(otherUserId) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const user = await getCurrentUser();
 
-  // Delete all messages between current user and other user
   const { error } = await supabase
     .from("messages")
     .delete()
@@ -217,4 +188,37 @@ export async function deleteConversation(otherUserId) {
     );
 
   if (error) throw new Error(error.message);
+}
+
+// ─── Real-time subscription for new messages ────────────────────────────────
+/**
+ * Call this once when chat opens. Returns unsubscribe function.
+ *
+ * Usage:
+ *   const unsubscribe = subscribeToMessages(userId, (newMessage) => {
+ *     setMessages((prev) => [...prev, newMessage]);
+ *   });
+ *   // On cleanup: unsubscribe();
+ */
+export async function subscribeToMessages(onNewMessage) {
+  const user = await getCurrentUser();
+
+  const channel = supabase
+    .channel("realtime:messages")
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "messages",
+        filter: `receiver_id=eq.${user.id}`, // ✅ Only listen for messages TO current user
+      },
+      (payload) => {
+        onNewMessage(payload.new);
+      },
+    )
+    .subscribe();
+
+  // Return unsubscribe function for cleanup
+  return () => supabase.removeChannel(channel);
 }

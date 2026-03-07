@@ -1,5 +1,5 @@
 function Messages() {
-  return <div>messages</div>;
+  return <div>chats</div>;
 }
 
 export default Messages;
