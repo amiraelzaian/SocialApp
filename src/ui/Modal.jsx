@@ -115,7 +115,13 @@ function Modal({ children, onClose }) {
   };
 
   return createPortal(
-    <Overlay onClick={handleOverlayClick} $isMobile={isMobile}>
+    <Overlay
+      onClick={(e) => {
+        handleOverlayClick;
+        e.stopPropagation();
+      }}
+      $isMobile={isMobile}
+    >
       <ModalWrapper $isMobile={isMobile}>
         <CloseButton onClick={onClose}>
           <HiOutlineX />

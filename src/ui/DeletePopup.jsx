@@ -37,7 +37,8 @@ function DeletePopup({ post, onClose }) {
             Cancel
           </Button>
           <Button
-           $ size="medium"
+            $
+            size="medium"
             $variation="danger"
             onClick={() => {
               removePost(post.id);
