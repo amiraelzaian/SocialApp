@@ -76,9 +76,8 @@ function Header() {
   const isOwnProfile = !id || id === user?.id;
   const inOtherUserProfile = nameOfPage === "Discover" && !isOwnProfile;
 
-  const showSearch =
-    pathname.startsWith("/messages") || pathname.startsWith("/discover");
-  const showNumOfNotifications = pathname.startsWith("/notifications");
+  const showSearch = pathname.startsWith("/discover");
+  //  const showNumOfNotifications = pathname.startsWith("/notifications");
 
   function handleLogout() {
     logout();

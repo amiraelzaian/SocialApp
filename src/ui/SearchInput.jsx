@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 const placeholders = {
   Discover: "Search users...",
-  Messages: "Search messages...",
+  Messages: "Search chats...",
 };
 
 function SearchInput() {
