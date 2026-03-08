@@ -1,5 +1,7 @@
+import MessagesLayout from "../features/messaging/MessagesLayout";
+
 function Messages() {
-  return <div>chats</div>;
+  return <MessagesLayout />;
 }
 
 export default Messages;
