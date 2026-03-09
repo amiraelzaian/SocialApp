@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const StyledAvatar = styled.img`
-  width: ${(props) => (props.$page === "profile" ? "100%" : "3.2rem")};
-  height: ${(props) => (props.$page === "profile" ? "100%" : "3.2rem")};
+  width: ${(props) => (props.$page === "profile" ? "100%" : "3.5rem")};
+  height: ${(props) => (props.$page === "profile" ? "100%" : "3.5rem")};
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -10,8 +10,8 @@ const StyledAvatar = styled.img`
 `;
 
 const AvatarFallback = styled.div`
-  width: ${(props) => (props.$page === "profile" ? "100%" : "3.2rem")};
-  height: ${(props) => (props.$page === "profile" ? "100%" : "3.2rem")};
+  width: ${(props) => (props.$page === "profile" ? "100%" : "3.5rem")};
+  height: ${(props) => (props.$page === "profile" ? "100%" : "3.5rem")};
   border-radius: 50%;
   background-color: var(--color-brand-600);
   color: white;

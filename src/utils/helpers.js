@@ -16,6 +16,13 @@ export function dateConverter(value) {
   });
   return date;
 }
+export function messageDateConverter(value) {
+  const time = new Date(value).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return time;
+}
 
 export function formatCount(n = 0) {
   if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";

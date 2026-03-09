@@ -24,31 +24,16 @@ const Main = styled.div`
 
 const ContentArea = styled.div`
   flex: 1;
-  overflow-y: auto;
+
   overflow-x: hidden;
+  /* ...existing styles... */
+  overflow-y: scroll;
 
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
   &::-webkit-scrollbar {
-    width: 8px;
+    display: none; /* Chrome/Safari */
   }
-
-  &::-webkit-scrollbar-track {
-    background: var(--color-grey-100);
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--color-grey-400);
-    border-radius: 10px;
-
-    &:hover {
-      background: var(--color-grey-500);
-    }
-  }
-
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-grey-400) var(--color-grey-100);
-
-  scroll-behavior: smooth;
 `;
 
 function AppLayout() {

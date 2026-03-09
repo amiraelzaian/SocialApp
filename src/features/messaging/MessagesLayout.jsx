@@ -12,8 +12,16 @@ const Layout = styled.div`
 `;
 
 const ConversationSide = styled.div`
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: var(--color-grey-50);
+  border: 2px solid var(--color-grey-200);
+
   @media (max-width: 768px) {
-    display: ${({ $show }) => ($show ? "block" : "none")};
+    display: ${({ $show }) => ($show ? "flex" : "none")};
   }
 `;
 
