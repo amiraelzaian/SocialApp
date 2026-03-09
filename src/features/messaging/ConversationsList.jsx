@@ -31,7 +31,7 @@ const P = styled.p`
 function ConversationsList({ onSelect }) {
   const { conversations, isPending } = useConversations();
 
-  if (isPending) return <Spinner />;
+  // if (isPending) return <Spinner />;
 
   return (
     <>

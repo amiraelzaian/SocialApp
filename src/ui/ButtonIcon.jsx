@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useScreenSize } from "../hooks/useScreenSize";
+import Badge from "./badge";
 
 const StyledNavLink = styled(NavLink)`
   display: flex;
@@ -40,23 +41,6 @@ const IconWrapper = styled.div`
   align-items: center;
 `;
 
-const Badge = styled.span`
-  position: absolute;
-  top: -6px;
-  right: -8px;
-  background: var(--color-red-700);
-  color: white;
-  font-size: 1rem;
-  font-weight: 700;
-  min-width: 16px;
-  height: 16px;
-  border-radius: 99px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 3px;
-`;
-
 function ButtonIcon({ to, icon, children, badge }) {
   const { isMobile } = useScreenSize();
 
@@ -64,7 +48,7 @@ function ButtonIcon({ to, icon, children, badge }) {
     <StyledNavLink to={to} $isMobile={isMobile}>
       <IconWrapper>
         {icon}
-        {badge > 0 && <Badge>{badge > 99 ? "99+" : badge}</Badge>}
+        {badge > 0 && <Badge badge={badge} />}
       </IconWrapper>
       <span>{children}</span>
     </StyledNavLink>
