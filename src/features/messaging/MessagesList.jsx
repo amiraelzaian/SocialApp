@@ -12,6 +12,7 @@ const List = styled.div`
   padding: 16px;
   display: flex;
   flex-direction: column;
+  margin-top: 60px;
 
   /* hide scrollbar */
   scrollbar-width: none;

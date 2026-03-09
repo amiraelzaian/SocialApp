@@ -29,7 +29,7 @@ const P = styled.p`
   font-size: 13px;
 `;
 function ConversationsList({ onSelect }) {
-  const { conversations, isPending } = useConversations();
+  const { conversations } = useConversations();
 
   // if (isPending) return <Spinner />;
 
@@ -37,14 +37,14 @@ function ConversationsList({ onSelect }) {
     <>
       <SearchInput />
       <List>
-        {conversations.map((chat) => (
+        {conversations?.map((chat) => (
           <ConversationItem
             chat={chat}
             key={chat.otherUser.id}
             onSelect={onSelect}
           />
         ))}
-        {conversations.lenght === 0 && <P>There're not chats yet 💔</P>}
+        {conversations?.lenght === 0 && <P>There're not chats yet 💔</P>}
       </List>
     </>
   );

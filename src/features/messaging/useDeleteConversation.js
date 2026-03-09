@@ -14,6 +14,7 @@ export function useDeleteConversation(otherUserId) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["messages", otherUserId] });
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
+      queryClient.invalidateQueries({ queryKey: ["unreadMessagesCount"] });
     },
     onError: () => {
       toast.error("couldn't delete conversation");

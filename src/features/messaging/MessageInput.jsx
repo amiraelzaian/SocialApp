@@ -10,7 +10,9 @@ const InputBar = styled.div`
   gap: 10px;
   padding: 10px 20px;
   width: 90%;
-
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
   margin: auto;
 `;
 

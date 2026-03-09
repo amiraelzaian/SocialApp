@@ -25,26 +25,29 @@ const Buttons = styled.div`
   justify-content: center;
 `;
 
-function DeletePopup({ post, onClose }) {
+function DeletePopup({ post, onClose, onConfirm, message }) {
   const { removePost } = useDeletePost();
+
+  function handleDelete() {
+    if (onConfirm) {
+      // custom delete action (e.g. conversation)
+      onConfirm();
+    } else {
+      // default post delete
+      removePost(post.id);
+    }
+    onClose();
+  }
 
   return (
     <Modal onClose={onClose}>
-      <StyledDiv>
-        <P>Are you sure you want to delete this post?</P>
+      <StyledDiv onClick={(e) => e.stopPropagation()}>
+        <P>{message || "Are you sure you want to delete this post?"}</P>
         <Buttons>
           <Button $size="medium" $variation="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button
-            $
-            size="medium"
-            $variation="danger"
-            onClick={() => {
-              removePost(post.id);
-              onClose();
-            }}
-          >
+          <Button $size="medium" $variation="danger" onClick={handleDelete}>
             Delete
           </Button>
         </Buttons>

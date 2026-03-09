@@ -6,24 +6,25 @@ import MessageInput from "./MessageInput";
 const Window = styled.div`
   display: flex;
   flex-direction: column;
+
   height: 100%;
 `;
 
-const P = styled.p`
+const Empty = styled.p`
   color: var(--color-grey-400);
   font-size: 13px;
   text-align: center;
-  margin: 40px auto;
+  margin: auto;
 `;
 
 function ChatWindow({ userId, onBack }) {
-  if (!userId) return <P>Select a conversation to start chatting 😄</P>;
+  if (!userId) return <Empty>Select a conversation to start chatting 😄</Empty>;
 
   return (
     <Window>
       <ChatHeader userId={userId} onBack={onBack} />
-      {userId && <MessagesList userId={userId} />}
-      {userId && <MessageInput receiverId={userId} />}
+      <MessagesList userId={userId} />
+      <MessageInput receiverId={userId} />
     </Window>
   );
 }
