@@ -3,17 +3,19 @@ import styled from "styled-components";
 import Input from "../../ui/Input";
 import { HiPaperAirplane } from "react-icons/hi";
 import { useSendMessage } from "./useSendMessage";
+import { useScreen } from "../../context/ScreenSizeContext";
 
 const InputBar = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 20px;
-  width: 90%;
-  position: sticky;
-  bottom: 0;
-  z-index: 3;
-  margin: auto;
+  /* padding: 0 30px 10px; */
+  padding-top: 1px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-bottom: ${({ $isMobile }) => ($isMobile ? "60px" : "10px")};
+  width: 100%;
+  flex-shrink: 0;
 `;
 
 const SendButton = styled.button`
@@ -27,6 +29,7 @@ const SendButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
   &:hover {
     background: var(--color-brand-700);
@@ -36,6 +39,7 @@ const SendButton = styled.button`
 function MessageInput({ receiverId }) {
   const [content, setContent] = useState("");
   const { sendMessage, isSending } = useSendMessage();
+  const { isMobile } = useScreen();
 
   function handleSend() {
     if (!content.trim()) return;
@@ -48,7 +52,7 @@ function MessageInput({ receiverId }) {
   }
 
   return (
-    <InputBar>
+    <InputBar $isMobile={isMobile}>
       <Input
         placeholder="Type a message..."
         value={content}

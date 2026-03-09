@@ -7,14 +7,12 @@ import { useRealtimeMessages } from "./useRealtimeMessages";
 import { useUser } from "../authentication/useUser";
 
 const List = styled.div`
-  flex: 1;
+  flex: 1; /* ← takes all remaining space between header and input */
   overflow-y: auto;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
-
-  /* hide scrollbar */
+  min-height: 0; /* ← critical! allows flex child to shrink */
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -36,13 +34,11 @@ function MessagesList({ userId }) {
 
   useRealtimeMessages(userId);
 
-  // Auto scroll to bottom on new message
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   if (isPending) return <Spinner />;
-
   if (!messages?.length) return <Empty>No messages yet. Say hello! 👋</Empty>;
 
   return (

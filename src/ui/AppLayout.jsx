@@ -19,26 +19,25 @@ const Main = styled.div`
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  padding-bottom: ${({ $isMobile }) => ($isMobile ? "80px" : "0")};
+  padding-bottom: ${({ $isMobile }) => ($isMobile ? "5px" : "0")};
 `;
 
 const ContentArea = styled.div`
   flex: 1;
-
+  min-height: 0;
   overflow-x: hidden;
-  /* ...existing styles... */
-  overflow-y: scroll;
-
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  overflow-y: ${({ $noScroll }) => ($noScroll ? "hidden" : "scroll")};
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   &::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
   }
 `;
 
 function AppLayout() {
   const { isMobile } = useScreen();
   const { nameOfPage } = useGetPage();
+  const isMessagesPage = nameOfPage === "Messages";
 
   return (
     <Layout $isMobile={isMobile}>
@@ -46,7 +45,7 @@ function AppLayout() {
 
       <Main $isMobile={isMobile}>
         {nameOfPage !== "Profile" && <Header />}
-        <ContentArea>
+        <ContentArea $noScroll={isMessagesPage}>
           <Outlet />
         </ContentArea>
       </Main>

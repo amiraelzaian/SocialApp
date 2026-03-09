@@ -14,8 +14,9 @@ const List = styled.ul`
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  /* ...existing styles... */
-  overflow-y: scroll;
+  flex: 1;
+
+  overflow-y: auto;
 
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */

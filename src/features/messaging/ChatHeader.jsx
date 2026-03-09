@@ -10,23 +10,20 @@ import DeletePopup from "../../ui/DeletePopup";
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 5px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-grey-200);
+  align-items: center;
   padding: 10px;
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--color-grey-200);
   width: 100%;
   height: 60px;
+  flex-shrink: 0;
   background-color: var(--color-grey-50);
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  opacity: 98%;
 `;
 
 const Content = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 `;
 
 const Username = styled.p`
@@ -42,7 +39,6 @@ const Button = styled.button`
   cursor: pointer;
   width: 40px;
   color: var(--color-brand-600);
-  z-index: 3;
 
   &:hover,
   &:active,
