@@ -5,14 +5,15 @@ import Spinner from "../../ui/Spinner";
 import { useMessages } from "./useMessages";
 import { useRealtimeMessages } from "./useRealtimeMessages";
 import { useUser } from "../authentication/useUser";
+import { useMarkConversationAsRead } from "./useMarkConversationAsRead";
 
 const List = styled.div`
-  flex: 1; /* ← takes all remaining space between header and input */
+  flex: 1;
   overflow-y: auto;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  min-height: 0; /* ← critical! allows flex child to shrink */
+  min-height: 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -29,6 +30,7 @@ const Empty = styled.p`
 
 function MessagesList({ userId }) {
   const { messages, isPending } = useMessages(userId);
+  const { markConversationAsRead } = useMarkConversationAsRead();
   const { user } = useUser();
   const bottomRef = useRef(null);
 
@@ -37,6 +39,10 @@ function MessagesList({ userId }) {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (userId) markConversationAsRead({ otherUserId: userId });
+  }, [userId, markConversationAsRead]);
 
   if (isPending) return <Spinner />;
   if (!messages?.length) return <Empty>No messages yet. Say hello! 👋</Empty>;
@@ -48,6 +54,7 @@ function MessagesList({ userId }) {
           key={message.id}
           message={message}
           currentUserId={user?.id}
+          userId={userId}
         />
       ))}
       <div ref={bottomRef} />

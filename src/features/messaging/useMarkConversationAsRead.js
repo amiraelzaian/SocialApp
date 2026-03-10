@@ -10,7 +10,9 @@ export function useMarkConversationAsRead() {
     onSuccess: (_, { otherUserId }) => {
       queryClient.invalidateQueries({ queryKey: ["messages", otherUserId] });
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
-      queryClient.invalidateQueries({ queryKey: ["unreadMessagesCount"] });
+      queryClient.invalidateQueries({
+        queryKey: ["unreadMessagesCount", otherUserId],
+      });
     },
     onError: () => {
       toast.error("couldn't mark conversation as read");

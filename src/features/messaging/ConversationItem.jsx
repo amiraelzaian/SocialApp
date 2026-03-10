@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Avatar from "../../ui/Avatar";
 import { timeAgo } from "../../utils/helpers";
-import { useUnreadMessagesCount } from "./useUnreadCount";
 import Badge from "../../ui/badge";
 
 const Item = styled.li`
@@ -13,7 +12,6 @@ const Item = styled.li`
   border-radius: 10px;
   padding: 3px;
   cursor: pointer;
-
   &:hover {
     background-color: var(--color-grey-200);
   }
@@ -50,17 +48,16 @@ const LastMessage = styled.p`
   font-weight: 600;
   color: var(--color-grey-500);
 `;
+
 const Container = styled.div`
   position: relative;
 `;
 
 function ConversationItem({ chat, onSelect }) {
-  const { unreadMessagesCount: badge } = useUnreadMessagesCount();
-
   return (
     <Item onClick={() => onSelect(chat.otherUser.id)}>
       <Container>
-        {badge > 0 && <Badge badge={badge} />}
+        {chat.unreadCount > 0 && <Badge badge={chat.unreadCount} />}
         <Avatar
           src={chat.otherUser.avatar_url}
           name={chat.otherUser.full_name}

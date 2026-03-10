@@ -202,23 +202,26 @@ export async function deleteConversation(otherUserId) {
  */
 export async function subscribeToMessages(onNewMessage) {
   const user = await getCurrentUser();
+  console.log("subscribing for user:", user.id); // ← does this log?
 
   const channel = supabase
-    .channel("realtime:messages")
+    .channel(`realtime:messages:${user.id}`)
     .on(
       "postgres_changes",
       {
         event: "INSERT",
         schema: "public",
         table: "messages",
-        filter: `receiver_id=eq.${user.id}`, // ✅ Only listen for messages TO current user
+        filter: `receiver_id=eq.${user.id}`,
       },
       (payload) => {
+        console.log("new message received:", payload); // ← does this log?
         onNewMessage(payload.new);
       },
     )
-    .subscribe();
+    .subscribe((status) => {
+      console.log("subscription status:", status); // ← what does this say?
+    });
 
-  // Return unsubscribe function for cleanup
   return () => supabase.removeChannel(channel);
 }

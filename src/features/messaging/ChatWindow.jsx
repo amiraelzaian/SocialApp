@@ -6,7 +6,7 @@ import MessageInput from "./MessageInput";
 const Window = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%; /* ← fill parent, not 100vh */
+  height: 100%;
   overflow: hidden;
 `;
 

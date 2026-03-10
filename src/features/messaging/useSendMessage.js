@@ -9,6 +9,10 @@ export function useSendMessage() {
       sendMessageApi(receiverId, content),
     onSuccess: (_, { receiverId }) => {
       queryClient.invalidateQueries({ queryKey: ["messages", receiverId] });
+      queryClient.invalidateQueries({
+        queryKey: ["unreadMessagesCount", receiverId],
+      });
+      queryClient.invalidateQueries({ queryKey: ["conversations"] });
     },
     onError: () => {
       toast.error("couldn't send this message");
