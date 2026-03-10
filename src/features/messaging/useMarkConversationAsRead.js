@@ -11,7 +11,7 @@ export function useMarkConversationAsRead() {
       queryClient.invalidateQueries({ queryKey: ["messages", otherUserId] });
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
       queryClient.invalidateQueries({
-        queryKey: ["unreadMessagesCount", otherUserId],
+        queryKey: ["unreadMessagesCount"],
       });
     },
     onError: () => {

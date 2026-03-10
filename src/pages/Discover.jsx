@@ -6,6 +6,7 @@ const StyledContainer = styled.div`
   padding: 0;
   width: 100%;
   height: fit-content;
+  padding-bottom: 45px;
 `;
 
 function Discover() {

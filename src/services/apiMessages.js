@@ -4,7 +4,7 @@ import { getCurrentUser } from "../utils/helpers";
 // ─── Get all conversations for current user ──────────────────────────────────
 export async function getConversations() {
   const user = await getCurrentUser();
-  console.log("my id", user.id);
+
   // Limit fetch for performance — avoids loading entire messages table
   const { data: messages, error } = await supabase
     .from("messages")

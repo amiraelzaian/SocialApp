@@ -60,7 +60,6 @@ const StatLabel = styled.span`
 `;
 
 function DiscoverCardBody({ data }) {
-  console.log(data);
   const { followersCount } = useFollowersCount(data.id);
   const { followingsCount } = useFollowingsCount(data.id);
   return (

@@ -1,4 +1,4 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -38,12 +38,13 @@ const ContentArea = styled.div`
 function AppLayout() {
   const { isMobile } = useScreen();
   const { nameOfPage } = useGetPage();
-  const { chatId } = useParams();
+  const location = useLocation();
 
   const isMessagesPage = nameOfPage === "Messages";
-  const isInChat = isMessagesPage && !!chatId;
+  // ✅ in chat if path is /messages/someId (not just /messages)
+  const isInChat = location.pathname.startsWith("/messages/");
 
-  useRealtimeMessages();
+  useRealtimeMessages(); // ✅ always runs regardless of page
 
   return (
     <Layout $isMobile={isMobile}>

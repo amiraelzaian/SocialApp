@@ -48,7 +48,7 @@ function ButtonIcon({ to, icon, children, badge }) {
     <StyledNavLink to={to} $isMobile={isMobile}>
       <IconWrapper>
         {icon}
-        {badge > 0 && <Badge badge={badge} />}
+        {(badge > 0 || badge === "dot") && <Badge badge={badge} />}
       </IconWrapper>
       <span>{children}</span>
     </StyledNavLink>

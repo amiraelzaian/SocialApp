@@ -10,6 +10,7 @@ const Layout = styled.div`
     $isMobile ? "1fr" : "320px 1fr"};
   height: 100%;
   overflow: hidden;
+  padding-bottom: ${({ $isMobile }) => $isMobile && "45px"};
 `;
 
 const ConversationSide = styled.div`

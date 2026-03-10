@@ -7,6 +7,7 @@ const StyledHome = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 45px;
 `;
 
 function Home() {

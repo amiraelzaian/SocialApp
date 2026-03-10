@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getUnreadCount } from "../../services/apiMessages";
 import toast from "react-hot-toast";
 
-export function useUnreadMessagesCount(userId) {
+export function useUnreadMessagesCount() {
   const {
     data: unreadMessagesCount,
     isPending,
     error,
   } = useQuery({
-    queryKey: ["unreadMessagesCount", userId],
+    queryKey: ["unreadMessagesCount"],
     queryFn: getUnreadCount,
   });
 

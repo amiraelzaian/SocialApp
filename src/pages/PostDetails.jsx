@@ -17,6 +17,7 @@ const Page = styled.div`
   align-items: center;
   padding: 1rem 0 4rem;
   width: 100%;
+  padding-bottom: 45px;
 `;
 
 const BackButton = styled.button`
