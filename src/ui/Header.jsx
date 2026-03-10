@@ -107,25 +107,9 @@ function Header() {
               )}
             </Button>
           )}
-          {/* {nameOfPage === "Notifications" && (
-            <Button $size="small" $variation="outlined">
-              <ButtonContent>
-                {isMobile && <HiOutlineCheckBadge />}
-                {!isMobile && <span>Mark all as read</span>}
-              </ButtonContent>
-            </Button>
-          )} */}
-          {/* {nameOfPage === "Notifications" && (
-            <Button $size="small" $variation="outlined">
-              <ButtonContent>
-                {isMobile && <HiOutlineTrash />}
-                {!isMobile && <span>Delete all</span>}
-              </ButtonContent>
-            </Button>
-          )} */}
         </Buttons>
       </TopSection>
-      {/* {showNumOfNotifications && <NotificationCount numOfNotificaitons={5} />} */}
+
       {showSearch && !inOtherUserProfile && <SearchInput />}
     </StyledHeader>
   );

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useConversations } from "./useConversations";
 import ConversationItem from "./ConversationItem";
 import SearchInput from "../../ui/SearchInput";
+import { useDebounce } from "../../hooks/useDebounce";
+import { useSearch } from "../../context/SearchContext";
 
 const List = styled.ul`
   list-style: none;
@@ -28,12 +30,26 @@ const P = styled.p`
 
 function ConversationsList({ selectedUser }) {
   const { conversations } = useConversations();
+  const { searchQuery } = useSearch();
+  const debouncedQuery = useDebounce(searchQuery);
+
+  const filteredChats = debouncedQuery
+    ? conversations?.filter(
+        (chat) =>
+          chat.otherUser.full_name
+            .toLowerCase()
+            .includes(debouncedQuery.toLowerCase()) ||
+          chat.otherUser.username
+            .toLowerCase()
+            .includes(debouncedQuery.toLowerCase()),
+      )
+    : conversations;
 
   return (
     <>
       <SearchInput />
       <List>
-        {conversations?.map((chat) => (
+        {filteredChats?.map((chat) => (
           <ConversationItem
             chat={chat}
             key={chat.otherUser.id}
