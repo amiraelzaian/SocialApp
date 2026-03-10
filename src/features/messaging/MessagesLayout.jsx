@@ -10,7 +10,8 @@ const Layout = styled.div`
     $isMobile ? "1fr" : "320px 1fr"};
   height: 100%;
   overflow: hidden;
-  padding-bottom: ${({ $isMobile }) => $isMobile && "45px"};
+  padding-bottom: ${({ $isMobile, $isMessaging }) =>
+    $isMobile && $isMessaging && "45px"};
 `;
 
 const ConversationSide = styled.div`
@@ -42,7 +43,7 @@ function MessagesLayout() {
   const { chatId } = useParams();
 
   return (
-    <Layout $isMobile={isMobile}>
+    <Layout $isMobile={isMobile} $isMassaging={!!chatId}>
       <ConversationSide $show={!chatId}>
         <ConversationsList selectedUser={chatId} />
       </ConversationSide>

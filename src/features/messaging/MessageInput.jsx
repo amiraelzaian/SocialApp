@@ -12,7 +12,7 @@ const InputBar = styled.div`
   padding-top: 1px;
   padding-right: 30px;
   padding-left: 30px;
-  padding-bottom: 10px;
+  padding-bottom: ${({ $isMobile }) => ($isMobile ? "0" : "10px")};
   width: 100%;
   flex-shrink: 0;
 `;

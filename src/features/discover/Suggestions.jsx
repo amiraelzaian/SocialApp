@@ -6,6 +6,7 @@ import { useSearch } from "../../context/SearchContext";
 import { useDebounce } from "../../hooks/useDebounce";
 import DiscoverUserCard from "./DiscoverUserCard";
 import Spinner from "../../ui/Spinner";
+import { useUser } from "../authentication/useUser";
 
 const Grid = styled.div`
   display: grid;
@@ -16,6 +17,7 @@ const Grid = styled.div`
 `;
 
 function Suggestions() {
+  const { user } = useUser();
   const { isMobile, isTablet } = useScreen();
   const { searchQuery } = useSearch();
   const debouncedQuery = useDebounce(searchQuery);
@@ -29,13 +31,15 @@ function Suggestions() {
   const users = isSearching ? searchResults : suggestedUsers;
   const isPending = isSearching ? isSearchPending : isSuggestionsPending;
 
+  const filteredUsers = users.filter((u) => u.id !== user.id) || users;
+
   if (isPending) return <Spinner />;
-  if (users.length === 0)
+  if (filteredUsers.length === 0)
     return <p style={{ padding: "20px" }}>No users found.</p>;
 
   return (
     <Grid $isMobile={isMobile} $isTablet={isTablet}>
-      {users.map((user) => (
+      {filteredUsers.map((user) => (
         <DiscoverUserCard key={user.id} data={user} />
       ))}
     </Grid>

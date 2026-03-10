@@ -4,6 +4,9 @@ import { messageDateConverter } from "../../utils/helpers";
 import { useDeleteMessage } from "./useDeleteMessage";
 import DeletePopup from "../../ui/DeletePopup";
 import { useState, useRef } from "react";
+import { HiChevronDoubleRight } from "react-icons/hi2";
+import { HiCheck } from "react-icons/hi";
+import { BsCheck, BsCheckAll } from "react-icons/bs";
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,6 +17,7 @@ const Wrapper = styled.div`
 `;
 
 const Bubble = styled.div`
+  position: relative;
   max-width: 80%;
   padding: 10px 14px;
   border-radius: 30px;
@@ -49,6 +53,12 @@ const BubbleGroup = styled.div`
   display: flex;
   flex-direction: column;
   align-items: ${({ $isOwn }) => ($isOwn ? "flex-end" : "flex-start")};
+`;
+const MessageState = styled.span`
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  margin: aut0 2px;
 `;
 
 function MessageBubble({ message, currentUserId, userId }) {
@@ -86,7 +96,19 @@ function MessageBubble({ message, currentUserId, userId }) {
           name={message.sender?.full_name}
         />
         <BubbleGroup $isOwn={isOwn}>
-          <Bubble $isOwn={isOwn}>{message.content}</Bubble>
+          <Bubble $isOwn={isOwn}>
+            {message.content}
+            {isOwn && !message.is_read && (
+              <MessageState>
+                <HiCheck size={16} />
+              </MessageState>
+            )}
+            {isOwn && message.is_read && (
+              <MessageState>
+                <BsCheckAll size={16} />
+              </MessageState>
+            )}
+          </Bubble>
           <Time $isOwn={isOwn}>{time}</Time>
         </BubbleGroup>
       </Wrapper>
