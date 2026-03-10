@@ -14,7 +14,7 @@ const Empty = styled.p`
   color: var(--color-grey-400);
   font-size: 13px;
   text-align: center;
-  margin: auto;
+  margin: 40px auto;
 `;
 
 function ChatWindow({ userId, onBack }) {

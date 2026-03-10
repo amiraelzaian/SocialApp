@@ -9,7 +9,6 @@ const InputBar = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  /* padding: 0 30px 10px; */
   padding-top: 1px;
   padding-right: 30px;
   padding-left: 30px;

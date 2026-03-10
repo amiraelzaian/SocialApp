@@ -1,6 +1,9 @@
 import styled, { css } from "styled-components";
 import Avatar from "../../ui/Avatar";
 import { messageDateConverter } from "../../utils/helpers";
+import { useDeleteMessage } from "./useDeleteMessage";
+import DeletePopup from "../../ui/DeletePopup";
+import { useState, useRef } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,21 +51,55 @@ const BubbleGroup = styled.div`
   align-items: ${({ $isOwn }) => ($isOwn ? "flex-end" : "flex-start")};
 `;
 
-function MessageBubble({ message, currentUserId }) {
+function MessageBubble({ message, currentUserId, userId }) {
+  const [showConfirm, setShowConfirm] = useState(false);
   const isOwn = message.sender_id === currentUserId;
   const time = messageDateConverter(message.created_at);
+  const { deleteMessage } = useDeleteMessage();
+
+  const pressTimer = useRef(null);
+
+  function handleTouchStart() {
+    if (!isOwn) return;
+    pressTimer.current = setTimeout(() => setShowConfirm(true), 500);
+  }
+  function handleTouchEnd() {
+    if (!isOwn) return;
+    clearTimeout(pressTimer.current);
+  }
+
+  function handleDelete() {
+    if (!isOwn) return;
+    setShowConfirm(true);
+  }
 
   return (
-    <Wrapper $isOwn={isOwn}>
-      <Avatar
-        src={message.sender?.avatar_url}
-        name={message.sender?.full_name}
-      />
-      <BubbleGroup $isOwn={isOwn}>
-        <Bubble $isOwn={isOwn}>{message.content}</Bubble>
-        <Time $isOwn={isOwn}>{time}</Time>
-      </BubbleGroup>
-    </Wrapper>
+    <>
+      <Wrapper
+        $isOwn={isOwn}
+        onDoubleClick={handleDelete}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <Avatar
+          src={message.sender?.avatar_url}
+          name={message.sender?.full_name}
+        />
+        <BubbleGroup $isOwn={isOwn}>
+          <Bubble $isOwn={isOwn}>{message.content}</Bubble>
+          <Time $isOwn={isOwn}>{time}</Time>
+        </BubbleGroup>
+      </Wrapper>
+      {showConfirm && (
+        <DeletePopup
+          onClose={() => setShowConfirm(false)}
+          onConfirm={() =>
+            deleteMessage({ messageId: message.id, otherUserId: userId })
+          }
+          message="Delete this message?"
+        />
+      )}
+    </>
   );
 }
 
