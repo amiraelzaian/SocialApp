@@ -6,9 +6,10 @@ import {
   HiCalendarDays,
   HiMiniUserMinus,
   HiMiniUserPlus,
+  HiOutlineChatBubbleLeftRight,
 } from "react-icons/hi2";
 import { useUser } from "../authentication/useUser";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFollowersCount } from "./useFollowersCount";
 import { useFollowingsCount } from "./useFollowingsCount";
 import { useUserPosts } from "./useUserPosts";
@@ -16,7 +17,7 @@ import { useState } from "react";
 import { dateConverter, formatCount } from "../../utils/helpers.js";
 import UpdateUserModal from "./UpdateUserModal";
 import { useUserProfile } from "../discover/useUserProfile.js";
-import { useFollow } from "../discover/useFollow.js";
+import FollowButtonProfile from "./FollowButtonProfile.jsx";
 import FollowingsModal from "./FollowingsModal.jsx";
 import FollowersModal from "./FollowersModal.jsx";
 
@@ -59,7 +60,7 @@ const Username = styled.span`
   color: var(--color-grey-500);
 `;
 
-const EditButton = styled.button`
+export const EditButton = styled.button`
   display: flex;
   align-items: center;
   gap: 6px;
@@ -75,6 +76,10 @@ const EditButton = styled.button`
 
   &:hover {
     background-color: var(--color-grey-100);
+  }
+
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -142,24 +147,9 @@ const StatCount = styled.span`
   font-weight: 700;
   color: var(--color-grey-800);
 `;
-function FollowButtonHere({ userId }) {
-  const { toggleFollow, isFollowingUser, isPending } = useFollow(userId);
 
-  return (
-    <EditButton onClick={toggleFollow} disabled={isPending}>
-      {isFollowingUser ? (
-        <>
-          <HiMiniUserMinus /> Following
-        </>
-      ) : (
-        <>
-          <HiMiniUserPlus /> Follow
-        </>
-      )}
-    </EditButton>
-  );
-}
 function UserDetailsCard() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUser(); // logged in user
   const isOwnProfile = !id || id === user?.id;
@@ -179,6 +169,10 @@ function UserDetailsCard() {
 
   const joinedDate = dateConverter(displayUser.created_at);
 
+  function handleMassagingNavigation(userId) {
+    navigate(`/messages/${userId}`);
+  }
+
   return (
     <>
       <StyledUserInfoCard>
@@ -189,14 +183,24 @@ function UserDetailsCard() {
           </MainInfo>
           <Actions>
             {isOwnProfile ? (
-              // show edit button only on own profile
-              <EditButton onClick={() => setClose((c) => !c)}>
-                <HiCog6Tooth size={14} />
-                Edit Profile
-              </EditButton>
+              <>
+                <EditButton onClick={() => setClose((c) => !c)}>
+                  <HiCog6Tooth size={14} />
+                  Edit Profile
+                </EditButton>
+              </>
             ) : (
-              // show follow button on other profiles
-              <FollowButtonHere userId={id} />
+              <>
+                <EditButton
+                  onClick={() => {
+                    handleMassagingNavigation(displayUser.id);
+                  }}
+                >
+                  <HiOutlineChatBubbleLeftRight size={14} />
+                  message
+                </EditButton>
+                <FollowButtonProfile userId={id} />
+              </>
             )}
           </Actions>
         </Header>
