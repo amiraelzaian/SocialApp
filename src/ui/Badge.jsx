@@ -16,7 +16,19 @@ const StyledBadge = styled.span`
   justify-content: center;
   padding: 0 3px;
 `;
+
+const StyledDot = styled.span`
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--color-red-700);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+`;
+
 function Badge({ badge }) {
+  if (badge === "dot") return <StyledDot />;
   return <StyledBadge>{badge > 99 ? "99+" : badge}</StyledBadge>;
 }
 

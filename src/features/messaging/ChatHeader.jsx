@@ -39,7 +39,6 @@ const Button = styled.button`
   cursor: pointer;
   width: 40px;
   color: var(--color-brand-600);
-
   &:hover,
   &:active,
   &:focus {

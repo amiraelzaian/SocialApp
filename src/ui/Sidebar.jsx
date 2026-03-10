@@ -1,4 +1,5 @@
 import { useUnreadCount } from "../features/notifications/useUnreadCount";
+import { useUnreadMessagesCount } from "../features/messaging/useUnreadCount";
 import {
   HiOutlineBell,
   HiOutlineHome,
@@ -14,7 +15,6 @@ import UserSidebarInfo from "./userSidebarInfo.jsx";
 
 const Nav = styled.nav`
   display: flex;
-
   align-items: center;
   flex-direction: ${({ $isMobile }) => ($isMobile ? "row" : "column")};
   padding: 5px;
@@ -36,13 +36,15 @@ const Nav = styled.nav`
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       justify-content: center;
       padding: 2px;
-      
     `}
 `;
 
-function Sidebar() {
+function Sidebar({ hideOnMobile }) {
   const { isMobile } = useScreen();
   const { unreadCount } = useUnreadCount();
+  const { unreadMessagesCount } = useUnreadMessagesCount();
+
+  if (isMobile && hideOnMobile) return null;
 
   return (
     <Nav $isMobile={isMobile}>
@@ -53,7 +55,11 @@ function Sidebar() {
       <ButtonIcon to="/discover" icon={<HiOutlineSearch />}>
         Discover
       </ButtonIcon>
-      <ButtonIcon to="/messages" icon={<HiOutlineChatBubbleLeftRight />}>
+      <ButtonIcon
+        to="/messages"
+        icon={<HiOutlineChatBubbleLeftRight />}
+        badge={unreadMessagesCount > 0 ? "dot" : null}
+      >
         Messages
       </ButtonIcon>
       <ButtonIcon
@@ -70,4 +76,5 @@ function Sidebar() {
     </Nav>
   );
 }
+
 export default Sidebar;

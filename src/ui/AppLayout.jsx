@@ -11,7 +11,7 @@ const Layout = styled.div`
     $isMobile ? "1fr" : "240px 1fr"};
   height: 100vh;
   background-color: var(--color-grey-100);
-  overflow: hidden; /* ✅ Prevent layout scroll */
+  overflow: hidden;
 `;
 
 const Main = styled.div`
@@ -41,10 +41,11 @@ function AppLayout() {
 
   return (
     <Layout $isMobile={isMobile}>
-      <Sidebar />
-
+      <Sidebar hideOnMobile={isMessagesPage} />
       <Main $isMobile={isMobile}>
-        {nameOfPage !== "Profile" && <Header />}
+        {!(isMessagesPage && isMobile) && nameOfPage !== "Profile" && (
+          <Header />
+        )}
         <ContentArea $noScroll={isMessagesPage}>
           <Outlet />
         </ContentArea>
