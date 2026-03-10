@@ -4,6 +4,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { useScreen } from "../context/ScreenSizeContext.jsx";
 import { useGetPage } from "../hooks/useGetPage.js";
+import { useRealtimeMessages } from "../features/messaging/useRealtimeMessages.js";
 
 const Layout = styled.div`
   display: grid;
@@ -38,7 +39,7 @@ function AppLayout() {
   const { isMobile } = useScreen();
   const { nameOfPage } = useGetPage();
   const isMessagesPage = nameOfPage === "Messages";
-
+  useRealtimeMessages();
   return (
     <Layout $isMobile={isMobile}>
       <Sidebar hideOnMobile={isMessagesPage} />
