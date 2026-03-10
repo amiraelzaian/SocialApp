@@ -1,27 +1,23 @@
 import styled from "styled-components";
 import { useConversations } from "./useConversations";
 import ConversationItem from "./ConversationItem";
-import Spinner from "../../ui/Spinner";
 import SearchInput from "../../ui/SearchInput";
 
 const List = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   gap: 5px;
   padding: 5px;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   flex: 1;
-
   overflow-y: auto;
-
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   &::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
   }
 `;
 
@@ -29,10 +25,9 @@ const P = styled.p`
   color: var(--color-grey-400);
   font-size: 13px;
 `;
-function ConversationsList({ onSelect }) {
-  const { conversations } = useConversations();
 
-  // if (isPending) return <Spinner />;
+function ConversationsList({ selectedUser }) {
+  const { conversations } = useConversations();
 
   return (
     <>
@@ -42,10 +37,10 @@ function ConversationsList({ onSelect }) {
           <ConversationItem
             chat={chat}
             key={chat.otherUser.id}
-            onSelect={onSelect}
+            isActive={chat.otherUser.id === selectedUser}
           />
         ))}
-        {conversations?.lenght === 0 && <P>There're not chats yet 💔</P>}
+        {conversations?.length === 0 && <P>There are no chats yet 💔</P>}
       </List>
     </>
   );

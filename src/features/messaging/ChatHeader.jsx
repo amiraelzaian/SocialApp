@@ -46,7 +46,7 @@ const Button = styled.button`
   }
 `;
 
-function ChatHeader({ userId, onBack }) {
+function ChatHeader({ userId }) {
   const { profileUser: user, isPending } = useUserProfile(userId);
   const navigate = useNavigate();
   const { deleteConversation } = useDeleteConversation(userId);
@@ -56,14 +56,14 @@ function ChatHeader({ userId, onBack }) {
 
   function handleDelete() {
     deleteConversation();
-    onBack();
+    navigate("/messages");
   }
 
   return (
     <>
       <Header>
         <Content>
-          <Button onClick={onBack}>
+          <Button onClick={() => navigate("/messages")}>
             <HiArrowLeft size={20} />
           </Button>
           <Avatar src={user?.avatar_url} name={user?.full_name} />

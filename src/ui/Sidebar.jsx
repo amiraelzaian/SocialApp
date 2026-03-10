@@ -39,12 +39,12 @@ const Nav = styled.nav`
     `}
 `;
 
-function Sidebar({ hideOnMobile }) {
+function Sidebar({ hideSidebar }) {
   const { isMobile } = useScreen();
   const { unreadCount } = useUnreadCount();
   const { unreadMessagesCount } = useUnreadMessagesCount();
 
-  if (isMobile && hideOnMobile) return null;
+  if (isMobile && hideSidebar) return null;
 
   return (
     <Nav $isMobile={isMobile}>

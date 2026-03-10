@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Avatar from "../../ui/Avatar";
 import { timeAgo } from "../../utils/helpers";
 import Badge from "../../ui/badge";
+import { useNavigate } from "react-router-dom";
 
 const Item = styled.li`
   display: flex;
@@ -12,6 +13,8 @@ const Item = styled.li`
   border-radius: 10px;
   padding: 3px;
   cursor: pointer;
+  background-color: ${({ $isActive }) =>
+    $isActive ? "var(--color-grey-200)" : "transparent"};
   &:hover {
     background-color: var(--color-grey-200);
   }
@@ -53,11 +56,18 @@ const Container = styled.div`
   position: relative;
 `;
 
-function ConversationItem({ chat, onSelect }) {
+function ConversationItem({ chat, isActive }) {
+  const navigate = useNavigate();
+
   return (
-    <Item onClick={() => onSelect(chat.otherUser.id)}>
+    <Item
+      $isActive={isActive}
+      onClick={() => navigate(`/messages/${chat.otherUser.id}`)}
+    >
       <Container>
-        {chat.unreadCount > 0 && <Badge badge={chat.unreadCount} />}
+        {chat.unreadCount > 0 && !isActive && (
+          <Badge badge={chat.unreadCount} />
+        )}
         <Avatar
           src={chat.otherUser.avatar_url}
           name={chat.otherUser.full_name}

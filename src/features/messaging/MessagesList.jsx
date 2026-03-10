@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import MessageBubble from "./MessageBubble";
 import Spinner from "../../ui/Spinner";
 import { useMessages } from "./useMessages";
-import { useRealtimeMessages } from "./useRealtimeMessages";
 import { useUser } from "../authentication/useUser";
 import { useMarkConversationAsRead } from "./useMarkConversationAsRead";
 
@@ -33,8 +32,6 @@ function MessagesList({ userId }) {
   const { markConversationAsRead } = useMarkConversationAsRead();
   const { user } = useUser();
   const bottomRef = useRef(null);
-
-  useRealtimeMessages(userId);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

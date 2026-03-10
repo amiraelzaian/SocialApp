@@ -51,6 +51,7 @@ function App() {
                   <Route path="/discover" element={<Discover />} />
                   <Route path="discover/:id" element={<Profile />} />
                   <Route path="/messages" element={<Messages />} />
+                  <Route path="/messages/:chatId" element={<Messages />} />
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/profile/:id" element={<Profile />} />

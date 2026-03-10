@@ -17,12 +17,12 @@ const Empty = styled.p`
   margin: 40px auto;
 `;
 
-function ChatWindow({ userId, onBack }) {
+function ChatWindow({ userId }) {
   if (!userId) return <Empty>Select a conversation to start chatting 😄</Empty>;
 
   return (
     <Window>
-      <ChatHeader userId={userId} onBack={onBack} />
+      <ChatHeader userId={userId} />
       <MessagesList userId={userId} />
       <MessageInput receiverId={userId} />
     </Window>

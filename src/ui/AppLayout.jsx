@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -38,15 +38,18 @@ const ContentArea = styled.div`
 function AppLayout() {
   const { isMobile } = useScreen();
   const { nameOfPage } = useGetPage();
+  const { chatId } = useParams();
+
   const isMessagesPage = nameOfPage === "Messages";
+  const isInChat = isMessagesPage && !!chatId;
+
   useRealtimeMessages();
+
   return (
     <Layout $isMobile={isMobile}>
-      <Sidebar hideOnMobile={isMessagesPage} />
+      <Sidebar hideSidebar={isInChat} />
       <Main $isMobile={isMobile}>
-        {!(isMessagesPage && isMobile) && nameOfPage !== "Profile" && (
-          <Header />
-        )}
+        {!(isInChat && isMobile) && nameOfPage !== "Profile" && <Header />}
         <ContentArea $noScroll={isMessagesPage}>
           <Outlet />
         </ContentArea>

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import styled from "styled-components";
 import { useScreen } from "../../context/ScreenSizeContext";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
 import ConversationsList from "./ConversationsList";
 import ChatWindow from "./ChatWindow";
 
@@ -8,7 +8,7 @@ const Layout = styled.div`
   display: grid;
   grid-template-columns: ${({ $isMobile }) =>
     $isMobile ? "1fr" : "320px 1fr"};
-  height: 100%; /* ← not 100vh, fill parent */
+  height: 100%;
   overflow: hidden;
 `;
 
@@ -17,7 +17,7 @@ const ConversationSide = styled.div`
   flex-direction: column;
   gap: 10px;
   padding: 10px;
-  height: 100%; /* ← fill parent */
+  height: 100%;
   overflow: hidden;
   background-color: var(--color-grey-50);
   border-right: 1px solid var(--color-grey-200);
@@ -28,7 +28,7 @@ const ConversationSide = styled.div`
 `;
 
 const ChatSide = styled.div`
-  height: 100%; /* ← fill parent */
+  height: 100%;
   overflow: hidden;
 
   @media (max-width: 768px) {
@@ -38,18 +38,15 @@ const ChatSide = styled.div`
 
 function MessagesLayout() {
   const { isMobile } = useScreen();
-  const [selectedUser, setSelectedUser] = useState(null);
+  const { chatId } = useParams();
 
   return (
     <Layout $isMobile={isMobile}>
-      <ConversationSide $show={!selectedUser}>
-        <ConversationsList onSelect={setSelectedUser} />
+      <ConversationSide $show={!chatId}>
+        <ConversationsList selectedUser={chatId} />
       </ConversationSide>
-      <ChatSide $show={!!selectedUser}>
-        <ChatWindow
-          userId={selectedUser}
-          onBack={() => setSelectedUser(null)}
-        />
+      <ChatSide $show={!!chatId}>
+        <ChatWindow userId={chatId} />
       </ChatSide>
     </Layout>
   );
