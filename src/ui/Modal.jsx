@@ -33,7 +33,7 @@ const Overlay = styled.div`
 
 const ModalWrapper = styled.div`
   position: relative;
-  background: var(--color-grey-0);
+  background: var(--color-grey-50);
   border-radius: ${({ $isMobile }) =>
     $isMobile ? "2rem 2rem 0 0" : "var(--border-radius-lg)"};
   width: ${({ $isMobile }) => ($isMobile ? "100%" : "60rem")};
