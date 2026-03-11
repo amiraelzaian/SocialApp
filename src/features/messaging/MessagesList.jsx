@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import MessageBubble from "./MessageBubble";
 import Spinner from "../../ui/Spinner";
 import { useMessages } from "./useMessages";
 import { useUser } from "../authentication/useUser";
 import { useMarkConversationAsRead } from "./useMarkConversationAsRead";
+import { HiChevronDown } from "react-icons/hi";
 
 const List = styled.div`
+  position: relative;
   flex: 1;
   overflow-y: auto;
   padding: 16px;
@@ -27,15 +29,20 @@ const Empty = styled.p`
   margin: auto;
 `;
 
-function MessagesList({ userId }) {
+function MessagesList({ userId, bottomRef, onScroll }) {
   const { messages, isPending } = useMessages(userId);
   const { markConversationAsRead } = useMarkConversationAsRead();
   const { user } = useUser();
-  const bottomRef = useRef(null);
+
+  function handleScroll(e) {
+    const el = e.target;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    onScroll?.(distanceFromBottom > 100);
+  }
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, bottomRef]);
 
   useEffect(() => {
     if (userId) markConversationAsRead({ otherUserId: userId });
@@ -45,7 +52,7 @@ function MessagesList({ userId }) {
   if (!messages?.length) return <Empty>No messages yet. Say hello! 👋</Empty>;
 
   return (
-    <List>
+    <List onScroll={handleScroll}>
       {messages.map((message) => (
         <MessageBubble
           key={message.id}
@@ -54,6 +61,7 @@ function MessagesList({ userId }) {
           userId={userId}
         />
       ))}
+
       <div ref={bottomRef} />
     </List>
   );

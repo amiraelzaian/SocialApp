@@ -4,8 +4,10 @@ import ConversationItem from "./ConversationItem";
 import SearchInput from "../../ui/SearchInput";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSearch } from "../../context/SearchContext";
+import { HiChevronDown } from "react-icons/hi";
 
 const List = styled.ul`
+  position: relative;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -56,6 +58,7 @@ function ConversationsList({ selectedUser }) {
             isActive={chat.otherUser.id === selectedUser}
           />
         ))}
+
         {conversations?.length === 0 && <P>There are no chats yet 💔</P>}
       </List>
     </>

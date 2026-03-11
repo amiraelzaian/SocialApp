@@ -3,21 +3,25 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import GlobalStyles from "./styles/GolobalStyles";
-import AppLayout from "./ui/AppLayout";
-import Home from "./pages/Home";
-import Discover from "./pages/Discover";
-import Messages from "./pages/Messages";
-import Profile from "./pages/Profile";
-import NotFound from "./pages/NotFound";
-import Notifications from "./pages/Notifications";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import { ScreenProvider } from "./context/ScreenSizeContext.jsx";
 import { DarkModeProvider } from "./context/ThemeContext.jsx/";
-import ProtectedRoutes from "./ui/ProtectedRoutes.jsx";
 import { SearchProvider } from "./context/SearchContext.jsx";
-import PostDetails from "./pages/PostDetails";
+import { lazy } from "react";
+
+import GlobalStyles from "./styles/GolobalStyles";
+
+import ProtectedRoutes from "./ui/ProtectedRoutes.jsx";
+import AppLayout from "./ui/AppLayout";
+
+const Home = lazy(() => import("./pages/Home"));
+const Discover = lazy(() => import("./pages/Discover"));
+const Messages = lazy(() => import("./pages/Messages"));
+const Profile = lazy(() => import("./pages/Profile"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Notifications = lazy(() => import("./pages/Notifications"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const PostDetails = lazy(() => import("./pages/PostDetails"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
