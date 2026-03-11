@@ -17,6 +17,7 @@ const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   padding: 4rem 0;
+  width: 100%;
 `;
 
 const EmptyState = styled.div`

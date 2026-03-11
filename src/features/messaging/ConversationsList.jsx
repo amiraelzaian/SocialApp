@@ -5,6 +5,7 @@ import SearchInput from "../../ui/SearchInput";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSearch } from "../../context/SearchContext";
 import { HiChevronDown } from "react-icons/hi";
+import MiniSpinner from "../../ui/MiniSpinner";
 
 const List = styled.ul`
   position: relative;
@@ -29,9 +30,16 @@ const P = styled.p`
   color: var(--color-grey-400);
   font-size: 13px;
 `;
+const Loading = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+`;
 
 function ConversationsList({ selectedUser }) {
-  const { conversations } = useConversations();
+  const { conversations, isPending } = useConversations();
   const { searchQuery } = useSearch();
   const debouncedQuery = useDebounce(searchQuery);
 
@@ -50,17 +58,22 @@ function ConversationsList({ selectedUser }) {
   return (
     <>
       <SearchInput />
-      <List>
-        {filteredChats?.map((chat) => (
-          <ConversationItem
-            chat={chat}
-            key={chat.otherUser.id}
-            isActive={chat.otherUser.id === selectedUser}
-          />
-        ))}
-
-        {conversations?.length === 0 && <P>There are no chats yet 💔</P>}
-      </List>
+      {isPending ? (
+        <Loading>
+          <MiniSpinner />
+        </Loading>
+      ) : (
+        <List>
+          {filteredChats?.map((chat) => (
+            <ConversationItem
+              chat={chat}
+              key={chat.otherUser.id}
+              isActive={chat.otherUser.id === selectedUser}
+            />
+          ))}
+          {conversations?.length === 0 && <P>There are no chats yet 💔</P>}
+        </List>
+      )}
     </>
   );
 }

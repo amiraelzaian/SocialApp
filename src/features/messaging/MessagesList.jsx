@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import MessageBubble from "./MessageBubble";
 import Spinner from "../../ui/Spinner";
+import MiniSpinner from "../../ui/MiniSpinner";
 import { useMessages } from "./useMessages";
 import { useUser } from "../authentication/useUser";
 import { useMarkConversationAsRead } from "./useMarkConversationAsRead";
@@ -28,7 +29,13 @@ const Empty = styled.p`
   font-size: 13px;
   margin: auto;
 `;
-
+const Loading = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+`;
 function MessagesList({ userId, bottomRef, onScroll }) {
   const { messages, isPending } = useMessages(userId);
   const { markConversationAsRead } = useMarkConversationAsRead();
@@ -48,7 +55,12 @@ function MessagesList({ userId, bottomRef, onScroll }) {
     if (userId) markConversationAsRead({ otherUserId: userId });
   }, [userId, markConversationAsRead]);
 
-  if (isPending) return <Spinner />;
+  if (isPending)
+    return (
+      <Loading>
+        <MiniSpinner />
+      </Loading>
+    );
   if (!messages?.length) return <Empty>No messages yet. Say hello! 👋</Empty>;
 
   return (

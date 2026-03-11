@@ -1,8 +1,21 @@
 import { supabase } from "./supabase";
-
-// we will handle this and add to and from to get handle pagination
-
+import { getCurrentUser } from "./apiAuth";
 export async function getPosts({ cursor, limit = 20 }) {
+  const user = await getCurrentUser();
+
+  // 1. get list of users current user follows
+  const { data: follows, error: followsError } = await supabase
+    .from("follows")
+    .select("following_id")
+    .eq("follower_id", user.id);
+
+  if (followsError) throw new Error(followsError.message);
+
+  // 2. extract ids + include own posts
+  const followingIds = follows.map((f) => f.following_id);
+  followingIds.push(user.id);
+
+  // 3. fetch posts only from those users
   let query = supabase
     .from("posts")
     .select(
@@ -25,6 +38,7 @@ export async function getPosts({ cursor, limit = 20 }) {
       )
     `,
     )
+    .in("user_id", followingIds)
     .order("created_at", { ascending: false })
     .limit(limit);
 
