@@ -9,7 +9,7 @@ import { useScreen } from "../context/ScreenSizeContext";
 import toast from "react-hot-toast";
 import Input from "./Input";
 
-const Form = styled.form`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
@@ -17,7 +17,7 @@ const Form = styled.form`
     $isMobile ? "1.6rem 1.2rem" : "2rem 2.4rem 2.4rem"};
 `;
 
-const Title = styled.h2`
+export const Title = styled.h2`
   font-size: ${({ $isMobile }) => ($isMobile ? "1.8rem" : "2rem")};
   font-weight: 700;
   color: var(--color-grey-800);
@@ -28,7 +28,7 @@ const Title = styled.h2`
   letter-spacing: -0.02em;
 `;
 
-const Textarea = styled.textarea`
+export const Textarea = styled.textarea`
   width: 100%;
   min-height: ${({ $isMobile }) => ($isMobile ? "9rem" : "12rem")};
   padding: 1.2rem;
@@ -62,7 +62,7 @@ const Textarea = styled.textarea`
   }
 `;
 
-const FieldLabel = styled.label`
+export const FieldLabel = styled.label`
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--color-grey-600);
@@ -72,13 +72,13 @@ const FieldLabel = styled.label`
   display: block;
 `;
 
-const FieldGroup = styled.div`
+export const FieldGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 `;
 
-const ButtonGroup = styled.div`
+export const ButtonGroup = styled.div`
   display: flex;
   gap: 1rem;
   justify-content: ${({ $isMobile }) => ($isMobile ? "stretch" : "flex-end")};

@@ -1,6 +1,7 @@
 import PostFeed from "../features/posts/PostFeed";
 import CreatePost from "../features/posts/CreatePost";
 import styled from "styled-components";
+import Storybar from "../features/stories/Storybar";
 
 const StyledHome = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const StyledHome = styled.div`
 function Home() {
   return (
     <StyledHome>
+      <Storybar />
       <CreatePost />
       <PostFeed />
     </StyledHome>

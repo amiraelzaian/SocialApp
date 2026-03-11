@@ -26,7 +26,7 @@ const UploadArea = styled.div`
 
   &:hover {
     border-color: var(--color-brand-600);
-    background-color: var(--color-brand-50);
+    background-color: var(--color-brand-500);
   }
 `;
 
@@ -140,7 +140,7 @@ function ImageUploader({ imageUrl, setImageUrl }) {
       };
       reader.readAsDataURL(file);
 
-      // ✅ Fixed UUID generation
+      //  Fixed UUID generation
       const postId = uuidv4();
 
       const publicUrl = await uploadPostImage(user.id, postId, file);

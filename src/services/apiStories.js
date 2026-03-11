@@ -1,10 +1,28 @@
 import { supabase } from "./supabase";
 
 // ============================================
+// HELPERS
+// ============================================
+
+async function getViewedStoryIds(storyIds) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data } = await supabase
+    .from("story_views")
+    .select("story_id")
+    .eq("viewer_id", user.id)
+    .in("story_id", storyIds);
+
+  return data?.map((v) => v.story_id) || [];
+}
+
+// ============================================
 // GET STORIES
 // ============================================
 
-// Get all active stories (all users - for explore)
 export async function getAllActiveStories() {
   const {
     data: { user },
@@ -16,12 +34,7 @@ export async function getAllActiveStories() {
     .select(
       `
       *,
-      users (
-        id,
-        username,
-        full_name,
-        avatar_url
-      )
+      users (id, username, full_name, avatar_url)
     `,
     )
     .gt("expires_at", new Date().toISOString())
@@ -29,18 +42,17 @@ export async function getAllActiveStories() {
 
   if (error) throw new Error(error.message);
 
-  // Add view status for each story
-  const storiesWithViewStatus = await Promise.all(
-    stories.map(async (story) => {
-      const viewed = await hasViewedStory(story.id);
-      return { ...story, hasViewed: viewed };
-    }),
-  );
+  // ✅ 1 DB call instead of N
+  const storyIds = stories.map((s) => s.id);
+  const viewedIds = await getViewedStoryIds(storyIds);
+  const viewedSet = new Set(viewedIds);
 
-  return storiesWithViewStatus;
+  return stories.map((story) => ({
+    ...story,
+    hasViewed: viewedSet.has(story.id),
+  }));
 }
 
-// Get stories from users you follow (for home feed)
 export async function getStories() {
   const {
     data: { user },
@@ -54,9 +66,7 @@ export async function getStories() {
     .eq("follower_id", user.id);
 
   const followingIds = following?.map((f) => f.following_id) || [];
-
-  // Add your own ID to see your stories
-  followingIds.push(user.id);
+  followingIds.push(user.id); // include own stories
 
   // Step 2: Get stories from those users
   const { data: stories, error } = await supabase
@@ -74,30 +84,24 @@ export async function getStories() {
 
   if (error) throw new Error(error.message);
 
-  // Add view status
-  const storiesWithViewStatus = await Promise.all(
-    stories.map(async (story) => {
-      const viewed = await hasViewedStory(story.id);
-      return { ...story, hasViewed: viewed };
-    }),
-  );
+  // ✅ 1 DB call instead of N
+  const storyIds = stories.map((s) => s.id);
+  const viewedIds = await getViewedStoryIds(storyIds);
+  const viewedSet = new Set(viewedIds);
 
-  return storiesWithViewStatus;
+  return stories.map((story) => ({
+    ...story,
+    hasViewed: viewedSet.has(story.id),
+  }));
 }
 
-// Get stories from a specific user
 export async function getUserStories(userId) {
   const { data: stories, error } = await supabase
     .from("stories")
     .select(
       `
       *,
-      users (
-        id,
-        username,
-        full_name,
-        avatar_url
-      )
+      users (id, username, full_name, avatar_url)
     `,
     )
     .eq("user_id", userId)
@@ -106,23 +110,33 @@ export async function getUserStories(userId) {
 
   if (error) throw new Error(error.message);
 
-  // Add view status
-  const storiesWithViewStatus = await Promise.all(
-    stories.map(async (story) => {
-      const viewed = await hasViewedStory(story.id);
-      const viewCount = await getStoryViewCount(story.id);
-      return { ...story, hasViewed: viewed, viewCount };
-    }),
-  );
+  // ✅ 1 DB call instead of N
+  const storyIds = stories.map((s) => s.id);
+  const viewedIds = await getViewedStoryIds(storyIds);
+  const viewedSet = new Set(viewedIds);
 
-  return storiesWithViewStatus;
+  // get view counts in one call too
+  const { data: viewCounts } = await supabase
+    .from("story_views")
+    .select("story_id")
+    .in("story_id", storyIds);
+
+  const viewCountMap = {};
+  viewCounts?.forEach((v) => {
+    viewCountMap[v.story_id] = (viewCountMap[v.story_id] || 0) + 1;
+  });
+
+  return stories.map((story) => ({
+    ...story,
+    hasViewed: viewedSet.has(story.id),
+    viewCount: viewCountMap[story.id] || 0,
+  }));
 }
 
 // ============================================
 // CREATE & DELETE STORIES
 // ============================================
 
-// Create a new story
 export async function createStory({ imageUrl, caption }) {
   const {
     data: { user },
@@ -136,17 +150,13 @@ export async function createStory({ imageUrl, caption }) {
         user_id: user.id,
         image_url: imageUrl,
         caption,
+        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
       },
     ])
     .select(
       `
       *,
-      users (
-        id,
-        username,
-        full_name,
-        avatar_url
-      )
+      users (id, username, full_name, avatar_url)
     `,
     )
     .single();
@@ -155,7 +165,6 @@ export async function createStory({ imageUrl, caption }) {
   return data;
 }
 
-// Delete a story (only your own)
 export async function deleteStory(storyId) {
   const {
     data: { user },
@@ -175,7 +184,6 @@ export async function deleteStory(storyId) {
 // STORY VIEWS
 // ============================================
 
-// Mark a story as viewed
 export async function viewStory(storyId) {
   const {
     data: { user },
@@ -184,25 +192,18 @@ export async function viewStory(storyId) {
 
   const { data, error } = await supabase
     .from("story_views")
-    .insert([
-      {
-        story_id: storyId,
-        viewer_id: user.id,
-      },
-    ])
+    .insert([{ story_id: storyId, viewer_id: user.id }])
     .select()
     .single();
 
   if (error) {
-    // Ignore duplicate error (already viewed)
-    if (error.code === "23505") return;
+    if (error.code === "23505") return; // already viewed — ignore
     throw new Error(error.message);
   }
 
   return data;
 }
 
-// Get who viewed a story (only for your own stories)
 export async function getStoryViewers(storyId) {
   const {
     data: { user },
@@ -220,18 +221,12 @@ export async function getStoryViewers(storyId) {
     throw new Error("You can only see viewers of your own stories");
   }
 
-  // Get all viewers
   const { data: viewers, error } = await supabase
     .from("story_views")
     .select(
       `
       *,
-      users (
-        id,
-        username,
-        full_name,
-        avatar_url
-      )
+      users (id, username, full_name, avatar_url)
     `,
     )
     .eq("story_id", storyId)
@@ -241,7 +236,6 @@ export async function getStoryViewers(storyId) {
   return viewers;
 }
 
-// Check if current user has viewed a story
 export async function hasViewedStory(storyId) {
   const {
     data: { user },
@@ -262,7 +256,6 @@ export async function hasViewedStory(storyId) {
   return !!data;
 }
 
-// Get view count for a story
 export async function getStoryViewCount(storyId) {
   const { count, error } = await supabase
     .from("story_views")
@@ -277,23 +270,16 @@ export async function getStoryViewCount(storyId) {
 // STORY STATUS
 // ============================================
 
-// Get count of unviewed stories from users you follow
 export async function getUnviewedStoriesCount() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return 0;
 
-  // Get all active stories from users you follow
   const stories = await getStories();
-
-  // Count unviewed ones
-  const unviewedCount = stories.filter((story) => !story.hasViewed).length;
-
-  return unviewedCount;
+  return stories.filter((story) => !story.hasViewed).length;
 }
 
-// Check if a user has active stories
 export async function hasActiveStories(userId) {
   const { count, error } = await supabase
     .from("stories")
@@ -304,13 +290,3 @@ export async function hasActiveStories(userId) {
   if (error) throw new Error(error.message);
   return count > 0;
 }
-
-// // Delete expired stories (cleanup - run with cron job)
-// export async function deleteExpiredStories() {
-//   const { error } = await supabase
-//     .from("stories")
-//     .delete()
-//     .lt("expires_at", new Date().toISOString());
-
-//   if (error) throw new Error(error.message);
-// }
