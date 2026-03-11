@@ -62,14 +62,7 @@ const ModalWrapper = styled.div`
   `}
 
   &::-webkit-scrollbar {
-    width: 0.4rem;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: var(--color-grey-300);
-    border-radius: 99px;
+    display: none;
   }
 `;
 
