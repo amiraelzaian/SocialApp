@@ -57,7 +57,7 @@ const H2 = styled.h2`
 const ButtonContent = styled.span`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
 
   svg {
     width: 18px;
