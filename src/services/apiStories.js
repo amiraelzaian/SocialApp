@@ -192,7 +192,7 @@ export async function viewStory(storyId) {
 
   const { data, error } = await supabase
     .from("story_views")
-    .insert([{ story_id: storyId, viewer_id: user.id }])
+    .upsert([{ story_id: storyId, viewer_id: user.id }])
     .select()
     .single();
 

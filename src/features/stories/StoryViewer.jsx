@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useUserStories } from "./useUserStories";
 import { useViewStory } from "./useViewStory";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   HiX,
   HiChevronLeft,
@@ -182,9 +182,14 @@ function StoryViewer({ userId, onClose }) {
 
   const current = userStories?.[currentIndex];
 
+  const viewedRef = useRef(new Set());
+
   // mark as viewed when story changes
   useEffect(() => {
-    if (current?.id) viewStory(current.id);
+    if (current?.id && !viewedRef.current.has(current.id)) {
+      viewedRef.current.add(current.id);
+      viewStory(current.id);
+    }
   }, [current?.id, viewStory]);
 
   // auto advance every 15 seconds

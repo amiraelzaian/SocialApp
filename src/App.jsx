@@ -6,12 +6,15 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ScreenProvider } from "./context/ScreenSizeContext.jsx";
 import { DarkModeProvider } from "./context/ThemeContext.jsx/";
 import { SearchProvider } from "./context/SearchContext.jsx";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 
 import GlobalStyles from "./styles/GolobalStyles";
 
 import ProtectedRoutes from "./ui/ProtectedRoutes.jsx";
 import AppLayout from "./ui/AppLayout";
+import ErrorFallBack from "./ui/ErrorFallBack.jsx";
+import Spinner from "./ui/Spinner.jsx";
+import ErrorBoundary from "./ui/ErrorBoundary.jsx";
 
 const Home = lazy(() => import("./pages/Home"));
 const Discover = lazy(() => import("./pages/Discover"));
@@ -41,29 +44,37 @@ function App() {
         <SearchProvider>
           <DarkModeProvider>
             <BrowserRouter>
-              <Routes>
-                <Route
-                  element={
-                    <ProtectedRoutes>
-                      <AppLayout />
-                    </ProtectedRoutes>
-                  }
-                >
-                  <Route path="/" element={<Home />} />
-                  <Route path="/posts/:postId" element={<PostDetails />} />
-                  <Route path="/:id" element={<Home />} />
-                  <Route path="/discover" element={<Discover />} />
-                  <Route path="discover/:id" element={<Profile />} />
-                  <Route path="/messages" element={<Messages />} />
-                  <Route path="/messages/:chatId" element={<Messages />} />
-                  <Route path="/notifications" element={<Notifications />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/profile/:id" element={<Profile />} />
-                </Route>
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <ErrorBoundary>
+                <Suspense fallback={<Spinner />}>
+                  <Routes>
+                    <Route
+                      element={
+                        <ProtectedRoutes>
+                          <AppLayout />
+                        </ProtectedRoutes>
+                      }
+                      errorElement={<ErrorFallBack />}
+                    >
+                      <Route path="/" element={<Home />} />
+                      <Route path="/posts/:postId" element={<PostDetails />} />
+                      <Route path="/:id" element={<Home />} />
+                      <Route path="/discover" element={<Discover />} />
+                      <Route path="discover/:id" element={<Profile />} />
+                      <Route path="/messages" element={<Messages />} />
+                      <Route path="/messages/:chatId" element={<Messages />} />
+                      <Route
+                        path="/notifications"
+                        element={<Notifications />}
+                      />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/profile/:id" element={<Profile />} />
+                    </Route>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
               <Toaster
                 position="top-center"
                 gutter={12}
