@@ -8,6 +8,7 @@ import Avatar from "../../ui/Avatar";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 import { HiEye } from "react-icons/hi";
+import { useUser } from "../authentication/useUser";
 
 const Header = styled.div`
   display: flex;
@@ -105,6 +106,8 @@ function ViewsModal({ onClose, story }) {
   const { viewers, isPending } = useStoryViewers(story.id);
   const navigate = useNavigate();
 
+  const { user } = useUser();
+
   return (
     <Modal onClose={onClose}>
       <Header>
@@ -131,17 +134,23 @@ function ViewsModal({ onClose, story }) {
               <Avatar src={v.users?.avatar_url} name={v.users?.full_name} />
               <Info>
                 <Username>{v.users?.username}</Username>
-                <FullName>{v.users?.full_name}</FullName>
+                <FullName>
+                  {v.users.id === user.id
+                    ? `${v.users.full_name} (you)`
+                    : v.users.full_name}
+                </FullName>
               </Info>
-              <MessageBtn
-                onClick={() => {
-                  navigate(`/messages/${v.users?.id}`);
-                  onClose();
-                }}
-              >
-                <HiOutlineChatBubbleLeftRight size={14} />
-                Message
-              </MessageBtn>
+              {v.users.id !== user.id && (
+                <MessageBtn
+                  onClick={() => {
+                    navigate(`/messages/${v.users?.id}`);
+                    onClose();
+                  }}
+                >
+                  <HiOutlineChatBubbleLeftRight size={14} />
+                  Message
+                </MessageBtn>
+              )}
             </Viewer>
           ))}
         </Viewers>
