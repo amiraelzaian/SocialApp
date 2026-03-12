@@ -45,8 +45,9 @@ const GlobalStyles = createGlobalStyle`
   /* Status Colors */
   --color-blue-100: #dbeafe;
   --color-blue-700: #1d4ed8;
-  --color-green-100: #dcfce7;
+ 
   --color-green-700: #15803d;
+    --color-green-100: #166534;
   --color-yellow-100: #fef9c3;
   --color-yellow-200: #ffea08;
   --color-yellow-700: #a16207;

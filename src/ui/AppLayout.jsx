@@ -8,6 +8,7 @@ import { useGetPage } from "../hooks/useGetPage.js";
 import { useRealtimeMessages } from "../features/messaging/useRealtimeMessages.js";
 import { HiChevronUp } from "react-icons/hi2";
 import { useRef, useState } from "react";
+import { useUpdateOnlineStatus } from "../features/presence/useUpdateOnlineStatus.js";
 
 const Layout = styled.div`
   display: grid;
@@ -51,6 +52,7 @@ function AppLayout() {
   const isInChat = location.pathname.startsWith("/messages/");
 
   useRealtimeMessages();
+  useUpdateOnlineStatus();
 
   function handleScroll() {
     const el = contentRef.current;

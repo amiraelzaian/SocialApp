@@ -1,4 +1,5 @@
 import { supabase } from "../services/supabase";
+import { formatDistanceToNow } from "date-fns";
 
 export function timeAgo(dateStr) {
   const diff = (Date.now() - new Date(dateStr)) / 1000;
@@ -6,6 +7,12 @@ export function timeAgo(dateStr) {
   if (diff < 3600) return `${Math.floor(diff / 60)}m`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
   return `${Math.floor(diff / 86400)}d`;
+}
+
+export function convertLastSeen(value) {
+  if (!value) return "offline";
+
+  return `last seen ${formatDistanceToNow(new Date(value), { addSuffix: true })}`;
 }
 
 export function dateConverter(value) {

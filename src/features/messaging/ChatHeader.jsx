@@ -6,6 +6,9 @@ import { useDeleteConversation } from "./useDeleteConversation";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import DeletePopup from "../../ui/DeletePopup";
+import { useUserStatus } from "../presence/useUserStatus";
+import { convertLastSeen } from "../../utils/helpers";
+import OnlineSign from "../../ui/onlineSign";
 
 const Header = styled.div`
   display: flex;
@@ -31,7 +34,16 @@ const Username = styled.p`
   color: var(--color-grey-600);
   cursor: pointer;
 `;
-
+const Details = styled.div`
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+`;
+const P = styled.p`
+  font-size: 12px;
+  color: ${({ $on }) =>
+    $on ? "var(--color-green-100)" : " var(--color-grey-400)"};
+`;
 const Button = styled.button`
   outline: none;
   background: none;
@@ -45,12 +57,19 @@ const Button = styled.button`
     outline: none;
   }
 `;
-
+const Div = styled.div`
+  position: relative;
+`;
 function ChatHeader({ userId }) {
   const { profileUser: user, isPending } = useUserProfile(userId);
   const navigate = useNavigate();
   const { deleteConversation } = useDeleteConversation(userId);
   const [showConfirm, setShowConfirm] = useState(false);
+  const { userStatus } = useUserStatus(userId);
+
+  const lastSeen = convertLastSeen(userStatus?.last_seen);
+  const isOnline = userStatus?.is_online;
+  console.log(lastSeen, isOnline);
 
   if (isPending) return null;
 
@@ -66,10 +85,19 @@ function ChatHeader({ userId }) {
           <Button onClick={() => navigate("/messages")}>
             <HiArrowLeft size={20} />
           </Button>
-          <Avatar src={user?.avatar_url} name={user?.full_name} />
-          <Username onClick={() => navigate(`/profile/${userId}`)}>
-            {user?.username}
-          </Username>
+          <Div>
+            <Avatar src={user?.avatar_url} name={user?.full_name} />
+            {isOnline && <OnlineSign />}
+          </Div>
+          <Details>
+            <Username onClick={() => navigate(`/profile/${userId}`)}>
+              {user?.username}
+            </Username>
+            <P $on={isOnline}>
+              {lastSeen && !isOnline && lastSeen}
+              {isOnline && `online`}
+            </P>
+          </Details>
         </Content>
         <Button onClick={() => setShowConfirm(true)}>
           <HiTrash size={20} />

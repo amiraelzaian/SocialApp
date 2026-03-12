@@ -6,7 +6,8 @@ import { useUploadAvatar } from "./useUploadAvatar";
 import { useUploadCover } from "./useUploadCover";
 import { useUserProfile } from "../discover/useUserProfile";
 import { useNavigate, useParams } from "react-router-dom";
-import { HiArrowCircleLeft } from "react-icons/hi";
+import OnlineSign from "../../ui/onlineSign";
+import { useUserStatus } from "../presence/useUserStatus";
 
 const Header = styled.header`
   width: 100%;
@@ -33,11 +34,11 @@ const CoverUploadBtn = styled.label`
   gap: 0.4rem;
   cursor: pointer;
   font-size: 0.9rem;
-
   &:hover {
     background: var(--color-grey-800);
   }
 `;
+
 const BackBtn = styled.label`
   position: absolute;
   top: 1rem;
@@ -51,21 +52,28 @@ const BackBtn = styled.label`
   gap: 0.4rem;
   cursor: pointer;
   font-size: 0.9rem;
-
   &:hover {
     background: var(--color-grey-800);
   }
 `;
 
-const AvatarPart = styled.div`
+// ✅ overflow: visible so OnlineSign is not clipped
+const AvatarWrapper = styled.div`
+  position: absolute;
+  bottom: -30px;
+  left: 1rem;
+  width: 90px;
+  height: 90px;
+`;
+
+// ✅ separate inner div handles the circle clip
+const AvatarCircle = styled.div`
   width: 90px;
   height: 90px;
   border: 2px solid var(--color-grey-300);
   border-radius: 50%;
-  overflow: hidden;
-  position: absolute;
-  bottom: -30px;
-  left: 1rem;
+  overflow: hidden; /* ← clips avatar only */
+  position: relative;
 `;
 
 const AvatarOverlay = styled.label`
@@ -82,7 +90,7 @@ const AvatarOverlay = styled.label`
   opacity: 0;
   transition: opacity 0.2s;
 
-  ${AvatarPart}:hover & {
+  ${AvatarCircle}:hover & {
     opacity: 0.8;
   }
 `;
@@ -94,6 +102,7 @@ const HiddenInput = styled.input`
 function ProfileImages() {
   const { id } = useParams();
   const { user } = useUser();
+
   const isOwnProfile = !id || id === user?.id;
 
   const { profileUser } = useUserProfile(id);
@@ -101,10 +110,10 @@ function ProfileImages() {
 
   const { uploadAvatar, isUploadingAvatar } = useUploadAvatar();
   const { uploadCover, isUploadingCover } = useUploadCover();
-
+  const { userStatus } = useUserStatus(displayUser?.id); // ✅ optional chaining
   const navigate = useNavigate();
 
-  if (!displayUser) return null;
+  if (!displayUser) return null; // ✅ after all hooks
 
   function handleCoverChange(e) {
     const file = e.target.files[0];
@@ -124,12 +133,13 @@ function ProfileImages() {
         src={displayUser.cover_url || "/public/cover.jpg"}
         alt="Profile cover"
       />
+
       {!isOwnProfile && (
         <BackBtn onClick={() => navigate(-1)}>
           <HiArrowLeft size={20} />
         </BackBtn>
       )}
-      {/* only show edit buttons on own profile */}
+
       {isOwnProfile && (
         <>
           <CoverUploadBtn htmlFor="cover-upload">
@@ -146,28 +156,34 @@ function ProfileImages() {
         </>
       )}
 
-      <AvatarPart>
-        <Avatar
-          src={displayUser.avatar_url}
-          name={displayUser.full_name}
-          alt={displayUser.full_name}
-          page="profile"
-        />
-        {isOwnProfile && (
-          <>
-            <AvatarOverlay htmlFor="avatar-upload">
-              <HiPencil />
-            </AvatarOverlay>
-            <HiddenInput
-              id="avatar-upload"
-              type="file"
-              accept="image/*"
-              onChange={handleAvatarChange}
-              disabled={isUploadingAvatar}
-            />
-          </>
-        )}
-      </AvatarPart>
+      {/*  AvatarWrapper has no overflow — OnlineSign won't be clipped */}
+      <AvatarWrapper>
+        <AvatarCircle>
+          <Avatar
+            src={displayUser.avatar_url}
+            name={displayUser.full_name}
+            alt={displayUser.full_name}
+            page="profile"
+          />
+          {isOwnProfile && (
+            <>
+              <AvatarOverlay htmlFor="avatar-upload">
+                <HiPencil />
+              </AvatarOverlay>
+              <HiddenInput
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                disabled={isUploadingAvatar}
+              />
+            </>
+          )}
+        </AvatarCircle>
+
+        {/* outside AvatarCircle — not clipped */}
+        {userStatus?.is_online && <OnlineSign $inProfile={true} />}
+      </AvatarWrapper>
     </Header>
   );
 }
