@@ -9,6 +9,7 @@ import { useRealtimeMessages } from "../features/messaging/useRealtimeMessages.j
 import { HiChevronUp } from "react-icons/hi2";
 import { useRef, useState } from "react";
 import { useUpdateOnlineStatus } from "../features/presence/useUpdateOnlineStatus.js";
+import { useRealtimeStories } from "../features/stories/useRealtimeStories.js";
 
 const Layout = styled.div`
   display: grid;
@@ -53,6 +54,7 @@ function AppLayout() {
 
   useRealtimeMessages();
   useUpdateOnlineStatus();
+  useRealtimeStories();
 
   function handleScroll() {
     const el = contentRef.current;

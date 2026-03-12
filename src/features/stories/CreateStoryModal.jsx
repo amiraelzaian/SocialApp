@@ -16,6 +16,7 @@ import { useCreateStory } from "./useCreateStory";
 
 function CreateStoryModal({ onClose }) {
   const { isMobile } = useScreen();
+
   const { createStory, isPending } = useCreateStory();
   const [imageUrl, setImageUrl] = useState("");
   const [caption, setCaption] = useState("");

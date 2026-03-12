@@ -3,7 +3,18 @@ import { supabase } from "./supabase";
 // ============================================
 // HELPERS
 // ============================================
+export function subscribeToStories(onNewStory) {
+  const channel = supabase
+    .channel("stories")
+    .on(
+      "postgres_changes",
+      { event: "INSERT", schema: "public", table: "stories" },
+      onNewStory,
+    )
+    .subscribe();
 
+  return () => supabase.removeChannel(channel);
+}
 async function getViewedStoryIds(storyIds) {
   const {
     data: { user },
@@ -42,7 +53,7 @@ export async function getAllActiveStories() {
 
   if (error) throw new Error(error.message);
 
-  // ✅ 1 DB call instead of N
+  //  1 DB call instead of N
   const storyIds = stories.map((s) => s.id);
   const viewedIds = await getViewedStoryIds(storyIds);
   const viewedSet = new Set(viewedIds);
@@ -84,7 +95,7 @@ export async function getStories() {
 
   if (error) throw new Error(error.message);
 
-  // ✅ 1 DB call instead of N
+  //  1 DB call instead of N
   const storyIds = stories.map((s) => s.id);
   const viewedIds = await getViewedStoryIds(storyIds);
   const viewedSet = new Set(viewedIds);
@@ -110,7 +121,7 @@ export async function getUserStories(userId) {
 
   if (error) throw new Error(error.message);
 
-  // ✅ 1 DB call instead of N
+  //  1 DB call instead of N
   const storyIds = stories.map((s) => s.id);
   const viewedIds = await getViewedStoryIds(storyIds);
   const viewedSet = new Set(viewedIds);
