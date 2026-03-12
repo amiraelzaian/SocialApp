@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useUser } from "../authentication/useUser";
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const Wrapper = styled.div`
 const StyledCircle = styled.div`
   width: 70px;
   height: 70px;
+
   border-radius: 50%;
   position: relative;
   background-image: ${({ $avatar_url }) =>
@@ -37,6 +39,8 @@ const Label = styled.p`
 
 function StoryCircle({ story, onClick }) {
   const user = story.users;
+  const { user: loggedUser } = useUser();
+  const isOwn = user.id === loggedUser.id;
 
   return (
     <Wrapper onClick={onClick}>
@@ -44,7 +48,10 @@ function StoryCircle({ story, onClick }) {
         $avatar_url={user?.avatar_url}
         $hasViewed={story.hasViewed}
       />
-      <Label>{user?.username}</Label>
+      <Label>
+        {user?.username}
+        {isOwn && "(you)"}
+      </Label>
     </Wrapper>
   );
 }

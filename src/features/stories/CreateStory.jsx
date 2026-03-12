@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useUser } from "../authentication/useUser";
 import { useUserStories } from "./useUserStories";
+import { HiPlus } from "react-icons/hi";
 
 const StyledCircle = styled.div`
   width: 70px;
@@ -20,21 +21,22 @@ const StyledCircle = styled.div`
 `;
 
 const AddBtn = styled.span`
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   position: absolute;
-  right: -2px;
-  bottom: -2px;
+  right: -6px;
+  bottom: -6px;
   cursor: pointer;
-  border: 2px solid var(--color-grey-50);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-grey-200);
+  box-shadow: var(--shadow-md);
   background-color: var(--color-brand-600);
+
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   z-index: 1;
 `;
@@ -74,7 +76,7 @@ function CreateStory({ onOpenCreate, onOpenViewer }) {
             onOpenCreate();
           }}
         >
-          +
+          <HiPlus />
         </AddBtn>
       </StyledCircle>
       <Label>Your story</Label>

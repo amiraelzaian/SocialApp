@@ -23,12 +23,11 @@ function StoriesList({ onOpenViewer }) {
   const { stories, isPending } = useStories();
 
   const uniqueStories = stories
-    ?.toReversed()
-    .filter(
+    ?.filter(
       (story, index, self) =>
         index === self.findIndex((s) => s.user_id === story.user_id),
-    );
-
+    )
+    .toSorted();
   if (isPending)
     return (
       <Loading>
