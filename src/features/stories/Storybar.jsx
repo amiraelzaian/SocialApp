@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import CreateStory from "./CreateStory";
 import StoriesList from "./StoriesList";
+import StoryViewer from "./StoryViewer";
 import { useState } from "react";
 import CreateStoryModal from "./CreateStoryModal";
 
@@ -15,25 +16,28 @@ const StyledBox = styled.div`
   gap: 15px;
   align-items: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.2s;
-
-  &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
+  overflow: hidden;
 `;
 
 function Storybar() {
-  const [openViewer, setOpenViewer] = useState(false);
+  const [viewingUserId, setViewingUserId] = useState(null);
   const [openCreate, setOpenCreate] = useState(false);
 
   return (
     <StyledBox>
       <CreateStory
-        onOpenViewer={() => setOpenViewer(true)}
+        onOpenViewer={(userId) => setViewingUserId(userId)}
         onOpenCreate={() => setOpenCreate(true)}
       />
-      <StoriesList />
+      <StoriesList onOpenViewer={(userId) => setViewingUserId(userId)} />
+
       {openCreate && <CreateStoryModal onClose={() => setOpenCreate(false)} />}
+      {viewingUserId && (
+        <StoryViewer
+          userId={viewingUserId}
+          onClose={() => setViewingUserId(null)}
+        />
+      )}
     </StyledBox>
   );
 }

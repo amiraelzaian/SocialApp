@@ -30,10 +30,8 @@ function DeletePopup({ post, onClose, onConfirm, message }) {
 
   function handleDelete() {
     if (onConfirm) {
-      // custom delete action (e.g. conversation)
       onConfirm();
     } else {
-      // default post delete
       removePost(post.id);
     }
     onClose();

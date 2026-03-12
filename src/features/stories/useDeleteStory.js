@@ -9,7 +9,7 @@ export function useDeleteStory() {
   const { mutate: deleteStory, isPending } = useMutation({
     mutationFn: async ({ storyId, imageUrl }) => {
       // 1. extract path from imageUrl
-      const path = imageUrl.split("/stories/")[1]; // ← get path after bucket name
+      const path = imageUrl.split("/stories/")[1]; // get path after bucket name
 
       // 2. delete image from storage
       await deleteImage("stories", path);
