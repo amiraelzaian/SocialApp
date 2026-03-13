@@ -4,6 +4,7 @@ export async function signup({ email, password, fullName, username, phone }) {
     email,
     password,
     options: {
+      emailRedirectTo: "https://vibehub-v1.netlify.app/",
       data: {
         full_name: fullName,
         username,
@@ -14,7 +15,6 @@ export async function signup({ email, password, fullName, username, phone }) {
   });
 
   if (error) throw new Error(error.message);
-  // ✅ removed manual insert — trigger handles it
   return data;
 }
 export async function login({ email, password }) {

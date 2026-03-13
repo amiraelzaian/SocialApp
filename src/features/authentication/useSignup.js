@@ -12,7 +12,7 @@ export function useSignup() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data.user);
       toast.success("User is created successfully");
-      navigate("/", { replace: true });
+      navigate("/check-email");
     },
     onError: (err) => {
       console.log(err.message);

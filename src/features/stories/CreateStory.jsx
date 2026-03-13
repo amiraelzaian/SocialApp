@@ -11,8 +11,9 @@ const StyledCircle = styled.div`
   background-image: ${({ $avatar_url }) =>
     $avatar_url ? `url(${$avatar_url})` : "none"};
   background-size: cover;
+
   background-position: center;
-  background-color: var(--color-grey-200);
+  background-color: var(--color-brand-400);
   border: 3px solid
     ${({ $hasStories }) =>
       $hasStories ? "var(--color-brand-600)" : "var(--color-grey-200)"};

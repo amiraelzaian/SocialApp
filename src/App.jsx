@@ -15,6 +15,7 @@ import AppLayout from "./ui/AppLayout";
 import ErrorFallBack from "./ui/ErrorFallBack.jsx";
 import Spinner from "./ui/Spinner.jsx";
 import ErrorBoundary from "./ui/ErrorBoundary.jsx";
+import CheckEmail from "./pages/CheckEmail.jsx";
 
 const Home = lazy(() => import("./pages/Home"));
 const Discover = lazy(() => import("./pages/Discover"));
@@ -69,6 +70,7 @@ function App() {
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/profile/:id" element={<Profile />} />
                     </Route>
+                    <Route path="/check-email" element={<CheckEmail />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="*" element={<NotFound />} />
