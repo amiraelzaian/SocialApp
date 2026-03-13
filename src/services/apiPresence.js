@@ -1,24 +1,21 @@
 import { supabase } from "./supabase";
 
-//  Set user online/offline with last_seen
+// apiPresence.js
 export async function updateOnlineStatus(isOnline) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  if (!user) return; // ✅ return silently instead of throwing
 
-  const { data, error } = await supabase
+  const { error } = await supabase // ✅ removed .select().single()
     .from("users")
     .update({
       is_online: isOnline,
       last_seen: new Date().toISOString(),
     })
-    .eq("id", user.id)
-    .select()
-    .single();
+    .eq("id", user.id);
 
-  if (error) throw new Error(error.message);
-  return data;
+  if (error) console.error("updateOnlineStatus error:", error.message); // ✅ don't throw
 }
 
 // Track user activity (heartbeat)

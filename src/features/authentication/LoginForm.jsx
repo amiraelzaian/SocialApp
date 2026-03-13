@@ -79,7 +79,7 @@ function LoginForm() {
             id="email"
             type="email"
             placeholder="john@example.com"
-            disabed={isPending}
+            disabled={isPending}
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -99,7 +99,7 @@ function LoginForm() {
             id="password"
             type="password"
             placeholder="••••••••"
-            disabed={isPending}
+            disabled={isPending}
             {...register("password", {
               required: "Password is required",
               minLength: {

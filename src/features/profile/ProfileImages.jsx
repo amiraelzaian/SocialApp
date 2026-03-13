@@ -57,7 +57,7 @@ const BackBtn = styled.label`
   }
 `;
 
-// ✅ overflow: visible so OnlineSign is not clipped
+//  overflow: visible so OnlineSign is not clipped
 const AvatarWrapper = styled.div`
   position: absolute;
   bottom: -30px;
@@ -66,7 +66,7 @@ const AvatarWrapper = styled.div`
   height: 90px;
 `;
 
-// ✅ separate inner div handles the circle clip
+//  separate inner div handles the circle clip
 const AvatarCircle = styled.div`
   width: 90px;
   height: 90px;
@@ -110,10 +110,10 @@ function ProfileImages() {
 
   const { uploadAvatar, isUploadingAvatar } = useUploadAvatar();
   const { uploadCover, isUploadingCover } = useUploadCover();
-  const { userStatus } = useUserStatus(displayUser?.id); // ✅ optional chaining
+  const { userStatus } = useUserStatus(displayUser?.id); //
   const navigate = useNavigate();
 
-  if (!displayUser) return null; // ✅ after all hooks
+  if (!displayUser) return null;
 
   function handleCoverChange(e) {
     const file = e.target.files[0];

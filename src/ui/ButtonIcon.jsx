@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { useScreenSize } from "../hooks/useScreenSize";
 import Badge from "./badge";
+import { useScreen } from "../context/ScreenSizeContext";
 
 const StyledNavLink = styled(NavLink)`
   display: flex;
@@ -42,7 +42,7 @@ const IconWrapper = styled.div`
 `;
 
 function ButtonIcon({ to, icon, children, badge }) {
-  const { isMobile } = useScreenSize();
+  const { isMobile } = useScreen(); // ✅ changed
 
   return (
     <StyledNavLink to={to} $isMobile={isMobile}>

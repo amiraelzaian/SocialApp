@@ -1,5 +1,4 @@
 import { supabase } from "./supabase";
-
 export async function signup({ email, password, fullName, username, phone }) {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -15,22 +14,9 @@ export async function signup({ email, password, fullName, username, phone }) {
   });
 
   if (error) throw new Error(error.message);
-
-  const { error: profileError } = await supabase.from("users").insert([
-    {
-      id: data.user.id,
-      full_name: fullName,
-      username,
-
-      avatar_url: "",
-    },
-  ]);
-
-  if (profileError) throw new Error(profileError.message);
-
+  // ✅ removed manual insert — trigger handles it
   return data;
 }
-
 export async function login({ email, password }) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
