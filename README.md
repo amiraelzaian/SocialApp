@@ -13,13 +13,13 @@ A modern social media app built with React and Supabase.
 ![Messages](./screenshots/addStory.jpg)
 ![Profile](./screenshots/discover.jpg)
 ![Profile](./screenshots/followingMOdal.jpg)
-![Profile](./screenshots/loginPage.jpg)
 ![Profile](./screenshots/notifications.jpg)
 ![Profile](./screenshots/chat.jpg)
 ![Profile](./screenshots/phone1.jpg)
 ![Profile](./screenshots/phone2.jpg)
 ![Profile](./screenshots/phone3.jpg)
 ![Profile](./screenshots/profile.jpg)
+![Profile](./screenshots/loginPage.jpg)
 ![Profile](./screenshots/signUpPage.jpg)
 
 ---
