@@ -129,10 +129,7 @@ function ProfileImages() {
 
   return (
     <Header>
-      <Cover
-        src={displayUser.cover_url || "/public/cover.jpg"}
-        alt="Profile cover"
-      />
+      <Cover src={displayUser.cover_url || "/cover.jpg"} alt="Profile cover" />
 
       {!isOwnProfile && (
         <BackBtn onClick={() => navigate(-1)}>
@@ -156,7 +153,6 @@ function ProfileImages() {
         </>
       )}
 
-      {/*  AvatarWrapper has no overflow — OnlineSign won't be clipped */}
       <AvatarWrapper>
         <AvatarCircle>
           <Avatar
