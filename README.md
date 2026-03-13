@@ -1,6 +1,4 @@
-
 # VibeHub 🥰
-
 A modern social media app built with React and Supabase.
 
 🔗 **Live Demo:** [vibehub-v1.netlify.app](https://vibehub-v1.netlify.app)
@@ -9,16 +7,18 @@ A modern social media app built with React and Supabase.
 
 ## 📸 Screenshots
 
-![Chat](./screenshots/chat.jpg)
-![Login](./screenshots/loginPage.jpg)
-![Signup](./screenshots/signUpPage.jpg)
-![Notifications](./screenshots/notifications.jpg)
+![Home](./screenshots/HomePage.jpg)
 ![Discover](./screenshots/discover.jpg)
 ![Following Modal](./screenshots/followingMOdal.jpg)
+![Notifications](./screenshots/notifications.jpg)
+![Add Story](./screenshots/addStory.jpg)
+![Chat](./screenshots/chat.jpg)
 ![Mobile View 1](./screenshots/phone1.jpg)
 ![Mobile View 2](./screenshots/phone2.jpg)
 ![Mobile View 3](./screenshots/phone3.jpg)
 ![Profile](./screenshots/profile.jpg)
+![Login](./screenshots/loginPage.jpg)
+![Signup](./screenshots/signUpPage.jpg)
 
 ---
 
@@ -26,7 +26,7 @@ A modern social media app built with React and Supabase.
 
 - 🔐 Authentication (signup, login, email confirmation)
 - 📸 Stories (24h expiry, image + caption)
-- 💬 Real-time messaging 
+- 💬 Real-time messaging
 - ❤️ Posts, likes, comments
 - 🔔 Notifications
 - 👥 Follow / unfollow
@@ -52,7 +52,7 @@ A modern social media app built with React and Supabase.
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/vibehub.git
+git clone https://github.com/amiraelzaian/vibehub.git
 cd vibehub
 ```
 
