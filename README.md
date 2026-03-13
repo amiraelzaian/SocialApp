@@ -9,18 +9,16 @@ A modern social media app built with React and Supabase.
 
 ## 📸 Screenshots
 
-![Home](./screenshots/HomePage.jpg)
-![Messages](./screenshots/addStory.jpg)
-![Profile](./screenshots/discover.jpg)
-![Profile](./screenshots/followingMOdal.jpg)
-![Profile](./screenshots/notifications.jpg)
-![Profile](./screenshots/chat.jpg)
-![Profile](./screenshots/phone1.jpg)
-![Profile](./screenshots/phone2.jpg)
-![Profile](./screenshots/phone3.jpg)
+![Chat](./screenshots/chat.jpg)
+![Login](./screenshots/loginPage.jpg)
+![Signup](./screenshots/signUpPage.jpg)
+![Notifications](./screenshots/notifications.jpg)
+![Discover](./screenshots/discover.jpg)
+![Following Modal](./screenshots/followingMOdal.jpg)
+![Mobile View 1](./screenshots/phone1.jpg)
+![Mobile View 2](./screenshots/phone2.jpg)
+![Mobile View 3](./screenshots/phone3.jpg)
 ![Profile](./screenshots/profile.jpg)
-![Profile](./screenshots/loginPage.jpg)
-![Profile](./screenshots/signUpPage.jpg)
 
 ---
 
