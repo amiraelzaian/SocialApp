@@ -106,7 +106,6 @@ function CommentItem({ comment, postId, currentUserId }) {
 
   const isOwner = currentUserId === comment.user_id;
   const user = comment.users;
-  // const initials = user?.full_name?.charAt(0)?.toUpperCase() || "?";
 
   const handleSave = () => {
     if (!editValue.trim() || editValue === comment.content) {

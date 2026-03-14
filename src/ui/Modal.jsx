@@ -110,7 +110,7 @@ function Modal({ children, onClose }) {
   return createPortal(
     <Overlay
       onClick={(e) => {
-        handleOverlayClick;
+        handleOverlayClick(e);
         e.stopPropagation();
       }}
       $isMobile={isMobile}

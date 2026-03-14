@@ -62,7 +62,6 @@ function LoginForm() {
   } = useForm();
 
   function onSubmit(data) {
-    console.log(data);
     login(data);
   }
   if (isPending) return <Spinner />;

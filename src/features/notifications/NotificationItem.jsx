@@ -15,6 +15,11 @@ const typeConfig = {
   comment: { icon: <FaRegComment />, color: "var(--color-green-700)" },
   follow: { icon: <HiUserAdd />, color: "var(--color-brand-600)" },
 };
+const actionText = {
+  like: "liked your post",
+  comment: "commented on your post",
+  follow: "started following you",
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -66,22 +71,6 @@ const PostPreview = styled.p`
   font-style: italic;
 `;
 
-// const FollowBackBtn = styled.button`
-//   padding: 0.5rem 1.4rem;
-//   background: var(--color-brand-600);
-//   color: white;
-//   border: none;
-//   border-radius: 20px;
-//   font-size: 1.2rem;
-//   font-weight: 600;
-//   cursor: pointer;
-//   margin-top: 0.4rem;
-//   width: fit-content;
-
-//   &:hover {
-//     background: var(--color-brand-700);
-//   }
-// `;
 const ButtonCover = styled.div`
   width: 60px;
 `;
@@ -121,12 +110,6 @@ const DeleteBtn = styled.button`
     outline: none;
   }
 `;
-
-const actionText = {
-  like: "liked your post",
-  comment: "commented on your post",
-  follow: "started following you",
-};
 
 function NotificationItem({ notification }) {
   const { actor, type, posts, is_read, created_at, message, id, comment_id } =
