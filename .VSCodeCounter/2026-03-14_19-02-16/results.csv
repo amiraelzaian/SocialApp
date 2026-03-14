@@ -1,0 +1,183 @@
+"filename", "language", "JavaScript", "JavaScript JSX", "XML", "JSON", "Markdown", "PostCSS", "HTML", "comment", "blank", "total"
+"f:\SocialApp\README.md", "Markdown", 0, 0, 0, 0, 61, 0, 0, 0, 20, 81
+"f:\SocialApp\eslint.config.js", "JavaScript", 28, 0, 0, 0, 0, 0, 0, 0, 2, 30
+"f:\SocialApp\index.html", "HTML", 0, 0, 0, 0, 0, 0, 17, 0, 2, 19
+"f:\SocialApp\package-lock.json", "JSON", 0, 0, 0, 3409, 0, 0, 0, 0, 1, 3410
+"f:\SocialApp\package.json", "JSON", 0, 0, 0, 39, 0, 0, 0, 0, 1, 40
+"f:\SocialApp\public\icon.svg", "XML", 0, 0, 18, 0, 0, 0, 0, 0, 4, 22
+"f:\SocialApp\src\App.jsx", "JavaScript JSX", 0, 100, 0, 0, 0, 0, 0, 1, 8, 109
+"f:\SocialApp\src\context\AuthContext.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"f:\SocialApp\src\context\ScreenSizeContext.jsx", "JavaScript JSX", 0, 18, 0, 0, 0, 0, 0, 0, 5, 23
+"f:\SocialApp\src\context\SearchContext.jsx", "JavaScript JSX", 0, 17, 0, 0, 0, 0, 0, 0, 6, 23
+"f:\SocialApp\src\context\ThemeContext.jsx", "JavaScript JSX", 0, 21, 0, 0, 0, 0, 0, 0, 7, 28
+"f:\SocialApp\src\features\authentication\LoginForm.jsx", "JavaScript JSX", 0, 133, 0, 0, 0, 0, 0, 0, 14, 147
+"f:\SocialApp\src\features\authentication\SignupForm.jsx", "JavaScript JSX", 0, 161, 0, 0, 0, 0, 0, 0, 13, 174
+"f:\SocialApp\src\features\authentication\useLogin.js", "JavaScript", 21, 0, 0, 0, 0, 0, 0, 0, 4, 25
+"f:\SocialApp\src\features\authentication\useLogout.js", "JavaScript", 20, 0, 0, 0, 0, 0, 0, 1, 4, 25
+"f:\SocialApp\src\features\authentication\useSignup.js", "JavaScript", 21, 0, 0, 0, 0, 0, 0, 0, 4, 25
+"f:\SocialApp\src\features\authentication\useUser.js", "JavaScript", 10, 0, 0, 0, 0, 0, 0, 0, 3, 13
+"f:\SocialApp\src\features\discover\DiscoverCardBody.jsx", "JavaScript JSX", 0, 74, 0, 0, 0, 0, 0, 0, 11, 85
+"f:\SocialApp\src\features\discover\DiscoverCardHeader.jsx", "JavaScript JSX", 0, 86, 0, 0, 0, 0, 0, 0, 1, 87
+"f:\SocialApp\src\features\discover\DiscoverCardTail.jsx", "JavaScript JSX", 0, 62, 0, 0, 0, 0, 0, 0, 6, 68
+"f:\SocialApp\src\features\discover\DiscoverUserCard.jsx", "JavaScript JSX", 0, 31, 0, 0, 0, 0, 0, 0, 4, 35
+"f:\SocialApp\src\features\discover\FollowButton.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"f:\SocialApp\src\features\discover\Suggestions.jsx", "JavaScript JSX", 0, 41, 0, 0, 0, 0, 0, 0, 9, 50
+"f:\SocialApp\src\features\discover\useFollow.js", "JavaScript", 41, 0, 0, 0, 0, 0, 0, 0, 8, 49
+"f:\SocialApp\src\features\discover\useSearchUsers.js", "JavaScript", 10, 0, 0, 0, 0, 0, 0, 0, 3, 13
+"f:\SocialApp\src\features\discover\useSuggestedUsers.js", "JavaScript", 13, 0, 0, 0, 0, 0, 0, 0, 2, 15
+"f:\SocialApp\src\features\discover\useUserProfile.js", "JavaScript", 10, 0, 0, 0, 0, 0, 0, 0, 3, 13
+"f:\SocialApp\src\features\messaging\ChatHeader.jsx", "JavaScript JSX", 0, 109, 0, 0, 0, 0, 0, 0, 10, 119
+"f:\SocialApp\src\features\messaging\ChatWindow.jsx", "JavaScript JSX", 0, 47, 0, 0, 0, 0, 0, 0, 8, 55
+"f:\SocialApp\src\features\messaging\ConversationItem.jsx", "JavaScript JSX", 0, 77, 0, 0, 0, 0, 0, 0, 11, 88
+"f:\SocialApp\src\features\messaging\ConversationsList.jsx", "JavaScript JSX", 0, 75, 0, 0, 0, 0, 0, 0, 7, 82
+"f:\SocialApp\src\features\messaging\MessageBubble.jsx", "JavaScript JSX", 0, 118, 0, 0, 0, 0, 0, 0, 11, 129
+"f:\SocialApp\src\features\messaging\MessageInput.jsx", "JavaScript JSX", 0, 62, 0, 0, 0, 0, 0, 0, 8, 70
+"f:\SocialApp\src\features\messaging\MessagesLayout.jsx", "JavaScript JSX", 0, 51, 0, 0, 0, 0, 0, 0, 7, 58
+"f:\SocialApp\src\features\messaging\MessagesList.jsx", "JavaScript JSX", 0, 73, 0, 0, 0, 0, 0, 0, 10, 83
+"f:\SocialApp\src\features\messaging\useConversations.js", "JavaScript", 13, 0, 0, 0, 0, 0, 0, 0, 3, 16
+"f:\SocialApp\src\features\messaging\useDeleteConversation.js", "JavaScript", 22, 0, 0, 0, 0, 0, 0, 0, 4, 26
+"f:\SocialApp\src\features\messaging\useDeleteMessage.js", "JavaScript", 20, 0, 0, 0, 0, 0, 0, 0, 3, 23
+"f:\SocialApp\src\features\messaging\useMarkConversationAsRead.js", "JavaScript", 20, 0, 0, 0, 0, 0, 0, 0, 4, 24
+"f:\SocialApp\src\features\messaging\useMarkMessageAsRead.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 4, 21
+"f:\SocialApp\src\features\messaging\useMessages.js", "JavaScript", 15, 0, 0, 0, 0, 0, 0, 0, 3, 18
+"f:\SocialApp\src\features\messaging\useRealtimeMessages.js", "JavaScript", 29, 0, 0, 0, 0, 0, 0, 1, 5, 35
+"f:\SocialApp\src\features\messaging\useSendMessage.js", "JavaScript", 21, 0, 0, 0, 0, 0, 0, 0, 3, 24
+"f:\SocialApp\src\features\messaging\useUnreadCount.js", "JavaScript", 15, 0, 0, 0, 0, 0, 0, 0, 4, 19
+"f:\SocialApp\src\features\notifications\NotificationItem.jsx", "JavaScript JSX", 0, 167, 0, 0, 0, 0, 0, 15, 25, 207
+"f:\SocialApp\src\features\notifications\NotificationTrash.jsx", "JavaScript JSX", 0, 4, 0, 0, 0, 0, 0, 0, 2, 6
+"f:\SocialApp\src\features\notifications\NotificationsList.jsx", "JavaScript JSX", 0, 105, 0, 0, 0, 0, 0, 0, 14, 119
+"f:\SocialApp\src\features\notifications\useDeleteAllNotifications.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 2, 19
+"f:\SocialApp\src\features\notifications\useDeleteNotification.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 2, 19
+"f:\SocialApp\src\features\notifications\useMarkAllAsRead.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 2, 19
+"f:\SocialApp\src\features\notifications\useMarkAsRead.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 4, 21
+"f:\SocialApp\src\features\notifications\useNotifications.js", "JavaScript", 30, 0, 0, 0, 0, 0, 0, 0, 6, 36
+"f:\SocialApp\src\features\notifications\useUnreadCount.js", "JavaScript", 13, 0, 0, 0, 0, 0, 0, 0, 2, 15
+"f:\SocialApp\src\features\posts\CommentItem.jsx", "JavaScript JSX", 0, 169, 0, 0, 0, 0, 0, 1, 18, 188
+"f:\SocialApp\src\features\posts\CommentsBox.jsx", "JavaScript JSX", 0, 73, 0, 0, 0, 0, 0, 2, 8, 83
+"f:\SocialApp\src\features\posts\CreateComment.jsx", "JavaScript JSX", 0, 67, 0, 0, 0, 0, 0, 0, 8, 75
+"f:\SocialApp\src\features\posts\CreatePost.jsx", "JavaScript JSX", 0, 73, 0, 0, 0, 0, 0, 0, 10, 83
+"f:\SocialApp\src\features\posts\Hashtag.jsx", "JavaScript JSX", 0, 10, 0, 0, 0, 0, 0, 0, 3, 13
+"f:\SocialApp\src\features\posts\ImageUploader.jsx", "JavaScript JSX", 0, 177, 0, 0, 0, 0, 0, 3, 26, 206
+"f:\SocialApp\src\features\posts\PostCard.jsx", "JavaScript JSX", 0, 92, 0, 0, 0, 0, 0, 2, 10, 104
+"f:\SocialApp\src\features\posts\PostCardActions.jsx", "JavaScript JSX", 0, 92, 0, 0, 0, 0, 0, 0, 11, 103
+"f:\SocialApp\src\features\posts\PostCardCaption.jsx", "JavaScript JSX", 0, 61, 0, 0, 0, 0, 0, 0, 10, 71
+"f:\SocialApp\src\features\posts\PostCardHeader.jsx", "JavaScript JSX", 0, 116, 0, 0, 0, 0, 0, 0, 14, 130
+"f:\SocialApp\src\features\posts\PostCardImage.jsx", "JavaScript JSX", 0, 13, 0, 0, 0, 0, 0, 0, 4, 17
+"f:\SocialApp\src\features\posts\PostFeed.jsx", "JavaScript JSX", 0, 72, 0, 0, 0, 0, 0, 1, 16, 89
+"f:\SocialApp\src\features\posts\useComments.js", "JavaScript", 14, 0, 0, 0, 0, 0, 0, 0, 2, 16
+"f:\SocialApp\src\features\posts\useCreateComment.js", "JavaScript", 16, 0, 0, 0, 0, 0, 0, 0, 4, 20
+"f:\SocialApp\src\features\posts\useCreatePost.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 4, 21
+"f:\SocialApp\src\features\posts\useDeleteComment.js", "JavaScript", 16, 0, 0, 0, 0, 0, 0, 0, 4, 20
+"f:\SocialApp\src\features\posts\useDeletePost.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 4, 21
+"f:\SocialApp\src\features\posts\useLike.js", "JavaScript", 21, 0, 0, 0, 0, 0, 0, 3, 7, 31
+"f:\SocialApp\src\features\posts\usePostById.js", "JavaScript", 14, 0, 0, 0, 0, 0, 0, 0, 3, 17
+"f:\SocialApp\src\features\posts\usePosts.js", "JavaScript", 33, 0, 0, 0, 0, 0, 0, 0, 6, 39
+"f:\SocialApp\src\features\posts\useRepost.js", "JavaScript", 25, 0, 0, 0, 0, 0, 0, 2, 8, 35
+"f:\SocialApp\src\features\posts\useUpdateComment.js", "JavaScript", 16, 0, 0, 0, 0, 0, 0, 0, 4, 20
+"f:\SocialApp\src\features\posts\useUpdatePost.js", "JavaScript", 18, 0, 0, 0, 0, 0, 0, 0, 6, 24
+"f:\SocialApp\src\features\presence\useUpdateOnlineStatus.js", "JavaScript", 26, 0, 0, 0, 0, 0, 0, 5, 7, 38
+"f:\SocialApp\src\features\presence\useUserStatus.js", "JavaScript", 11, 0, 0, 0, 0, 0, 0, 0, 3, 14
+"f:\SocialApp\src\features\profile\FollowButtonProfile.jsx", "JavaScript JSX", 0, 20, 0, 0, 0, 0, 0, 0, 3, 23
+"f:\SocialApp\src\features\profile\FollowerItem.jsx", "JavaScript JSX", 0, 56, 0, 0, 0, 0, 0, 0, 6, 62
+"f:\SocialApp\src\features\profile\FollowersModal.jsx", "JavaScript JSX", 0, 67, 0, 0, 0, 0, 0, 0, 9, 76
+"f:\SocialApp\src\features\profile\FollowingItem.jsx", "JavaScript JSX", 0, 56, 0, 0, 0, 0, 0, 0, 6, 62
+"f:\SocialApp\src\features\profile\FollowingsModal.jsx", "JavaScript JSX", 0, 68, 0, 0, 0, 0, 0, 1, 10, 79
+"f:\SocialApp\src\features\profile\ProfileHeader.jsx", "JavaScript JSX", 0, 15, 0, 0, 0, 0, 0, 1, 4, 20
+"f:\SocialApp\src\features\profile\ProfileImages.jsx", "JavaScript JSX", 0, 163, 0, 0, 0, 0, 0, 3, 22, 188
+"f:\SocialApp\src\features\profile\UpdateUserModal.jsx", "JavaScript JSX", 0, 198, 0, 0, 0, 0, 0, 0, 18, 216
+"f:\SocialApp\src\features\profile\UserDetailsCard.jsx", "JavaScript JSX", 0, 256, 0, 0, 0, 0, 0, 0, 25, 281
+"f:\SocialApp\src\features\profile\UserPosts.jsx", "JavaScript JSX", 0, 73, 0, 0, 0, 0, 0, 0, 12, 85
+"f:\SocialApp\src\features\profile\useFollowersCount.js", "JavaScript", 12, 0, 0, 0, 0, 0, 0, 0, 3, 15
+"f:\SocialApp\src\features\profile\useFollowersUsers.js", "JavaScript", 15, 0, 0, 0, 0, 0, 0, 0, 2, 17
+"f:\SocialApp\src\features\profile\useFollowingsCount.js", "JavaScript", 11, 0, 0, 0, 0, 0, 0, 0, 3, 14
+"f:\SocialApp\src\features\profile\useFollowingsUsers.js", "JavaScript", 15, 0, 0, 0, 0, 0, 0, 0, 2, 17
+"f:\SocialApp\src\features\profile\useIsFollowing.js", "JavaScript", 10, 0, 0, 0, 0, 0, 0, 0, 3, 13
+"f:\SocialApp\src\features\profile\useUpdateUserDetails.js", "JavaScript", 22, 0, 0, 0, 0, 0, 0, 0, 3, 25
+"f:\SocialApp\src\features\profile\useUploadAvatar.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 4, 21
+"f:\SocialApp\src\features\profile\useUploadCover.js", "JavaScript", 17, 0, 0, 0, 0, 0, 0, 0, 3, 20
+"f:\SocialApp\src\features\profile\useUserPosts.js", "JavaScript", 29, 0, 0, 0, 0, 0, 0, 0, 4, 33
+"f:\SocialApp\src\features\stories\CreateStory.jsx", "JavaScript JSX", 0, 86, 0, 0, 0, 0, 0, 0, 3, 89
+"f:\SocialApp\src\features\stories\CreateStoryModal.jsx", "JavaScript JSX", 0, 59, 0, 0, 0, 0, 0, 0, 6, 65
+"f:\SocialApp\src\features\stories\StoriesList.jsx", "JavaScript JSX", 0, 46, 0, 0, 0, 0, 0, 0, 6, 52
+"f:\SocialApp\src\features\stories\StoryCircle.jsx", "JavaScript JSX", 0, 58, 0, 0, 0, 0, 0, 0, 2, 60
+"f:\SocialApp\src\features\stories\StoryViewer.jsx", "JavaScript JSX", 0, 293, 0, 0, 0, 0, 0, 6, 35, 334
+"f:\SocialApp\src\features\stories\Storybar.jsx", "JavaScript JSX", 0, 40, 0, 0, 0, 0, 0, 0, 6, 46
+"f:\SocialApp\src\features\stories\ViewsModal.jsx", "JavaScript JSX", 0, 147, 0, 0, 0, 0, 0, 0, 16, 163
+"f:\SocialApp\src\features\stories\useCreateStory.js", "JavaScript", 21, 0, 0, 0, 0, 0, 0, 0, 3, 24
+"f:\SocialApp\src\features\stories\useDeleteStory.js", "JavaScript", 22, 0, 0, 0, 0, 0, 0, 3, 6, 31
+"f:\SocialApp\src\features\stories\useRealtimeStories.js", "JavaScript", 19, 0, 0, 0, 0, 0, 0, 0, 4, 23
+"f:\SocialApp\src\features\stories\useStories.js", "JavaScript", 13, 0, 0, 0, 0, 0, 0, 0, 3, 16
+"f:\SocialApp\src\features\stories\useStoryViewers.js", "JavaScript", 14, 0, 0, 0, 0, 0, 0, 0, 3, 17
+"f:\SocialApp\src\features\stories\useUnviewedStoriesCount.js", "JavaScript", 9, 0, 0, 0, 0, 0, 0, 0, 3, 12
+"f:\SocialApp\src\features\stories\useUserStories.js", "JavaScript", 14, 0, 0, 0, 0, 0, 0, 0, 3, 17
+"f:\SocialApp\src\features\stories\useViewStory.js", "JavaScript", 13, 0, 0, 0, 0, 0, 0, 0, 4, 17
+"f:\SocialApp\src\hooks\useDebounce.js", "JavaScript", 11, 0, 0, 0, 0, 0, 0, 0, 5, 16
+"f:\SocialApp\src\hooks\useGetPage.js", "JavaScript", 15, 0, 0, 0, 0, 0, 0, 0, 5, 20
+"f:\SocialApp\src\hooks\useLocalStorageState.js", "JavaScript", 18, 0, 0, 0, 0, 0, 0, 0, 4, 22
+"f:\SocialApp\src\hooks\useMoveBack.js", "JavaScript", 5, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"f:\SocialApp\src\hooks\useOutsideClick.js", "JavaScript", 16, 0, 0, 0, 0, 0, 0, 0, 5, 21
+"f:\SocialApp\src\hooks\useScreenSize.js", "JavaScript", 33, 0, 0, 0, 0, 0, 0, 0, 8, 41
+"f:\SocialApp\src\main.jsx", "JavaScript JSX", 0, 10, 0, 0, 0, 0, 0, 0, 2, 12
+"f:\SocialApp\src\pages\CheckEmail.jsx", "JavaScript JSX", 0, 38, 0, 0, 0, 0, 0, 0, 7, 45
+"f:\SocialApp\src\pages\Discover.jsx", "JavaScript JSX", 0, 17, 0, 0, 0, 0, 0, 0, 4, 21
+"f:\SocialApp\src\pages\Home.jsx", "JavaScript JSX", 0, 21, 0, 0, 0, 0, 0, 0, 4, 25
+"f:\SocialApp\src\pages\Login.jsx", "JavaScript JSX", 0, 5, 0, 0, 0, 0, 0, 0, 3, 8
+"f:\SocialApp\src\pages\Messages.jsx", "JavaScript JSX", 0, 5, 0, 0, 0, 0, 0, 0, 3, 8
+"f:\SocialApp\src\pages\NotFound.jsx", "JavaScript JSX", 0, 4, 0, 0, 0, 0, 0, 0, 2, 6
+"f:\SocialApp\src\pages\Notifications.jsx", "JavaScript JSX", 0, 13, 0, 0, 0, 0, 0, 0, 4, 17
+"f:\SocialApp\src\pages\PostDetails.jsx", "JavaScript JSX", 0, 142, 0, 0, 0, 0, 0, 2, 17, 161
+"f:\SocialApp\src\pages\Profile.jsx", "JavaScript JSX", 0, 22, 0, 0, 0, 0, 0, 0, 4, 26
+"f:\SocialApp\src\pages\Signup.jsx", "JavaScript JSX", 0, 5, 0, 0, 0, 0, 0, 0, 3, 8
+"f:\SocialApp\src\services\apiAuth.js", "JavaScript", 71, 0, 0, 0, 0, 0, 0, 2, 23, 96
+"f:\SocialApp\src\services\apiComments.js", "JavaScript", 115, 0, 0, 0, 0, 0, 0, 5, 19, 139
+"f:\SocialApp\src\services\apiLikes.js", "JavaScript", 80, 0, 0, 0, 0, 0, 0, 7, 16, 103
+"f:\SocialApp\src\services\apiMessages.js", "JavaScript", 169, 0, 0, 0, 0, 0, 0, 22, 37, 228
+"f:\SocialApp\src\services\apiNotifications.js", "JavaScript", 92, 0, 0, 0, 0, 0, 0, 6, 21, 119
+"f:\SocialApp\src\services\apiPosts.js", "JavaScript", 226, 0, 0, 0, 0, 0, 0, 8, 35, 269
+"f:\SocialApp\src\services\apiPresence.js", "JavaScript", 47, 0, 0, 0, 0, 0, 0, 4, 11, 62
+"f:\SocialApp\src\services\apiReposts.js", "JavaScript", 64, 0, 0, 0, 0, 0, 0, 4, 14, 82
+"f:\SocialApp\src\services\apiStorage.js", "JavaScript", 62, 0, 0, 0, 0, 0, 0, 24, 31, 117
+"f:\SocialApp\src\services\apiStories.js", "JavaScript", 230, 0, 0, 0, 0, 0, 0, 22, 52, 304
+"f:\SocialApp\src\services\apiUsers.js", "JavaScript", 163, 0, 0, 0, 0, 0, 0, 6, 39, 208
+"f:\SocialApp\src\services\supabase.js", "JavaScript", 9, 0, 0, 0, 0, 0, 0, 1, 4, 14
+"f:\SocialApp\src\styles\GolobalStyles.js", "JavaScript", 203, 0, 0, 0, 0, 0, 0, 0, 3, 206
+"f:\SocialApp\src\styles\index.css", "PostCSS", 0, 0, 0, 0, 0, 8, 0, 0, 2, 10
+"f:\SocialApp\src\ui\AppLayout.jsx", "JavaScript JSX", 0, 82, 0, 0, 0, 0, 0, 0, 12, 94
+"f:\SocialApp\src\ui\Avatar.jsx", "JavaScript JSX", 0, 30, 0, 0, 0, 0, 0, 0, 7, 37
+"f:\SocialApp\src\ui\Badge.jsx", "JavaScript JSX", 0, 31, 0, 0, 0, 0, 0, 0, 5, 36
+"f:\SocialApp\src\ui\Button.jsx", "JavaScript JSX", 0, 100, 0, 0, 0, 0, 0, 0, 6, 106
+"f:\SocialApp\src\ui\ButtonIcon.jsx", "JavaScript JSX", 0, 53, 0, 0, 0, 0, 0, 0, 6, 59
+"f:\SocialApp\src\ui\DeletePopup.jsx", "JavaScript JSX", 0, 50, 0, 0, 0, 0, 0, 0, 8, 58
+"f:\SocialApp\src\ui\ErrorBoundary.jsx", "JavaScript JSX", 0, 18, 0, 0, 0, 0, 0, 0, 5, 23
+"f:\SocialApp\src\ui\ErrorFallBack.jsx", "JavaScript JSX", 0, 52, 0, 0, 0, 0, 0, 0, 8, 60
+"f:\SocialApp\src\ui\FakeAvatar.jsx", "JavaScript JSX", 0, 21, 0, 0, 0, 0, 0, 0, 4, 25
+"f:\SocialApp\src\ui\Form.jsx", "JavaScript JSX", 0, 28, 0, 0, 0, 0, 0, 0, 3, 31
+"f:\SocialApp\src\ui\FormHeader.jsx", "JavaScript JSX", 0, 52, 0, 0, 0, 0, 0, 0, 7, 59
+"f:\SocialApp\src\ui\FormRow.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"f:\SocialApp\src\ui\FormTail.jsx", "JavaScript JSX", 0, 40, 0, 0, 0, 0, 0, 0, 7, 47
+"f:\SocialApp\src\ui\Header.jsx", "JavaScript JSX", 0, 105, 0, 0, 0, 0, 0, 1, 13, 119
+"f:\SocialApp\src\ui\Input.jsx", "JavaScript JSX", 0, 28, 0, 0, 0, 0, 0, 0, 3, 31
+"f:\SocialApp\src\ui\Label.jsx", "JavaScript JSX", 0, 29, 0, 0, 0, 0, 0, 0, 3, 32
+"f:\SocialApp\src\ui\ListItem.jsx", "JavaScript JSX", 0, 10, 0, 0, 0, 0, 0, 0, 3, 13
+"f:\SocialApp\src\ui\Logo.jsx", "JavaScript JSX", 0, 31, 0, 0, 0, 0, 0, 0, 4, 35
+"f:\SocialApp\src\ui\Menu.jsx", "JavaScript JSX", 0, 33, 0, 0, 0, 0, 0, 0, 4, 37
+"f:\SocialApp\src\ui\MenuItem.jsx", "JavaScript JSX", 0, 27, 0, 0, 0, 0, 0, 0, 4, 31
+"f:\SocialApp\src\ui\MiniSpinner.jsx", "JavaScript JSX", 0, 5, 0, 0, 0, 0, 0, 0, 3, 8
+"f:\SocialApp\src\ui\Modal.jsx", "JavaScript JSX", 0, 119, 0, 0, 0, 0, 0, 0, 11, 130
+"f:\SocialApp\src\ui\NavItem.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"f:\SocialApp\src\ui\NotificationCount.jsx", "JavaScript JSX", 0, 14, 0, 0, 0, 0, 0, 0, 4, 18
+"f:\SocialApp\src\ui\OnlineSign.jsx", "JavaScript JSX", 0, 15, 0, 0, 0, 0, 0, 0, 2, 17
+"f:\SocialApp\src\ui\PostModal.jsx", "JavaScript JSX", 0, 168, 0, 0, 0, 0, 0, 0, 19, 187
+"f:\SocialApp\src\ui\ProtectedRoutes.jsx", "JavaScript JSX", 0, 19, 0, 0, 0, 0, 0, 0, 6, 25
+"f:\SocialApp\src\ui\Row.jsx", "JavaScript JSX", 0, 11, 0, 0, 0, 0, 0, 0, 3, 14
+"f:\SocialApp\src\ui\ScrollBtn.jsx", "JavaScript JSX", 0, 24, 0, 0, 0, 0, 0, 0, 2, 26
+"f:\SocialApp\src\ui\SearchInput.jsx", "JavaScript JSX", 0, 52, 0, 0, 0, 0, 0, 1, 9, 62
+"f:\SocialApp\src\ui\Sidebar.jsx", "JavaScript JSX", 0, 75, 0, 0, 0, 0, 0, 0, 6, 81
+"f:\SocialApp\src\ui\Spinner.jsx", "JavaScript JSX", 0, 24, 0, 0, 0, 0, 0, 0, 4, 28
+"f:\SocialApp\src\ui\ThemeToggle.jsx", "JavaScript JSX", 0, 44, 0, 0, 0, 0, 0, 0, 5, 49
+"f:\SocialApp\src\ui\UserSidebarInfo.jsx", "JavaScript JSX", 0, 39, 0, 0, 0, 0, 0, 0, 5, 44
+"f:\SocialApp\src\utils\contstants.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"f:\SocialApp\src\utils\helpers.js", "JavaScript", 39, 0, 0, 0, 0, 0, 0, 0, 7, 46
+"f:\SocialApp\src\utils\parseText.jsx", "JavaScript JSX", 0, 11, 0, 0, 0, 0, 0, 0, 3, 14
+"f:\SocialApp\vite.config.js", "JavaScript", 18, 0, 0, 0, 0, 0, 0, 1, 2, 21
+"Total", "-", 2660, 6070, 18, 3448, 61, 8, 17, 167, 1351, 13800
