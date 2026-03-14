@@ -169,7 +169,7 @@ function PostModal({ mode = "create", post = null, onClose }) {
           <Button
             type="button"
             $variation="secondary"
-            $onClick={onClose}
+            onClick={onClose}
             disabled={isLoading}
           >
             Cancel
